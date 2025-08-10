@@ -49,6 +49,9 @@ class HomeFragment : Fragment() {
         binding.iconAlert.setOnClickListener {
             findNavController().navigate(R.id.notificationFragment)
         }
+        binding.iconSearch.setOnClickListener {
+            findNavController().navigate(R.id.homeSearchFragment)
+        }
 
     }
 
@@ -63,9 +66,7 @@ class HomeFragment : Fragment() {
         viewPagerRegionNews.adapter = RegionNewsAdapter(newsList)
 
         dotsIndicator.attachTo(viewPagerRegionNews)
-        dotsIndicator.setDotIndicatorColor(
-            ContextCompat.getColor(requireContext(), R.color.gray_scale_9)
-        )
+
     }
 
     private fun initLessBoomBimPlace() = with((binding)){
