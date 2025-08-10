@@ -22,20 +22,24 @@
         android:label="MyPageFragment" />
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.example.swift.view.main.notification.NotificationFragment"
+        android:name="com.example.swift.view.main.home.notification.NotificationFragment"
         android:label="NotificationFragment" />
     <fragment
         android:id="@+id/eventTabFragment"
-        android:name="com.example.swift.view.main.notification.EventTabFragment"
+        android:name="com.example.swift.view.main.home.notification.EventTabFragment"
         android:label="EventTabFragment" />
     <fragment
         android:id="@+id/newIssueTabFragment"
-        android:name="com.example.swift.view.main.notification.NewIssueTabFragment"
+        android:name="com.example.swift.view.main.home.notification.NewIssueTabFragment"
         android:label="NewIssueTabFragment" />
     <fragment
         android:id="@+id/socialLoginFragment"
         android:name="com.example.swift.view.auth.SocialLoginFragment"
         android:label="SocialLoginFragment" />
+    <fragment
+        android:id="@+id/homeSearchFragment"
+        android:name="com.example.swift.view.main.home.search.HomeSearchFragment"
+        android:label="HomeSearchFragment" />
 
 
 </navigation>

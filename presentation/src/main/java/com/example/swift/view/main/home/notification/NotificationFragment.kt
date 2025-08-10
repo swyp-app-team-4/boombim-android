@@ -1,4 +1,4 @@
-package com.example.swift.view.main.notification
+package com.example.swift.view.main.home.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater

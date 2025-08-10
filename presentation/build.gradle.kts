@@ -63,7 +63,7 @@ dependencies {
     implementation("com.navercorp.nid:oauth:5.10.0")
 
     //Dot 라이브러리
-    implementation("com.tbuonomo:dotsindicator:5.0")
+    implementation("com.tbuonomo:dotsindicator:5.1.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

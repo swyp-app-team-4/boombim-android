@@ -1,4 +1,4 @@
-package com.example.swift.view.main.notification
+package com.example.swift.view.main.home.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentEventTabBinding
 import com.boombim.android.databinding.FragmentNotificationBinding
 import com.example.domain.model.NotificationModel
-import com.example.swift.view.main.notification.adapter.EventNotificationAdapter
+import com.example.swift.view.main.home.notification.adapter.EventNotificationAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
