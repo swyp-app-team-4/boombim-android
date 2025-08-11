@@ -2,6 +2,7 @@ package com.example.swift
 
 import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
+import com.kakao.vectormap.KakaoMapSdk
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.HiltAndroidApp
 
@@ -11,6 +12,7 @@ class BoomBimApp : Application() {
         super.onCreate()
 
         KakaoSdk.init(this, "15beddeb998ebfb5407b1501bf0b2259")
+        KakaoMapSdk.init(this, "15beddeb998ebfb5407b1501bf0b2259")
 
         NaverIdLoginSDK.initialize(
             this,
