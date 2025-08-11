@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:state_selected="true" android:color="#FFFFFF" /> <!-- 선택되면 흰색 -->
-    <item android:color="#000000" /> <!-- 기본은 검정 -->
+    <item android:state_selected="true" android:color="#FFA13B" /> <!-- 선택되면 흰색 -->
+    <item android:color="@color/gray_scale_10" /> <!-- 기본은 검정 -->
 </selector>

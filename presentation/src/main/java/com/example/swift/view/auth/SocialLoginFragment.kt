@@ -94,6 +94,7 @@ class SocialLoginFragment : Fragment() {
             provider = "kakao",
             onSuccess = {
                findNavController().navigate(R.id.homeFragment)
+                Toast.makeText(requireContext(), "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
             },
             onFail = { msg ->
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
@@ -108,6 +109,7 @@ class SocialLoginFragment : Fragment() {
             provider = "naver",
             onSuccess = {
                 findNavController().navigate(R.id.homeFragment)
+                Toast.makeText(requireContext(), "네이버 로그인 성공", Toast.LENGTH_SHORT).show()
             },
             onFail = { msg ->
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
