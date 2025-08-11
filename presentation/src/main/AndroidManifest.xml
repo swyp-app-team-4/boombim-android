@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Swift"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.kakao.vectormap.AppKey"
+            android:value="15beddeb998ebfb5407b1501bf0b2259" />
+
         <activity
             android:name="com.example.swift.view.MainActivity"
             android:exported="true"
