@@ -1,6 +1,5 @@
 package com.example.swift.view.main
 
-import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -10,19 +9,18 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMapBinding
-import com.kakao.vectormap.GestureType
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
-import com.kakao.vectormap.camera.CameraPosition
-import com.kakao.vectormap.label.LabelLayer
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
-import com.kakao.vectormap.label.LabelStyles
 import com.kakao.vectormap.label.LabelTextStyle
 import dagger.hilt.android.AndroidEntryPoint
+import java.lang.Math.toDegrees
+import kotlin.math.cos
+import kotlin.math.pow
 
 @AndroidEntryPoint
 class MapFragment : Fragment() {
@@ -37,6 +35,7 @@ class MapFragment : Fragment() {
         Triple("서울역", 37.5547, 126.9706)
     )
 
+    private val EARTH_RADIUS = 6378137.0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,7 +52,6 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         showMapView()
-
 
 
     }
@@ -80,9 +78,27 @@ class MapFragment : Fragment() {
                 addMarkers()
 
                 kakaoMap!!.setOnCameraMoveEndListener { kakaoMap, position, gestureType ->
-                    Log.d(
-                        "MapFragment", "Camera moved to: ${position.position.longitude}, ${position.position.latitude}"
-                    )
+
+                    val cameraPosition = kakaoMap.cameraPosition
+                    val centerLatLng = cameraPosition!!.position.latitude
+                        .let { LatLng.from(it, cameraPosition.position.longitude) }
+                    val zoomLevel = cameraPosition.zoomLevel
+
+                    val mapWidthPx = mapView.width
+                    val mapHeightPx = mapView.height
+
+                    val (southWest, northEast) = calculateViewRect(centerLatLng, zoomLevel, mapWidthPx, mapHeightPx)
+
+                    Log.d("MapFragment", "카메라 이동 위치: ${position.position.longitude}, ${position.position.latitude}")
+                    Log.d("MapFragment", "남서 (SouthWest): ${southWest.latitude}, ${southWest.longitude}")
+                    Log.d("MapFragment", "남서 (SouthWest): ${southWest.latitude}, ${southWest.longitude}")
+                    Log.d("MapFragment", "북동 (NorthEast): ${northEast.latitude}, ${northEast.longitude}")
+
+                    val southEast = LatLng.from(southWest.latitude, northEast.longitude)
+                    val northWest = LatLng.from(northEast.latitude, southWest.longitude)
+
+                    Log.d("MapFragment", "남동 (SouthEast): ${southEast.latitude}, ${southEast.longitude}")
+                    Log.d("MapFragment", "북서 (NorthWest): ${northWest.latitude}, ${northWest.longitude}")
                 }
             }
         })
@@ -131,6 +147,22 @@ class MapFragment : Fragment() {
                 )
             )
         }
+    }
+
+    private fun calculateViewRect(centerLatLng: LatLng, zoomLevel: Int, mapWidthPx: Int, mapHeightPx: Int): Pair<LatLng, LatLng> {
+        // 한 픽셀당 미터 단위 계산 (대략)
+        val metersPerPixel = 156543.03392 * cos(Math.toRadians(centerLatLng.latitude)) / 2.0.pow(zoomLevel)
+
+        val halfWidthMeters = mapWidthPx / 2 * metersPerPixel
+        val halfHeightMeters = mapHeightPx / 2 * metersPerPixel
+
+        val latDiff = toDegrees(halfHeightMeters / EARTH_RADIUS)
+        val lngDiff = toDegrees(halfWidthMeters / (EARTH_RADIUS * cos(Math.toRadians(centerLatLng.latitude))))
+
+        val southWest = LatLng.from(centerLatLng.latitude - latDiff, centerLatLng.longitude - lngDiff)
+        val northEast = LatLng.from(centerLatLng.latitude + latDiff, centerLatLng.longitude + lngDiff)
+
+        return Pair(southWest, northEast)
     }
 
 

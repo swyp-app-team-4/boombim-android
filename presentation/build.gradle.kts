@@ -56,6 +56,11 @@ dependencies {
     implementation(libs.hilt)
     kapt(libs.hilt.compiler)
 
+    // firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.7.0"))
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.messaging)
+
     //KaKao APi
     implementation("com.kakao.sdk:v2-user:2.21.0")  // 카카오톡 사용자 정보 API 모듈
     implementation ("com.kakao.maps.open:android:2.9.5") // 카카오 지도 API 모듈
