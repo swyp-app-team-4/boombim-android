@@ -1,7 +1,9 @@
 package com.example.data.di
 
 import android.content.Context
+import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
+import com.example.data.network.notification.NotificationApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +22,7 @@ import javax.inject.Singleton
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
-annotation class WhereRetrofit
+annotation class AuthRetrofit
 
 @Qualifier
 @Retention(AnnotationRetention.BINARY)
@@ -62,6 +64,32 @@ object NetworkModule {
             .build()
     }
 
+    @AuthRetrofit
+    @Provides
+    fun provideAuthRetrofit(
+        okHttpClientBuilder: OkHttpClient.Builder,
+        appManageDataStore: AppManageDataStore,
+        tokenAuthenticator: TokenAuthenticator,
+    ): Retrofit = makeRetrofit(
+        okHttpClientBuilder
+            .authenticator(tokenAuthenticator)
+            .addInterceptor(AuthInterceptor(appManageDataStore))
+            .addNetworkInterceptor { chain ->
+                val originalResponse = chain.proceed(chain.request())
+
+                // 캐시는 GET 요청에만 적용
+                if (chain.request().method == "GET") {
+                    originalResponse.newBuilder()
+                        .removeHeader("Cache-Control") // 서버에서 온 private 제거
+                        .header("Cache-Control", "public, max-age=60") // 60초 동안 캐시
+                        .build()
+                } else {
+                    originalResponse
+                }
+            }
+            .build()
+    )
+
     @Provides
     @Singleton
     @NoAuthRetrofit
@@ -78,6 +106,14 @@ object NetworkModule {
         @NoAuthRetrofit retrofit: Retrofit
     ): AuthApi {
         return retrofit.create(AuthApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationApi(
+        @AuthRetrofit retrofit: Retrofit
+    ): NotificationApi {
+        return retrofit.create(NotificationApi::class.java)
     }
 
 
