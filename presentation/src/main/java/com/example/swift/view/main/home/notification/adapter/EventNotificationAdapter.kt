@@ -14,10 +14,9 @@ class EventNotificationAdapter(private val items: List<NotificationModel>) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: NotificationModel) {
-            binding.textContent.text = item.content
-            binding.textTime.text = item.time
+            binding.textContent.text = item.title
 
-            val backgroundColorRes = if (item.isRead) {
+            val backgroundColorRes = if (item.deliveryStatus == "읽음") {
                 R.color.gray_scale_1
             } else {
                 R.color.gray_scale_2
