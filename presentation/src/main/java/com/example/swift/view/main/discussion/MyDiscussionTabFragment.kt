@@ -1,16 +1,17 @@
-package com.example.swift.view.main
+package com.example.swift.view.main.discussion
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.boombim.android.databinding.FragmentChattingBinding
+import com.boombim.android.databinding.FragmentMyDiscussionTabBinding
+import com.boombim.android.databinding.FragmentMyPageBinding
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChattingFragment : Fragment() {
-    private var _binding: FragmentChattingBinding? = null
+class MyDiscussionTabFragment : Fragment() {
+    private var _binding: FragmentMyDiscussionTabBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -18,7 +19,7 @@ class ChattingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        _binding = FragmentChattingBinding.inflate(inflater, container, false)
+        _binding = FragmentMyDiscussionTabBinding.inflate(inflater, container, false)
 
         return binding.root
     }
