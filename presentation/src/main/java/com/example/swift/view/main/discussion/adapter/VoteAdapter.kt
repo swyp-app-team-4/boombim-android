@@ -7,16 +7,35 @@ import com.boombim.android.R
 import com.boombim.android.databinding.ItemDiscussionVoteBinding
 import com.example.domain.model.VoteModel
 
-class VoteAdapter (private val items: List<VoteModel>,
-                   private val onVoteClick: (VoteModel) -> Unit
-    ) : RecyclerView.Adapter<VoteAdapter.PlaceViewHolder>() {
+class VoteAdapter(
+    private val items: List<VoteModel>,
+    private val onVoteClick: (VoteModel) -> Unit
+) : RecyclerView.Adapter<VoteAdapter.PlaceViewHolder>() {
 
     inner class PlaceViewHolder(val binding: ItemDiscussionVoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: VoteModel) {
             binding.textTitle.text = item.title
+            updateIcons(item)
 
+            // 각 이미지 클릭 리스너
+            binding.imgCalm.setOnClickListener { selectIcon(item, 0) }
+            binding.imgNormal.setOnClickListener { selectIcon(item, 1) }
+            binding.iconSlightlyBusy.setOnClickListener { selectIcon(item, 2) }
+            binding.iconBusy.setOnClickListener { selectIcon(item, 3) }
+
+            binding.btnVote.setOnClickListener {
+                onVoteClick(item)
+            }
+        }
+
+        private fun selectIcon(item: VoteModel, iconIndex: Int) {
+            item.selectedIcon = iconIndex
+            updateIcons(item) // 아이콘만 갱신
+        }
+
+        private fun updateIcons(item: VoteModel) {
             binding.imgCalm.setImageResource(
                 when (item.selectedIcon) {
                     0 -> R.drawable.icon_calm_v2
@@ -45,27 +64,8 @@ class VoteAdapter (private val items: List<VoteModel>,
                     else -> R.drawable.icon_busy_v3
                 }
             )
-
-            // 각 이미지 클릭 리스너
-            binding.imgCalm.setOnClickListener { selectIcon(item, 0) }
-            binding.imgNormal.setOnClickListener { selectIcon(item, 1) }
-            binding.iconSlightlyBusy.setOnClickListener { selectIcon(item, 2) }
-            binding.iconBusy.setOnClickListener { selectIcon(item, 3) }
-
-            binding.btnVote.setOnClickListener {
-                onVoteClick(item)
-            }
-        }
-
-        private fun selectIcon(item: VoteModel, iconIndex: Int) {
-            val previousIndex = item.selectedIcon
-            item.selectedIcon = iconIndex
-            // 선택 전후 이미지 갱신
-            if (previousIndex != -1) notifyItemChanged(adapterPosition)
-            notifyItemChanged(adapterPosition)
         }
     }
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
