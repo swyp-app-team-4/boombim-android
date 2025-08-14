@@ -26,7 +26,7 @@ class BoomBimApp : Application() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val channel = NotificationChannel(
-                "channel_id",
+                "fcm_default_channel",
                 "parkhwan",
                 NotificationManager.IMPORTANCE_DEFAULT
             )

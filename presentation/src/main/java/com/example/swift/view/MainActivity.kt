@@ -57,6 +57,7 @@ class MainActivity : AppCompatActivity() {
 
         permissionCheck()
 
+
     }
     private fun initNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment

@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemInterestsPlaceBinding
 import com.example.domain.model.InterestsPlaceModel
+import com.example.domain.model.VoteModel
 
 class InterestsPlaceAdapter (private val items: List<InterestsPlaceModel>) :
     RecyclerView.Adapter<InterestsPlaceAdapter.PlaceViewHolder>() {

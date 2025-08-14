@@ -14,7 +14,7 @@
         android:label="MapFragment" />
     <fragment
         android:id="@+id/chattingFragment"
-        android:name="com.example.swift.view.main.ChattingFragment"
+        android:name="com.example.swift.view.main.discussion.ChattingFragment"
         android:label="ChattingFragment" />
     <fragment
         android:id="@+id/myPageFragment"

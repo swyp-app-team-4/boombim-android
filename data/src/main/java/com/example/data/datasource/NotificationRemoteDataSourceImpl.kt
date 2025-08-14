@@ -15,5 +15,4 @@ class NotificationRemoteDataSourceImpl @Inject constructor(
     override suspend fun getNotification(deviceType: String): Flow<ApiResult<List<NotificationModel>>> {
         return safeFlow { notificationApi.getAlarmHistory(deviceType) }
     }
-
 }
