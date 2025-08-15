@@ -1,28 +1,45 @@
 package com.example.swift.view.main.discussion
 
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.core.content.ContextCompat.checkSelfPermission
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.boombim.android.R
-import com.boombim.android.databinding.FragmentMyPageBinding
 import com.boombim.android.databinding.FragmentVoteTabBinding
-import com.example.domain.model.PlaceLessBoomBimModel
 import com.example.domain.model.VoteModel
+import com.example.swift.view.dialog.AskingVoteFragment
 import com.example.swift.view.main.discussion.adapter.VoteAdapter
-import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
-import com.example.swift.view.main.home.adapter.PlaceBoomBimAdapter
-import com.example.swift.view.main.home.adapter.PlaceLessBoomBimAdapter
+import com.example.swift.viewmodel.NotificationViewModel
+import com.example.swift.viewmodel.VoteViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
 import dagger.hilt.android.AndroidEntryPoint
+import android.Manifest
+import android.util.Log
+import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.example.swift.util.LocationUtils
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class VoteTabFragment : Fragment() {
     private var _binding: FragmentVoteTabBinding? = null
     private val binding get() = _binding!!
+    private val voteViewModel: VoteViewModel by activityViewModels()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,47 +51,65 @@ class VoteTabFragment : Fragment() {
         return binding.root
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initVote()
+        getCurrentLocationAndFetch()
 
+        initVote()
     }
 
     private fun initVote() = with((binding)){
-        val placeList = listOf(
-            VoteModel(1,"asdasdsadasd" ),    // 혼잡
-            VoteModel(1,"asdasdsadasd" ),    // 혼잡
-            VoteModel(1,"asdasdsadasd" ),    // 혼잡
-            VoteModel(1,"asdasdsadasd" ),    // 혼잡
-            VoteModel(1,"asdasdsadasd" ),    // 혼잡
 
-        )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED){
+                voteViewModel.voteList.collect{ voteList ->
+                    val adapter = VoteAdapter(
+                        voteList,
+                        onVoteClick = { voteModel ->
+                            if (voteModel.selectedIcon == -1) {
+                                return@VoteAdapter
+                            }
 
-        val adapter = VoteAdapter(
-            placeList,
-            onVoteClick = { voteModel ->
-                if (voteModel.selectedIcon == -1) {
-                    return@VoteAdapter
+                            val message = when (voteModel.selectedIcon) {
+                                0 -> "여유"
+                                1 -> "보통"
+                                2 -> "약간붐빔"
+                                3 -> "붐빔"
+                                else -> ""
+                            }
+
+                            AskingVoteFragment(message) {
+
+                            }.show(parentFragmentManager, "AskingVoteFragment")
+                        },
+                    )
+                    recycleVote.layoutManager = LinearLayoutManager(requireContext())
+                    recycleVote.adapter = adapter
                 }
+            }
+        }
 
-                val message = when (voteModel.selectedIcon) {
-                    0 -> "여유"
-                    1 -> "보통"
-                    2 -> "약간붐빔"
-                    3 -> "붐빔"
-                    else -> ""
-                }
-
-                AskingVoteFragment(message) {
-
-                }.show(parentFragmentManager, "AskingVoteFragment")
-            },
-        )
-
-        recycleVote.layoutManager = LinearLayoutManager(requireContext())
-        recycleVote.adapter = adapter
     }
+
+    private fun getCurrentLocationAndFetch() {
+        lifecycleScope.launch {
+            val location = LocationUtils.getLastKnownLocation(requireContext(), fusedLocationClient)
+                ?: LocationUtils.requestSingleUpdate(fusedLocationClient)
+
+            location?.let {
+                voteViewModel.fetchVoteList(it.latitude, it.longitude)
+            }
+        }
+    }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

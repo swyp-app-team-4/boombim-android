@@ -1,4 +1,4 @@
-package com.example.swift.view.main.discussion
+package com.example.swift.view.dialog
 
 import android.app.Dialog
 import android.os.Bundle
@@ -6,7 +6,6 @@ import android.view.Window
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.Fragment
 import com.boombim.android.R
 import dagger.hilt.android.AndroidEntryPoint
 

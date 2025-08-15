@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
 import com.example.data.network.notification.NotificationApi
+import com.example.data.network.vote.VoteApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -114,6 +115,14 @@ object NetworkModule {
         @AuthRetrofit retrofit: Retrofit
     ): NotificationApi {
         return retrofit.create(NotificationApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideVoteApi(
+        @AuthRetrofit retrofit: Retrofit
+    ): VoteApi {
+        return retrofit.create(VoteApi::class.java)
     }
 
 

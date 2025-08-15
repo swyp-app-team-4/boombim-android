@@ -66,6 +66,7 @@
         app:layout_constraintStart_toEndOf="@id/text_people_interests"/>
 
     <TextView
+        android:id="@+id/text_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="4분전"
