@@ -1,5 +1,6 @@
 package com.example.swift.view.main.discussion.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +36,7 @@ class VoteAdapter(
             updateIcons(item) // 아이콘만 갱신
         }
 
+        @SuppressLint("UseCompatLoadingForDrawables")
         private fun updateIcons(item: VoteModel) {
             binding.imgCalm.setImageResource(
                 when (item.selectedIcon) {
@@ -64,6 +66,10 @@ class VoteAdapter(
                     else -> R.drawable.icon_busy_v3
                 }
             )
+            binding.btnVote.background = when (item.selectedIcon) {
+                -1 -> binding.root.context.getDrawable(R.drawable.bg_btn_vote_gray)
+                else -> binding.root.context.getDrawable(R.drawable.bg_btn_vote_main_color)
+            }
         }
     }
 
