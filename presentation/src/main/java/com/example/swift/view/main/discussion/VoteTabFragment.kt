@@ -26,10 +26,12 @@ import com.google.android.gms.location.Priority
 import dagger.hilt.android.AndroidEntryPoint
 import android.Manifest
 import android.util.Log
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.domain.model.VoteItem
 import com.example.swift.util.LocationUtils
 import kotlinx.coroutines.launch
 
@@ -85,9 +87,21 @@ class VoteTabFragment : Fragment() {
                                 else -> ""
                             }
 
-                            AskingVoteFragment(message) {
-
-                            }.show(parentFragmentManager, "AskingVoteFragment")
+                            AskingVoteFragment(
+                                message = message,
+                                onConfirm = {
+                                    voteViewModel.postVote(
+                                        voteId = voteModel.voteId,
+                                        voteAnswerType = voteModel.selectedIcon.toVoteAnswerType(),
+                                        onSuccess = { successMessage ->
+                                            Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()
+                                        },
+                                        onFail = { errorMessage ->
+                                            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                                        }
+                                    )
+                                }
+                            ).show(parentFragmentManager, "AskingVoteFragment")
                         },
                     )
                     recycleVote.layoutManager = LinearLayoutManager(requireContext())
@@ -96,6 +110,16 @@ class VoteTabFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun Int.toVoteAnswerType(): String {
+        return when (this) {
+            0 -> "RELAXED"      // 여유
+            1 -> "COMMONLY"       // 보통
+            2 -> "SLIGHTLY_BUSY"      // 약간붐빔
+            3 -> "CROWDED" // 붐빔
+            else -> throw IllegalArgumentException("Invalid vote option: $this")
+        }
     }
 
     private fun getCurrentLocationAndFetch() {
