@@ -10,4 +10,9 @@ interface VoteRemoteDataSource {
         latitude: Double,
         longitude : Double,
     ): Flow<ApiResult<VoteResponse>>
+
+    suspend fun postVote(
+        voteId: Int,
+        answer: String
+    ):ApiResult<Unit>
 }

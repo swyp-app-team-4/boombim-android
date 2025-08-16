@@ -28,6 +28,7 @@ class AuthViewModel @Inject constructor(
             appManageDataStore.saveKakaoAccessToken(accessToken)
             appManageDataStore.saveKakaoRefreshToken(refreshToken)
         }
+
         viewModelScope.launch {
             when(val result = naverSignUpUseCase(
                 provider = provider,
