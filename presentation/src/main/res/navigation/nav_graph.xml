@@ -40,6 +40,10 @@
         android:id="@+id/homeSearchFragment"
         android:name="com.example.swift.view.main.home.search.HomeSearchFragment"
         android:label="HomeSearchFragment" />
+    <fragment
+        android:id="@+id/makeVoteFragment"
+        android:name="com.example.swift.view.main.discussion.MakeVoteFragment"
+        android:label="MakeVoteFragment" />
 
 
 </navigation>
