@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentChattingBinding
 import com.example.swift.view.main.home.notification.EventTabFragment
@@ -31,6 +32,10 @@ class ChattingFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initTabLayout()
+
+        binding.btnMakeVote.setOnClickListener {
+            findNavController().navigate(R.id.makeVoteFragment)
+        }
 
     }
 

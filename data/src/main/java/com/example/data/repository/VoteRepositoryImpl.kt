@@ -29,7 +29,6 @@ class VoteRepositoryImpl @Inject constructor(
     private val voteList
         get() = _voteList.asStateFlow()
 
-
     /*
     * 내 질문 목록을 불러온다
     */

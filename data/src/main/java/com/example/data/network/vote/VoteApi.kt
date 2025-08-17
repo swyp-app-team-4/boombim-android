@@ -2,6 +2,7 @@ package com.example.data.network.vote
 
 import com.example.data.network.auth.request.SignUpRequest
 import com.example.data.network.notification.request.PostVoteRequest
+import com.example.domain.model.PlaceSearchResponseDto
 import com.example.domain.model.VoteResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,4 +28,5 @@ interface VoteApi {
     suspend fun postVote(
         @Body data: PostVoteRequest
     ): Response<Unit>
+
 }

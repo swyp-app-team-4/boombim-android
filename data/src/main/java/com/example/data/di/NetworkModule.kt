@@ -3,6 +3,7 @@ package com.example.data.di
 import android.content.Context
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
+import com.example.data.network.kakaosearch.KakaoLocalApi
 import com.example.data.network.notification.NotificationApi
 import com.example.data.network.vote.VoteApi
 import dagger.Module
@@ -29,101 +30,96 @@ annotation class AuthRetrofit
 @Retention(AnnotationRetention.BINARY)
 annotation class NoAuthRetrofit
 
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class KakaoRetrofit
+
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
     private const val BASE_URL = "https://api.boombim.p-e.kr/"
+    private const val KAKAO_URL = "https://dapi.kakao.com/"
 
-    @Singleton
+    // OkHttpClient 공통 생성
     @Provides
-    fun provideOkHttpClient(
+    @Singleton
+    fun provideDefaultOkHttpClient(
         @ApplicationContext context: Context
-    ): OkHttpClient.Builder {
-        val httpLoggingInterceptor = HttpLoggingInterceptor()
-            .setLevel(HttpLoggingInterceptor.Level.BODY)
-
+    ): OkHttpClient {
+        val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
-            .addInterceptor(httpLoggingInterceptor)
-            .cache(
-                Cache(
-                    directory = File(context.cacheDir, "http_cache"),
-                    maxSize = 50L * 1024L * 1024L // 50 MiB
-                )
-            )
-    }
-
-    private fun makeRetrofit(
-        okHttpClient: OkHttpClient
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(
-                Json.asConverterFactory("application/json; charset=UTF8".toMediaType())
-            )
+            .addInterceptor(logging)
+            .cache(Cache(File(context.cacheDir, "http_cache"), 50L * 1024L * 1024L))
             .build()
     }
 
+    // Retrofit 기본 팩토리
+    private fun makeRetrofit(okHttpClient: OkHttpClient, baseUrl: String): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(okHttpClient)
+            .addConverterFactory(Json.asConverterFactory("application/json; charset=UTF-8".toMediaType()))
+            .build()
+    }
+
+    // Auth Retrofit
     @AuthRetrofit
     @Provides
     fun provideAuthRetrofit(
-        okHttpClientBuilder: OkHttpClient.Builder,
+        okHttpClient: OkHttpClient,
         appManageDataStore: AppManageDataStore,
-        tokenAuthenticator: TokenAuthenticator,
-    ): Retrofit = makeRetrofit(
-        okHttpClientBuilder
+        tokenAuthenticator: TokenAuthenticator
+    ): Retrofit {
+        val client = okHttpClient.newBuilder()
             .authenticator(tokenAuthenticator)
             .addInterceptor(AuthInterceptor(appManageDataStore))
             .addNetworkInterceptor { chain ->
                 val originalResponse = chain.proceed(chain.request())
-
-                // 캐시는 GET 요청에만 적용
                 if (chain.request().method == "GET") {
                     originalResponse.newBuilder()
-                        .removeHeader("Cache-Control") // 서버에서 온 private 제거
-                        .header("Cache-Control", "public, max-age=60") // 60초 동안 캐시
+                        .removeHeader("Cache-Control")
+                        .header("Cache-Control", "public, max-age=60")
                         .build()
                 } else {
                     originalResponse
                 }
             }
             .build()
-    )
 
-    @Provides
-    @Singleton
+        return makeRetrofit(client, BASE_URL)
+    }
+
+    // NoAuth Retrofit
     @NoAuthRetrofit
-    fun provideRetrofit(
-        okHttpClientBuilder: OkHttpClient.Builder
-    ): Retrofit = makeRetrofit(
-        okHttpClientBuilder
-            .build()
-    )
+    @Provides
+    fun provideNoAuthRetrofit(okHttpClient: OkHttpClient): Retrofit =
+        makeRetrofit(okHttpClient, BASE_URL)
+
+    // Kakao Retrofit
+    @KakaoRetrofit
+    @Provides
+    fun provideKakaoRetrofit(okHttpClient: OkHttpClient): Retrofit =
+        makeRetrofit(okHttpClient, KAKAO_URL)
+
+    // API 제공
+    @Provides
+    @Singleton
+    fun provideAuthApi(@NoAuthRetrofit retrofit: Retrofit): AuthApi =
+        retrofit.create(AuthApi::class.java)
 
     @Provides
     @Singleton
-    fun provideAuthApi(
-        @NoAuthRetrofit retrofit: Retrofit
-    ): AuthApi {
-        return retrofit.create(AuthApi::class.java)
-    }
+    fun provideNotificationApi(@AuthRetrofit retrofit: Retrofit): NotificationApi =
+        retrofit.create(NotificationApi::class.java)
 
     @Provides
     @Singleton
-    fun provideNotificationApi(
-        @AuthRetrofit retrofit: Retrofit
-    ): NotificationApi {
-        return retrofit.create(NotificationApi::class.java)
-    }
+    fun provideVoteApi(@AuthRetrofit retrofit: Retrofit): VoteApi =
+        retrofit.create(VoteApi::class.java)
 
     @Provides
     @Singleton
-    fun provideVoteApi(
-        @AuthRetrofit retrofit: Retrofit
-    ): VoteApi {
-        return retrofit.create(VoteApi::class.java)
-    }
-
-
+    fun provideKakaoLocalApi(@KakaoRetrofit retrofit: Retrofit): KakaoLocalApi =
+        retrofit.create(KakaoLocalApi::class.java)
 }
