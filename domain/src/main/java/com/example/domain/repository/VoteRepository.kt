@@ -2,6 +2,7 @@ package com.example.domain.repository
 
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
+import com.example.domain.model.MyVoteItem
 import com.example.domain.model.NotificationModel
 import com.example.domain.model.VoteItem
 import kotlinx.coroutines.flow.Flow
@@ -9,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 interface VoteRepository {
 
     fun getVoteList(): Flow<List<VoteItem>>
+
+    fun getMyVoteList(): Flow<List<MyVoteItem>>
 
     /**
      * 투표 목록 api를 불러온다.

@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
-import com.boombim.android.databinding.ItemDiscussionVoteBinding
+import com.boombim.android.databinding.ItemVoteBinding
 import com.example.domain.model.VoteItem
-import com.example.domain.model.VoteModel
+import com.example.swift.util.DateTimeUtils
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
@@ -20,7 +20,7 @@ class VoteAdapter(
     private val onVoteClick: (VoteItem) -> Unit
 ) : RecyclerView.Adapter<VoteAdapter.PlaceViewHolder>() {
 
-    inner class PlaceViewHolder(val binding: ItemDiscussionVoteBinding) :
+    inner class PlaceViewHolder(val binding: ItemVoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
         @RequiresApi(Build.VERSION_CODES.O)
@@ -28,7 +28,7 @@ class VoteAdapter(
         fun bind(item: VoteItem) {
             binding.textTitle.text = item.posName
             binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()
-            binding.textTime.text = getTimeAgo(item.createdAt)
+            binding.textTime.text = DateTimeUtils.getTimeAgo(item.createdAt)
 
             updateIcons(item)
 
@@ -85,29 +85,9 @@ class VoteAdapter(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
-    fun getTimeAgo(createdAt: String): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
-        val createdTime = LocalDateTime.parse(createdAt, formatter)
-        val now = LocalDateTime.now(ZoneId.systemDefault())
-
-        val duration = Duration.between(createdTime, now)
-        val minutes = duration.toMinutes()
-        val hours = duration.toHours()
-        val days = duration.toDays()
-
-        return when {
-            minutes < 1 -> "방금전"
-            minutes < 60 -> "${minutes}분 전"
-            hours < 24 -> "${hours}시간전"
-            days < 30 -> "${days}일전"
-            else -> createdAt.substring(0, 10)
-        }
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemDiscussionVoteBinding.inflate(inflater, parent, false)
+        val binding = ItemVoteBinding.inflate(inflater, parent, false)
         return PlaceViewHolder(binding)
     }
 

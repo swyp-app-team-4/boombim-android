@@ -4,11 +4,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
+import com.example.domain.model.MyVoteItem
+import com.example.domain.model.TabType
 import com.example.domain.usecase.FetVoteListUseCase
+import com.example.domain.usecase.GetMyVoteListUseCase
 import com.example.domain.usecase.GetVoteListUseCase
 import com.example.domain.usecase.PostVoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -17,8 +23,13 @@ import javax.inject.Inject
 class VoteViewModel @Inject constructor(
     getVoteListUseCase: GetVoteListUseCase,
     private val fetchVoteListUseCase: FetVoteListUseCase,
-    private val postVoteUseCase: PostVoteUseCase
+    private val postVoteUseCase: PostVoteUseCase,
+    getMyVoteListUseCase: GetMyVoteListUseCase
 ) : ViewModel() {
+
+    private val _tabFilter = MutableStateFlow(TabType.ALL) // 현재 선택된 탭
+    val tabFilter: StateFlow<TabType> = _tabFilter
+
 
     val voteList = getVoteListUseCase()
         .stateIn(
@@ -26,6 +37,26 @@ class VoteViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000L),
             emptyList()
         )
+
+    val myVoteList = getMyVoteListUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            emptyList()
+        )
+
+    val filteredVoteList: StateFlow<List<MyVoteItem>> =
+        combine(myVoteList, _tabFilter) { list, filter ->
+            when (filter) {
+                TabType.ALL -> list
+                TabType.PROGRESS -> list.filter { it.voteStatus == "PROGRESS" }
+                TabType.END -> list.filter { it.voteStatus == "END" }
+            }
+        }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), emptyList())
+
+    fun setTabFilter(tabType: TabType) {
+        _tabFilter.value = tabType
+    }
 
     fun fetchVoteList(
         latitude: Double,
@@ -38,7 +69,6 @@ class VoteViewModel @Inject constructor(
             )
         }
     }
-
 
     fun postVote(
         voteId: Int,
@@ -55,6 +85,4 @@ class VoteViewModel @Inject constructor(
             }
         }
     }
-
-
 }

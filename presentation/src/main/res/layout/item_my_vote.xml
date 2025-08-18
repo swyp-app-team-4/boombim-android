@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="15dp"
+    android:background="@drawable/bg_vote_card"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <FrameLayout
+        android:id="@+id/overlap_images_container"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/user_img_1"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_gray_circle"
+            android:scaleType="centerCrop"
+            android:layout_gravity="start"/>
+
+        <ImageView
+            android:id="@+id/user_img_2"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_gray_circle"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="15dp"
+            android:layout_gravity="start"/>
+
+        <ImageView
+            android:id="@+id/user_img_3"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@drawable/icon_gray_circle"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="30dp"
+            android:layout_gravity="start"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/text_people_interests"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="8"
+        android:fontFamily="@font/pretend_semibold"
+        android:textSize="12sp"
+        android:textColor="@color/main_color"
+        android:layout_marginTop="17dp"
+        android:layout_marginStart="4dp"
+        app:layout_constraintStart_toEndOf="@id/overlap_images_container"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명이 궁금해하고 있어요"
+        android:textSize="12sp"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="17dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/text_people_interests"/>
+
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="4분전"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_regular"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="지금 '강남 교보문구' 어때요?"
+        android:textSize="18sp"
+        android:textColor="@color/gray_scale_10"
+        android:fontFamily="@font/pretend_semibold"
+        android:layout_marginStart="20dp"
+        app:layout_constraintTop_toBottomOf="@id/overlap_images_container"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_calm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="여유"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_9"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_title" />
+
+    <TextView
+        android:id="@+id/text_calm_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="15"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_calm_end"
+        app:layout_constraintTop_toBottomOf="@id/text_title"/>
+
+    <TextView
+        android:id="@+id/text_calm_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_title"/>
+
+
+    <ProgressBar
+        android:id="@+id/progress_calm"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:max="30"
+        android:progress="25"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/bg_calm_progress_bar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/text_calm_count"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_normal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="보통"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_9"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_calm" />
+
+    <TextView
+        android:id="@+id/text_normal_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="15"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_normal_end"
+        app:layout_constraintTop_toBottomOf="@id/progress_calm"/>
+
+    <TextView
+        android:id="@+id/text_normal_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_calm"/>
+
+    <ProgressBar
+        android:id="@+id/progress_normal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:max="30"
+        android:progress="25"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/bg_normal_progress_bar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/text_normal_count"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_slightly_busy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="약간 붐빔"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_9"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_normal" />
+
+    <TextView
+        android:id="@+id/text_slightly_busy_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="15"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_slightly_busy_end"
+        app:layout_constraintTop_toBottomOf="@id/progress_normal"/>
+
+    <TextView
+        android:id="@+id/text_slightly_busy_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_normal"/>
+
+    <ProgressBar
+        android:id="@+id/progress_slightly_busy"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:max="30"
+        android:progress="25"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/bg_slightly_busy_progress_bar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/text_slightly_busy"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_busy"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="약간 붐빔"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_9"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_slightly_busy" />
+
+    <TextView
+        android:id="@+id/text_busy_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="15"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toStartOf="@+id/text_busy_end"
+        app:layout_constraintTop_toBottomOf="@id/progress_slightly_busy"/>
+
+    <TextView
+        android:id="@+id/text_busy_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명"
+        android:textSize="12sp"
+        android:fontFamily="@font/pretend_medium"
+        android:textColor="@color/gray_scale_8"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_slightly_busy"/>
+
+    <ProgressBar
+        android:id="@+id/progress_busy"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:max="30"
+        android:progress="25"
+        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+        android:progressDrawable="@drawable/bg_busy_progress_bar"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        app:layout_constraintTop_toBottomOf="@id/text_busy_count"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/text_total_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="15"
+        android:textSize="12sp"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_regular"
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@id/progress_busy"
+        app:layout_constraintEnd_toStartOf="@id/text_participants"/>
+
+    <TextView
+        android:id="@+id/text_participants"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="명참여"
+        android:textSize="12sp"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_regular"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progress_busy"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

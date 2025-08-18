@@ -39,6 +39,8 @@ class VoteRepositoryImpl @Inject constructor(
 
     override fun getVoteList(): Flow<List<VoteItem>>  = voteList
 
+    override fun getMyVoteList(): Flow<List<MyVoteItem>> = myVoteList
+
     override suspend fun getVoteList(latitude: Double, longitude: Double) {
         voteRemoteDataSource.getVoteList(latitude, longitude).first().let { result ->
             if (result is ApiResult.Success) {
