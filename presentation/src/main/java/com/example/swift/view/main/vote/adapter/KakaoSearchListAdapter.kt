@@ -1,4 +1,4 @@
-package com.example.swift.view.main.discussion.adapter
+package com.example.swift.view.main.vote.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

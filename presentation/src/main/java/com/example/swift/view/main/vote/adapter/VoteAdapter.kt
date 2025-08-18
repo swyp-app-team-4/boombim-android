@@ -1,4 +1,4 @@
-package com.example.swift.view.main.discussion.adapter
+package com.example.swift.view.main.vote.adapter
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -10,10 +10,6 @@ import com.boombim.android.R
 import com.boombim.android.databinding.ItemVoteBinding
 import com.example.domain.model.VoteItem
 import com.example.swift.util.DateTimeUtils
-import java.time.Duration
-import java.time.LocalDateTime
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
 
 class VoteAdapter(
     private val items: List<VoteItem>,
@@ -32,15 +28,25 @@ class VoteAdapter(
 
             updateIcons(item)
 
-            // 각 이미지 클릭 리스너
-            binding.imgCalm.setOnClickListener { selectIcon(item, 0) }
-            binding.imgNormal.setOnClickListener { selectIcon(item, 1) }
-            binding.iconSlightlyBusy.setOnClickListener { selectIcon(item, 2) }
-            binding.iconBusy.setOnClickListener { selectIcon(item, 3) }
+            if (item.voteFlag) {
+                binding.btnVote.setBackgroundResource(R.drawable.icon_completed_vote)
+                binding.btnVote.isEnabled = false
 
-            binding.btnVote.setOnClickListener {
-                onVoteClick(item)
+                binding.imgCalm.setOnClickListener(null)
+                binding.imgNormal.setOnClickListener(null)
+                binding.iconSlightlyBusy.setOnClickListener(null)
+                binding.iconBusy.setOnClickListener(null)
+            } else{
+                binding.imgCalm.setOnClickListener { selectIcon(item, 0) }
+                binding.imgNormal.setOnClickListener { selectIcon(item, 1) }
+                binding.iconSlightlyBusy.setOnClickListener { selectIcon(item, 2) }
+                binding.iconBusy.setOnClickListener { selectIcon(item, 3) }
+
+                binding.btnVote.setOnClickListener {
+                    onVoteClick(item)
+                }
             }
+
         }
 
         private fun selectIcon(item: VoteItem, iconIndex: Int) {

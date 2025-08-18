@@ -1,4 +1,4 @@
-package com.example.swift.view.main.discussion
+package com.example.swift.view.main.vote
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyDiscussionTabBinding
 import com.example.domain.model.TabType
 import com.example.swift.view.dialog.EndVoteDialog
-import com.example.swift.view.main.discussion.adapter.MyVoteAdapter
+import com.example.swift.view.main.vote.adapter.MyVoteAdapter
 import com.example.swift.viewmodel.VoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

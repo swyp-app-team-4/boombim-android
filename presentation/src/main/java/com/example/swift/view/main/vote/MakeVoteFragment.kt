@@ -1,7 +1,6 @@
-package com.example.swift.view.main.discussion
+package com.example.swift.view.main.vote
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
-import com.boombim.android.databinding.FragmentChattingBinding
 import com.boombim.android.databinding.FragmentMakeVoteBinding
-import com.example.swift.view.main.discussion.adapter.KakaoSearchListAdapter
-import com.example.swift.viewmodel.AuthViewModel
+import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

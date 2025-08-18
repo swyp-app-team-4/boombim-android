@@ -1,4 +1,4 @@
-package com.example.swift.view.main.discussion.adapter
+package com.example.swift.view.main.vote.adapter
 
 import android.annotation.SuppressLint
 import android.os.Build
@@ -8,11 +8,8 @@ import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
-import com.boombim.android.databinding.ItemKakaoSearchBinding
 import com.boombim.android.databinding.ItemMyVoteBinding
 import com.example.domain.model.MyVoteItem
-import com.example.domain.model.PlaceDocumentDto
-import com.example.domain.model.VoteItem
 import com.example.swift.util.DateTimeUtils
 
 class MyVoteAdapter (
