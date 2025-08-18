@@ -14,7 +14,7 @@
         android:label="MapFragment" />
     <fragment
         android:id="@+id/chattingFragment"
-        android:name="com.example.swift.view.main.discussion.ChattingFragment"
+        android:name="com.example.swift.view.main.vote.ChattingFragment"
         android:label="ChattingFragment" />
     <fragment
         android:id="@+id/myPageFragment"
@@ -42,7 +42,7 @@
         android:label="HomeSearchFragment" />
     <fragment
         android:id="@+id/makeVoteFragment"
-        android:name="com.example.swift.view.main.discussion.MakeVoteFragment"
+        android:name="com.example.swift.view.main.vote.MakeVoteFragment"
         android:label="MakeVoteFragment" />
 
 
