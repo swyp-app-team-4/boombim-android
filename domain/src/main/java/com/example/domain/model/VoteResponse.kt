@@ -20,6 +20,7 @@ data class VoteItem(
     val slightlyBusyCnt: Int,
     val crowedCnt: Int,
     val allType: String,
+    val voteFlag: Boolean,
     @Transient var selectedIcon: Int = -1
 )
 
@@ -34,5 +35,6 @@ data class MyVoteItem(
     val slightlyBusyCnt: Int,
     val crowedCnt: Int,
     val allType: String,
-    val voteStatus: String
+    val voteStatus: String,
+    val voteFlag: Boolean
 )

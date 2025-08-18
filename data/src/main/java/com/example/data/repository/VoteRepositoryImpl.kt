@@ -39,6 +39,8 @@ class VoteRepositoryImpl @Inject constructor(
 
     override fun getVoteList(): Flow<List<VoteItem>>  = voteList
 
+    override fun getMyVoteList(): Flow<List<MyVoteItem>> = myVoteList
+
     override suspend fun getVoteList(latitude: Double, longitude: Double) {
         voteRemoteDataSource.getVoteList(latitude, longitude).first().let { result ->
             if (result is ApiResult.Success) {
@@ -64,6 +66,19 @@ class VoteRepositoryImpl @Inject constructor(
                 is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
             }
         } catch (e: Exception) {
+            ApiResult.Fail.Exception(e)
+        }
+    }
+
+    override suspend fun patchVote(voteId: Int): ApiResult<Unit> {
+        return try {
+            when(val response = voteRemoteDataSource.patchVote(voteId)){
+                is ApiResult.Success -> ApiResult.Success(Unit)
+                is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
+                is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
+                is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
+            }
+        }catch (e: Exception) {
             ApiResult.Fail.Exception(e)
         }
     }

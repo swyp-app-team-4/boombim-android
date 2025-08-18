@@ -12,7 +12,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentVoteTabBinding
-import com.example.domain.model.VoteModel
 import com.example.swift.view.dialog.AskingVoteFragment
 import com.example.swift.view.main.discussion.adapter.VoteAdapter
 import com.example.swift.viewmodel.NotificationViewModel

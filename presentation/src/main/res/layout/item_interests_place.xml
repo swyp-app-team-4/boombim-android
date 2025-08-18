@@ -11,7 +11,7 @@
         android:layout_height="170dp"
         android:layout_marginTop="15dp"
         android:layout_marginEnd="10dp"
-        android:background="@drawable/bg_rounded"
+        android:background="@drawable/bg_rounded_main_color"
         android:clipToOutline="true"
         android:src="@drawable/image_place2"
         app:layout_constraintEnd_toEndOf="parent"
