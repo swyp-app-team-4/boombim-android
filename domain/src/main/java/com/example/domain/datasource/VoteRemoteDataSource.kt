@@ -15,4 +15,8 @@ interface VoteRemoteDataSource {
         voteId: Int,
         answer: String
     ):ApiResult<Unit>
+
+    suspend fun patchVote(
+        voteId: Int
+    ):ApiResult<Unit>
 }

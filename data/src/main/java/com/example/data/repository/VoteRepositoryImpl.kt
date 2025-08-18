@@ -70,5 +70,18 @@ class VoteRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun patchVote(voteId: Int): ApiResult<Unit> {
+        return try {
+            when(val response = voteRemoteDataSource.patchVote(voteId)){
+                is ApiResult.Success -> ApiResult.Success(Unit)
+                is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
+                is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
+                is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
+            }
+        }catch (e: Exception) {
+            ApiResult.Fail.Exception(e)
+        }
+    }
+
 
 }

@@ -9,6 +9,7 @@ import com.example.domain.model.TabType
 import com.example.domain.usecase.FetVoteListUseCase
 import com.example.domain.usecase.GetMyVoteListUseCase
 import com.example.domain.usecase.GetVoteListUseCase
+import com.example.domain.usecase.PatchVoteUseCase
 import com.example.domain.usecase.PostVoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,9 +23,10 @@ import javax.inject.Inject
 @HiltViewModel
 class VoteViewModel @Inject constructor(
     getVoteListUseCase: GetVoteListUseCase,
+    getMyVoteListUseCase: GetMyVoteListUseCase,
     private val fetchVoteListUseCase: FetVoteListUseCase,
     private val postVoteUseCase: PostVoteUseCase,
-    getMyVoteListUseCase: GetMyVoteListUseCase
+    private val patchVoteUseCase: PatchVoteUseCase
 ) : ViewModel() {
 
     private val _tabFilter = MutableStateFlow(TabType.ALL) // 현재 선택된 탭
@@ -82,6 +84,21 @@ class VoteViewModel @Inject constructor(
                 is ApiResult.SuccessEmpty -> onSuccess("투표 성공")
                 is ApiResult.Fail.Error -> onFail("투표 실패")
                 is ApiResult.Fail.Exception -> onFail("투표 실패")
+            }
+        }
+    }
+
+    fun patchVote(
+        voteId: Int,
+        onSuccess: (msg: String) -> Unit,
+        onFail: (msg: String) -> Unit
+    ){
+        viewModelScope.launch{
+            when (patchVoteUseCase(voteId)) {
+                is ApiResult.Success -> onSuccess("투표가 종료되었습니다.")
+                is ApiResult.SuccessEmpty -> onSuccess("투표가 종료되었습니다.")
+                is ApiResult.Fail.Error -> onFail("투표 종료 실패")
+                is ApiResult.Fail.Exception -> onFail("투표 종료 실패")
             }
         }
     }

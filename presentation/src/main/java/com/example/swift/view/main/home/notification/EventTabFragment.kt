@@ -39,28 +39,34 @@ class EventTabFragment : Fragment() {
 
         initEventNotification()
 
-        with(binding){
+        with(binding) {
+            // 공지 탭
             textNotice.setOnClickListener {
-                binding.textNotice.isSelected = true
-                binding.textEvent.isSelected = false
+                textNotice.isSelected = true
+                textEvent.isSelected = false
+                notificationViewModel.selectTab("ANNOUNCEMENT")
             }
 
+            // 이벤트 탭
             textEvent.setOnClickListener {
-                binding.textNotice.isSelected = false
-                binding.textEvent.isSelected = true
+                textNotice.isSelected = false
+                textEvent.isSelected = true
+                notificationViewModel.selectTab("EVENT")
             }
+
+            // 초기 선택 상태
+            textNotice.isSelected = true
+            textEvent.isSelected = false
         }
 
     }
 
-    private fun initEventNotification() = with(binding){
-
+    private fun initEventNotification() = with(binding) {
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                notificationViewModel.notificationList.collect{ notificationList ->
-                    val adapter = EventNotificationAdapter(notificationList.filter { it.alarmType == "이벤트" })
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                notificationViewModel.filteredNotifications.collect { list ->
                     recyclerEvent.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerEvent.adapter = adapter
+                    recyclerEvent.adapter = EventNotificationAdapter(list)
                 }
             }
         }

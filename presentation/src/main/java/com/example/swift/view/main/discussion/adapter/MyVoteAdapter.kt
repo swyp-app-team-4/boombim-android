@@ -5,14 +5,20 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.boombim.android.R
 import com.boombim.android.databinding.ItemKakaoSearchBinding
 import com.boombim.android.databinding.ItemMyVoteBinding
 import com.example.domain.model.MyVoteItem
 import com.example.domain.model.PlaceDocumentDto
+import com.example.domain.model.VoteItem
 import com.example.swift.util.DateTimeUtils
 
-class MyVoteAdapter (private val items: List<MyVoteItem>) :
+class MyVoteAdapter (
+    private val items: List<MyVoteItem>,
+    private val onBtnClick: (MyVoteItem) -> Unit
+    ) :
     RecyclerView.Adapter<MyVoteAdapter.PlaceViewHolder>() {
 
     inner class PlaceViewHolder(val binding: ItemMyVoteBinding) :
@@ -20,6 +26,11 @@ class MyVoteAdapter (private val items: List<MyVoteItem>) :
         @RequiresApi(Build.VERSION_CODES.O)
         @SuppressLint("SetTextI18n")
         fun bind(item: MyVoteItem) {
+
+            binding.btnEndVote.setOnClickListener {
+                onBtnClick(item)
+            }
+
             binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()
             binding.textTitle.text = item.posName
             binding.textTime.text = DateTimeUtils.getTimeAgo(item.createdAt)
@@ -34,6 +45,18 @@ class MyVoteAdapter (private val items: List<MyVoteItem>) :
             binding.progressSlightlyBusy.progress = item.slightlyBusyCnt
             binding.progressBusy.progress = item.crowedCnt
 
+            if (item.voteStatus == "END") {
+                binding.btnEndVote.setBackgroundColor(
+                    ContextCompat.getColor(binding.root.context, R.color.gray_scale_4) // 회색으로
+                )
+                binding.btnEndVote.setTextColor(
+                    ContextCompat.getColor(binding.root.context, R.color.gray_scale_7) // 흰색으로
+                )
+                binding.btnEndVote.setBackgroundResource(R.drawable.bg_rounded_gray_4)
+            }
+
+            binding.btnEndVote.isEnabled = item.voteStatus != "END"
+
         }
     }
 
@@ -43,6 +66,7 @@ class MyVoteAdapter (private val items: List<MyVoteItem>) :
         return PlaceViewHolder(binding)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         holder.bind(items[position])
     }

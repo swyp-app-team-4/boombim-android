@@ -5,13 +5,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyDiscussionTabBinding
 import com.example.domain.model.TabType
+import com.example.swift.view.dialog.EndVoteDialog
 import com.example.swift.view.main.discussion.adapter.MyVoteAdapter
 import com.example.swift.viewmodel.VoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -68,9 +71,26 @@ class MyDiscussionTabFragment : Fragment() {
 
     private fun initMyVoteList() = with(binding){
         lifecycleScope.launch {
-            repeatOnLifecycle(androidx.lifecycle.Lifecycle.State.STARTED) {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 voteViewModel.filteredVoteList.collect { myVoteList ->
-                   val adapter = MyVoteAdapter(myVoteList)
+                   val adapter = MyVoteAdapter(
+                       myVoteList,
+                       onBtnClick =  { myVoteItem ->
+                           EndVoteDialog(
+                               onConfirm = {
+                                   voteViewModel.patchVote(
+                                       voteId = myVoteItem.voteId,
+                                       onSuccess = { successMessage ->
+                                           Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()
+                                       },
+                                       onFail = { errorMessage ->
+                                           Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                                       }
+                                   )
+                               }
+                           ).show(parentFragmentManager, "EndVoteDialog")
+                       }
+                   )
                     recycleMyVote.layoutManager = LinearLayoutManager(requireContext())
                     recycleMyVote.adapter = adapter
                 }

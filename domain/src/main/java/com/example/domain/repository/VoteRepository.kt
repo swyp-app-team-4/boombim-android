@@ -20,4 +20,6 @@ interface VoteRepository {
 
     suspend fun postVote(voteId: Int, voteAnswerType: String): ApiResult<Unit>
 
+    suspend fun patchVote(voteId: Int): ApiResult<Unit>
+
 }
