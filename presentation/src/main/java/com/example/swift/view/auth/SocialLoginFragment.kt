@@ -4,6 +4,8 @@ import android.app.Activity.RESULT_CANCELED
 import android.app.Activity.RESULT_OK
 import android.content.Context
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -19,6 +21,8 @@ import com.example.swift.viewmodel.AuthViewModel
 import com.kakao.sdk.user.UserApiClient
 import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
+import android.text.style.ForegroundColorSpan
+import androidx.core.content.ContextCompat
 
 @AndroidEntryPoint
 class SocialLoginFragment : Fragment() {
@@ -68,6 +72,8 @@ class SocialLoginFragment : Fragment() {
             NaverIdLoginSDK.authenticate(requireContext(), launcher)
         }
 
+        setTextColor()
+
 
     }
 
@@ -115,6 +121,24 @@ class SocialLoginFragment : Fragment() {
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
             }
         )
+    }
+
+    private fun setTextColor() = with(binding){
+        val full = textBoomBim.text.toString()
+        val target = "붐빔"
+        val start = full.indexOf(target)
+
+        if (start >= 0) {
+            val spannable = SpannableString(full)
+            val color = ContextCompat.getColor(requireContext(), R.color.main_color) // 메인 컬러 리소스
+            spannable.setSpan(
+                ForegroundColorSpan(color),
+                start,
+                start + target.length,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            textBoomBim.text = spannable
+        }
     }
 
     override fun onDestroyView() {
