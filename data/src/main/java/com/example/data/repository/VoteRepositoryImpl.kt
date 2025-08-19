@@ -14,6 +14,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
@@ -60,8 +61,15 @@ class VoteRepositoryImpl @Inject constructor(
     ): ApiResult<Unit> {
         return try {
             when (val response = voteRemoteDataSource.postVote(voteId, voteAnswerType)) {
-                is ApiResult.Success -> ApiResult.Success(Unit)
-                is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
+                is ApiResult.Success, is ApiResult.SuccessEmpty -> {
+                    _voteList.update { list ->
+                        list.map { item ->
+                            if (item.voteId == voteId) item.copy(voteFlag = true)
+                            else item
+                        }
+                    }
+                    ApiResult.Success(Unit)
+                }
                 is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
                 is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
             }
@@ -70,18 +78,28 @@ class VoteRepositoryImpl @Inject constructor(
         }
     }
 
+
     override suspend fun patchVote(voteId: Int): ApiResult<Unit> {
         return try {
-            when(val response = voteRemoteDataSource.patchVote(voteId)){
-                is ApiResult.Success -> ApiResult.Success(Unit)
-                is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
+            when (val response = voteRemoteDataSource.patchVote(voteId)) {
+                is ApiResult.Success, is ApiResult.SuccessEmpty -> {
+                    // 서버 반영 성공 시, 로컬 리스트 갱신
+                    _myVoteList.update { list ->
+                        list.map { item ->
+                            if (item.voteId == voteId) item.copy(voteStatus = "END")
+                            else item
+                        }
+                    }
+                    response
+                }
                 is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
                 is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
             }
-        }catch (e: Exception) {
+        } catch (e: Exception) {
             ApiResult.Fail.Exception(e)
         }
     }
+
 
     override suspend fun makeVote(
         postId: Int,

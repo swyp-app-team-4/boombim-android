@@ -59,7 +59,6 @@ class VoteTabFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 voteViewModel.voteList.collect{ voteList ->
                     val adapter = VoteAdapter(
-                        voteList,
                         onVoteClick = { voteModel ->
                             if (voteModel.selectedIcon == -1) {
                                 return@VoteAdapter
@@ -92,6 +91,7 @@ class VoteTabFragment : Fragment() {
                     )
                     recycleVote.layoutManager = LinearLayoutManager(requireContext())
                     recycleVote.adapter = adapter
+                    adapter.submitList(voteList)
                 }
             }
         }
@@ -102,7 +102,7 @@ class VoteTabFragment : Fragment() {
         return when (this) {
             0 -> "RELAXED"      // 여유
             1 -> "COMMONLY"       // 보통
-            2 -> "SLIGHTLY_BUSY"      // 약간붐빔
+            2 -> "BUSY"      // 약간붐빔
             3 -> "CROWDED" // 붐빔
             else -> throw IllegalArgumentException("Invalid vote option: $this")
         }

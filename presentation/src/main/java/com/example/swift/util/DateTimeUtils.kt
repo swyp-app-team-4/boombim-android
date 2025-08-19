@@ -6,12 +6,21 @@ import java.time.Duration
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeFormatterBuilder
+import java.time.temporal.ChronoField
 
 object DateTimeUtils {
 
     @RequiresApi(Build.VERSION_CODES.O)
+    private val formatter = DateTimeFormatterBuilder()
+        .appendPattern("yyyy-MM-dd'T'HH:mm:ss")
+        .optionalStart()
+        .appendFraction(ChronoField.NANO_OF_SECOND, 0, 9, true) // 소수점 이하 0~9자리 허용
+        .optionalEnd()
+        .toFormatter()
+
+    @RequiresApi(Build.VERSION_CODES.O)
     fun getTimeAgo(createdAt: String): String {
-        val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSSSS")
         val createdTime = LocalDateTime.parse(createdAt, formatter)
         val now = LocalDateTime.now(ZoneId.systemDefault())
 
