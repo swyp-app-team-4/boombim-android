@@ -17,6 +17,8 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -42,7 +44,7 @@ class VoteViewModel @Inject constructor(
             emptyList()
         )
 
-    val myVoteList = getMyVoteListUseCase()
+    private val myVoteList = getMyVoteListUseCase()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -84,7 +86,7 @@ class VoteViewModel @Inject constructor(
             when (postVoteUseCase(voteId, voteAnswerType)) {
                 is ApiResult.Success -> onSuccess("투표 성공")
                 is ApiResult.SuccessEmpty -> onSuccess("투표 성공")
-                is ApiResult.Fail.Error -> onFail("투표 실패")
+                is ApiResult.Fail.Error -> onFail("완료된 투표입니다.")
                 is ApiResult.Fail.Exception -> onFail("투표 실패")
             }
         }

@@ -59,7 +59,6 @@ class VoteTabFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 voteViewModel.voteList.collect{ voteList ->
                     val adapter = VoteAdapter(
-                        voteList,
                         onVoteClick = { voteModel ->
                             if (voteModel.selectedIcon == -1) {
                                 return@VoteAdapter
@@ -92,6 +91,7 @@ class VoteTabFragment : Fragment() {
                     )
                     recycleVote.layoutManager = LinearLayoutManager(requireContext())
                     recycleVote.adapter = adapter
+                    adapter.submitList(voteList)
                 }
             }
         }

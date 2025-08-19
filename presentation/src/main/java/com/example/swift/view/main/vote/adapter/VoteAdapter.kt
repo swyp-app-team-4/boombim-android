@@ -5,6 +5,8 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemVoteBinding
@@ -12,9 +14,19 @@ import com.example.domain.model.VoteItem
 import com.example.swift.util.DateTimeUtils
 
 class VoteAdapter(
-    private val items: List<VoteItem>,
     private val onVoteClick: (VoteItem) -> Unit
-) : RecyclerView.Adapter<VoteAdapter.PlaceViewHolder>() {
+) : ListAdapter<VoteItem, VoteAdapter.PlaceViewHolder>(DiffCallback()) {
+
+    class DiffCallback : DiffUtil.ItemCallback<VoteItem>() {
+        override fun areItemsTheSame(oldItem: VoteItem, newItem: VoteItem) =
+            oldItem.voteId == newItem.voteId
+
+        override fun areContentsTheSame(oldItem: VoteItem, newItem: VoteItem): Boolean {
+            return oldItem.voteId == newItem.voteId &&
+                    oldItem.voteFlag == newItem.voteFlag
+        }
+    }
+
 
     inner class PlaceViewHolder(val binding: ItemVoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -51,7 +63,7 @@ class VoteAdapter(
 
         private fun selectIcon(item: VoteItem, iconIndex: Int) {
             item.selectedIcon = iconIndex
-            updateIcons(item) // 아이콘만 갱신
+            updateIcons(item)
         }
 
         @SuppressLint("UseCompatLoadingForDrawables")
@@ -99,8 +111,6 @@ class VoteAdapter(
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount() = items.size
 }
