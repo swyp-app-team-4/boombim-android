@@ -23,7 +23,8 @@ class VoteAdapter(
 
         override fun areContentsTheSame(oldItem: VoteItem, newItem: VoteItem): Boolean {
             return oldItem.voteId == newItem.voteId &&
-                    oldItem.voteFlag == newItem.voteFlag
+                    oldItem.voteFlag == newItem.voteFlag &&
+                    oldItem.selectedIcon == newItem.selectedIcon
         }
     }
 
