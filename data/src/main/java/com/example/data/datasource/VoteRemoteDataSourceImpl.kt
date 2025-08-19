@@ -1,10 +1,10 @@
 package com.example.data.datasource
 
-import com.example.data.network.notification.NotificationApi
 import com.example.data.network.notification.request.PostVoteRequest
 import com.example.data.network.safeFlow
 import com.example.data.network.vote.VoteApi
 import com.example.data.network.vote.request.EndVoteRequest
+import com.example.data.network.vote.request.MakeVoteRequest
 import com.example.domain.datasource.VoteRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.VoteResponse
@@ -28,12 +28,25 @@ class VoteRemoteDataSourceImpl @Inject constructor(
     override suspend fun postVote(voteId: Int, answer: String): ApiResult<Unit> {
         val request = PostVoteRequest(voteId, answer)
 
-        return safeFlow { voteApi.postVote(request)}.first()
+        return safeFlow { voteApi.makeVote(request)}.first()
     }
 
     override suspend fun patchVote(voteId: Int): ApiResult<Unit> {
         val request = EndVoteRequest(voteId)
 
         return safeFlow { voteApi.closeVote(request)}.first()
+    }
+
+    override suspend fun makeVote(
+        postId: Int,
+        posLatitude: String,
+        posLongitude: String,
+        userLatitude: String,
+        userLongitude: String,
+        posName: String
+    ): ApiResult<Unit> {
+        val request = MakeVoteRequest(postId,posLatitude, posLongitude, userLatitude, userLongitude, posName)
+
+        return safeFlow { voteApi.makeVote(request)}.first()
     }
 }

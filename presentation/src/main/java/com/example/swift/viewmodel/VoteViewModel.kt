@@ -9,6 +9,7 @@ import com.example.domain.model.TabType
 import com.example.domain.usecase.FetVoteListUseCase
 import com.example.domain.usecase.GetMyVoteListUseCase
 import com.example.domain.usecase.GetVoteListUseCase
+import com.example.domain.usecase.MakeVoteUseCase
 import com.example.domain.usecase.PatchVoteUseCase
 import com.example.domain.usecase.PostVoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -26,7 +27,8 @@ class VoteViewModel @Inject constructor(
     getMyVoteListUseCase: GetMyVoteListUseCase,
     private val fetchVoteListUseCase: FetVoteListUseCase,
     private val postVoteUseCase: PostVoteUseCase,
-    private val patchVoteUseCase: PatchVoteUseCase
+    private val patchVoteUseCase: PatchVoteUseCase,
+    private val makeVoteUseCase: MakeVoteUseCase
 ) : ViewModel() {
 
     private val _tabFilter = MutableStateFlow(TabType.ALL) // 현재 선택된 탭
@@ -99,6 +101,26 @@ class VoteViewModel @Inject constructor(
                 is ApiResult.SuccessEmpty -> onSuccess("투표가 종료되었습니다.")
                 is ApiResult.Fail.Error -> onFail("투표 종료 실패")
                 is ApiResult.Fail.Exception -> onFail("투표 종료 실패")
+            }
+        }
+    }
+
+    fun makeVote(
+        postId: Int,
+        posLatitude: String,
+        posLongitude: String,
+        userLatitude: String,
+        userLongitude: String,
+        posName: String,
+        onSuccess: (msg: String) -> Unit,
+        onFail: (msg: String) -> Unit
+    ){
+        viewModelScope.launch{
+            when (makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)) {
+                is ApiResult.Success -> onSuccess("성공")
+                is ApiResult.SuccessEmpty -> onSuccess("성공")
+                is ApiResult.Fail.Error -> onFail("위치가 500m를 넘었습니다!")
+                is ApiResult.Fail.Exception -> onFail("알수없는 오류")
             }
         }
     }

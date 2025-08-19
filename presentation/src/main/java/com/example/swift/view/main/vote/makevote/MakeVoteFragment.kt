@@ -1,4 +1,4 @@
-package com.example.swift.view.main.vote
+package com.example.swift.view.main.vote.makevote
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -92,7 +92,19 @@ class MakeVoteFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 kakaoSearchViewmodel.kakaoSearchList.collect { list ->
-                    adapter = KakaoSearchListAdapter(list)
+                    adapter = KakaoSearchListAdapter(
+                        list,
+                        onItemClick = { place ->
+                            val bundle = Bundle().apply {
+                                putString("placeName", place.place_name)
+                                putString("addressName", place.address_name)
+                                putString("x", place.x)
+                                putString("y", place.y)
+                                putString("id",place.id)
+                            }
+                            findNavController().navigate(R.id.checkMakeVoteFragment,bundle)
+                        }
+                    )
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter
 

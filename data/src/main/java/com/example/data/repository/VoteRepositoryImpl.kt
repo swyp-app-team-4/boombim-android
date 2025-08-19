@@ -83,5 +83,25 @@ class VoteRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun makeVote(
+        postId: Int,
+        posLatitude: String,
+        posLongitude: String,
+        userLatitude: String,
+        userLongitude: String,
+        posName: String
+    ): ApiResult<Unit> {
+        return try {
+            when(val response = voteRemoteDataSource.makeVote(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)){
+                is ApiResult.Success -> ApiResult.Success(Unit)
+                is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
+                is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
+                is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
+            }
+        }catch (e: Exception) {
+            ApiResult.Fail.Exception(e)
+        }
+    }
+
 
 }

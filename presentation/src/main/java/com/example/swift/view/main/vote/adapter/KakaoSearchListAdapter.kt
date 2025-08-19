@@ -6,13 +6,20 @@ import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.databinding.ItemKakaoSearchBinding
 import com.example.domain.model.PlaceDocumentDto
 
-class KakaoSearchListAdapter (private val items: List<PlaceDocumentDto>) :
+class KakaoSearchListAdapter (
+    private val items: List<PlaceDocumentDto>,
+    private val onItemClick: (PlaceDocumentDto) -> Unit
+) :
     RecyclerView.Adapter<KakaoSearchListAdapter.PlaceViewHolder>() {
 
     inner class PlaceViewHolder(val binding: ItemKakaoSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PlaceDocumentDto) {
             binding.textPlaceName.text = item.place_name
+
+            binding.root.setOnClickListener {
+                onItemClick(item)
+            }
         }
     }
 
