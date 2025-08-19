@@ -14,6 +14,7 @@ import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.MapLifeCycleCallback
 import com.kakao.vectormap.MapView
+import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.label.LabelTextStyle
@@ -142,7 +143,7 @@ class MapFragment : Fragment() {
             // 첫 번째 위치로 카메라 이동
             val first = placeList.first()
             map.moveCamera(
-                com.kakao.vectormap.camera.CameraUpdateFactory.newCenterPosition(
+                CameraUpdateFactory.newCenterPosition(
                     LatLng.from(first.second, first.third)
                 )
             )

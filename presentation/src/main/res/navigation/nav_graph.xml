@@ -42,8 +42,16 @@
         android:label="HomeSearchFragment" />
     <fragment
         android:id="@+id/makeVoteFragment"
-        android:name="com.example.swift.view.main.vote.MakeVoteFragment"
+        android:name="com.example.swift.view.main.vote.makevote.MakeVoteFragment"
         android:label="MakeVoteFragment" />
+    <fragment
+        android:id="@+id/checkMakeVoteFragment"
+        android:name="com.example.swift.view.main.vote.makevote.CheckMakeVoteFragment"
+        android:label="CheckMakeVoteFragment" />
+    <dialog
+        android:id="@+id/askingVoteFragment"
+        android:name="com.example.swift.view.dialog.AskingVoteFragment"
+        android:label="AskingVoteFragment" />
 
 
 </navigation>

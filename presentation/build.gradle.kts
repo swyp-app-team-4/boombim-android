@@ -71,7 +71,7 @@ dependencies {
     //Dot 라이브러리
     implementation("com.tbuonomo:dotsindicator:5.1.0")
 
-    implementation ("com.google.android.gms:play-services-location:21.3.0")
+    implementation (libs.play.services.location)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

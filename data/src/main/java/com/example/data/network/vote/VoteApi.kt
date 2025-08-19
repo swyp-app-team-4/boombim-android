@@ -1,9 +1,8 @@
 package com.example.data.network.vote
 
-import com.example.data.network.auth.request.SignUpRequest
 import com.example.data.network.notification.request.PostVoteRequest
 import com.example.data.network.vote.request.EndVoteRequest
-import com.example.domain.model.PlaceSearchResponseDto
+import com.example.data.network.vote.request.MakeVoteRequest
 import com.example.domain.model.VoteResponse
 import retrofit2.Response
 import retrofit2.http.Body
@@ -27,7 +26,7 @@ interface VoteApi {
      * 투표 목록을 불러오는 API
      */
     @POST("/api/vote/answer")
-    suspend fun postVote(
+    suspend fun makeVote(
         @Body data: PostVoteRequest
     ): Response<Unit>
 
@@ -37,6 +36,14 @@ interface VoteApi {
     @PATCH("/api/vote")
     suspend fun closeVote(
         @Body request: EndVoteRequest
+    ): Response<Unit>
+
+    /**
+     * 투표 셍성 API
+     */
+    @POST("/api/vote")
+    suspend fun makeVote(
+        @Body request: MakeVoteRequest
     ): Response<Unit>
 
 }

@@ -22,4 +22,12 @@ interface VoteRepository {
 
     suspend fun patchVote(voteId: Int): ApiResult<Unit>
 
+    suspend fun makeVote(
+        postId: Int,
+        posLatitude: String,
+        posLongitude: String,
+        userLatitude: String,
+        userLongitude: String,
+        posName: String
+    ): ApiResult<Unit>
 }
