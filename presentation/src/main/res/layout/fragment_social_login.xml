@@ -5,50 +5,51 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/text_logo"
+        android:id="@+id/text_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="혼잡도를 실시간으로 알아보는 서비스"
-        android:textSize="16sp"
-        android:fontFamily="@font/pretend_regular"
-        android:textColor="@color/gray_scale_9"
-        android:layout_marginTop="100dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-    <TextView
-        android:id="@+id/text_free_space"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="여유로운 공간에서"
-        android:textSize="26sp"
-        android:fontFamily="@font/pretend_semibold"
+        android:text="지금 바로"
+        android:textSize="32sp"
         android:textColor="@color/gray_scale_10"
-        android:layout_marginTop="10dp"
-        app:layout_constraintTop_toBottomOf="@id/text_logo"
+        android:fontFamily="@font/taebaek"
+        android:layout_marginTop="110dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
+        android:id="@+id/text_boom_bim"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="데이트를 시작하세요"
-        android:textSize="26sp"
-        android:fontFamily="@font/pretend_semibold"
+        android:text="붐빔을 확인하세요"
+        android:textSize="32sp"
         android:textColor="@color/gray_scale_10"
-        app:layout_constraintTop_toBottomOf="@id/text_free_space"
+        android:fontFamily="@font/taebaek"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_right"/>
+
+    <ImageView
+        android:id="@+id/image_logo_sofa"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/image_logo_sofa"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/text_boom_bim"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
+
+
     
     <ImageView
         android:id="@+id/icon_quick_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/icon_quick_start"
+        android:layout_marginTop="70dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintTop_toBottomOf="@id/image_logo_sofa"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_kakao_login"
