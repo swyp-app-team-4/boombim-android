@@ -2,15 +2,13 @@ package com.example.swift.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.usecase.FetchNotificationUseCase
-import com.example.domain.usecase.GetNotificationListUseCase
-import dagger.hilt.android.AndroidEntryPoint
+import com.example.domain.usecase.notification.FetchNotificationUseCase
+import com.example.domain.usecase.notification.GetNotificationListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch

@@ -56,6 +56,10 @@
         android:id="@+id/settingFragment"
         android:name="com.example.swift.view.main.setting.SettingFragment"
         android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.swift.view.main.mypage.EditProfileFragment"
+        android:label="EditProfileFragment" />
 
 
 </navigation>

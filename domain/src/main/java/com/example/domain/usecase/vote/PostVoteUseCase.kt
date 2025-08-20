@@ -1,4 +1,4 @@
-package com.example.domain.usecase
+package com.example.domain.usecase.vote
 
 import com.example.domain.model.ApiResult
 import com.example.domain.repository.VoteRepository
