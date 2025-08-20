@@ -73,6 +73,10 @@ dependencies {
 
     implementation (libs.play.services.location)
 
+    implementation("de.hdodenhof:circleimageview:3.1.0")
+
+    implementation ("com.github.bumptech.glide:glide:4.16.0")
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)

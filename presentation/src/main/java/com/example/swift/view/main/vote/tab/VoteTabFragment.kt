@@ -1,4 +1,4 @@
-package com.example.swift.view.main.vote
+package com.example.swift.view.main.vote.tab
 
 import android.os.Bundle
 import android.view.LayoutInflater
