@@ -18,7 +18,7 @@
         android:label="ChattingFragment" />
     <fragment
         android:id="@+id/myPageFragment"
-        android:name="com.example.swift.view.main.MyPageFragment"
+        android:name="com.example.swift.view.main.mypage.MyPageFragment"
         android:label="MyPageFragment" />
     <fragment
         android:id="@+id/notificationFragment"
@@ -26,11 +26,11 @@
         android:label="NotificationFragment" />
     <fragment
         android:id="@+id/eventTabFragment"
-        android:name="com.example.swift.view.main.home.notification.EventTabFragment"
+        android:name="com.example.swift.view.main.home.notification.tab.EventTabFragment"
         android:label="EventTabFragment" />
     <fragment
         android:id="@+id/newIssueTabFragment"
-        android:name="com.example.swift.view.main.home.notification.NewIssueTabFragment"
+        android:name="com.example.swift.view.main.home.notification.tab.NewIssueTabFragment"
         android:label="NewIssueTabFragment" />
     <fragment
         android:id="@+id/socialLoginFragment"
@@ -52,6 +52,10 @@
         android:id="@+id/askingVoteFragment"
         android:name="com.example.swift.view.dialog.AskingVoteFragment"
         android:label="AskingVoteFragment" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.swift.view.main.setting.SettingFragment"
+        android:label="SettingFragment" />
 
 
 </navigation>

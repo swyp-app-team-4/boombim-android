@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentChattingBinding
+import com.example.swift.view.main.vote.tab.MyDiscussionTabFragment
+import com.example.swift.view.main.vote.tab.VoteTabFragment
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
