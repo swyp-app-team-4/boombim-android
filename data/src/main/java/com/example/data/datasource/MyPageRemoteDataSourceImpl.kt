@@ -4,6 +4,7 @@ import com.example.data.network.mypage.MyPageApi
 import com.example.data.network.safeFlow
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.model.ApiResult
+import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.ProfileModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,6 +17,14 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
        return safeFlow {
            myPageApi.getProfile()
        }
+    }
+
+    override suspend fun getMyAnswer(): Flow<ApiResult<List<MyPageVoteResponse>>> {
+        return safeFlow { myPageApi.getMyAnswer() }
+    }
+
+    override suspend fun getMyQuestion(): Flow<ApiResult<List<MyPageVoteResponse>>> {
+       return safeFlow { myPageApi.getMyQuestion() }
     }
 
 }

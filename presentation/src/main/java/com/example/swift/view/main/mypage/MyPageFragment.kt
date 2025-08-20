@@ -49,6 +49,10 @@ class MyPageFragment : Fragment() {
             findNavController().navigate(R.id.settingFragment)
         }
 
+        binding.iconProfile.setOnClickListener {
+            findNavController().navigate(R.id.editProfileFragment)
+        }
+
     }
 
     private fun observeProfile() {

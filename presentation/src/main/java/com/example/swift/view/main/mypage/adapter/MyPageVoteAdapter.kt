@@ -1,5 +1,6 @@
 package com.example.swift.view.main.mypage.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +17,11 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
     inner class NotificationViewHolder(private val binding: ItemMyPageVoteBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        @SuppressLint("SetTextI18n")
         fun bind(item: PopularityDetail) {
             binding.placeName.text = item.posName
             binding.textStatus.text = item.popularStatus
-            binding.textPeopleNumber.text = item.popularCnt
+            binding.textPeopleNumber.text = "${item.popularCnt}명"
         }
     }
 
