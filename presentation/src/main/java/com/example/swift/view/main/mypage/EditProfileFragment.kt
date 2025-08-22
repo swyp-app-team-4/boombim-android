@@ -1,9 +1,13 @@
 package com.example.swift.view.main.mypage
 
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -40,44 +44,81 @@ class EditProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.iconBack.setOnClickListener {
-            findNavController().navigate(
-                R.id.myPageFragment, null,
-                navOptions {
-                    popUpTo(R.id.editProfileFragment) {
-                        inclusive = true
-                    }
+        initBackButton()
+        observeProfile()
+        initNicknameWatcher()
+        initProfileImageClick()
+        
+        binding.btnPatch.setOnClickListener{
+            myPageViewModel.patchNickName(
+                binding.editNickname.text.toString(),
+                onSuccess = {
+                    Toast.makeText(requireContext(), "변경이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            },
+                onFail = {
+                    Toast.makeText(requireContext(), "변경 실패", Toast.LENGTH_SHORT).show()
                 }
             )
         }
+    }
 
+    private fun initBackButton() {
+        binding.iconBack.setOnClickListener {
+            findNavController().navigate(
+                R.id.myPageFragment, null,
+                navOptions { popUpTo(R.id.editProfileFragment) { inclusive = true } }
+            )
+        }
+    }
+
+    private fun observeProfile() {
         lifecycleScope.launch {
-            myPageViewModel.profile.collect{ profile->
+            myPageViewModel.profile.collect { profile ->
                 Glide.with(requireContext())
-                    .load(profile.profile) // JSON에서 내려온 이미지 URL
-                    .placeholder(R.drawable.icon_edit_profile) // 로딩 중 보여줄 기본 이미지
-                    .error(R.drawable.icon_edit_profile) // 실패 시 보여줄 기본 이미지
+                    .load(profile.profile)
+                    .placeholder(R.drawable.icon_edit_profile)
+                    .error(R.drawable.icon_edit_profile)
                     .into(binding.imageProfile)
             }
         }
+    }
 
+    private fun initNicknameWatcher() {
+        val initialText = binding.editNickname.text?.toString()
+        updateButtonState(!initialText.isNullOrBlank())
+
+        binding.editNickname.addTextChangedListener { text ->
+            updateButtonState(!text.isNullOrBlank())
+        }
+    }
+
+    private fun updateButtonState(enabled: Boolean) {
+        binding.btnPatch.apply {
+            isEnabled = enabled
+            if (enabled) {
+                setBackgroundResource(R.drawable.bg_rounded_main_color)
+                setTextColor(requireContext().getColor(R.color.white))
+            } else {
+                setBackgroundResource(R.drawable.bg_rounded_8_background_gray4)
+                setTextColor(requireContext().getColor(R.color.gray_scale_7))
+            }
+        }
+    }
+
+    private fun initProfileImageClick() {
         binding.imageProfile.setOnClickListener {
             val dialog = ImagePickerDialogFragment.getInstance(
                 handler = object : ImagePickerDialogFragment.ImageTypeHandler {
                     override fun receiveImageType(imageType: ImageAddType) {
                         when (imageType) {
                             is ImageAddType.Default -> {
-//                                imageProfile.setImageResource(R.drawable.image_profile_default_cover)
-//                                val defaultImageUri = Uri.parse("android.resource://${requireContext().packageName}/${R.drawable.image_profile_default_cover}")
-//                                authViewModel.setProfileImage(defaultImageUri.toString())
+                                binding.imageProfile.setImageResource(R.drawable.icon_profile)
+                                val defaultImageUri = Uri.parse("android.resource://${requireContext().packageName}/${R.drawable.icon_profile}")
                             }
-
                             is ImageAddType.Content -> {
-//                                imageProfile.setImageURI(imageType.uri)
-//                                imageProfile.scaleType = ImageView.ScaleType.CENTER_CROP
-//                                authViewModel.setProfileImage(imageType.uri.toString())
+                                binding.imageProfile.setImageURI(imageType.uri)
+                                binding.imageProfile.scaleType = ImageView.ScaleType.CENTER_CROP
                             }
-
                             else -> {}
                         }
                     }
@@ -86,7 +127,6 @@ class EditProfileFragment : Fragment() {
             )
             dialog.show(parentFragmentManager, ImagePickerDialogFragment.TAG)
         }
-
     }
 
 

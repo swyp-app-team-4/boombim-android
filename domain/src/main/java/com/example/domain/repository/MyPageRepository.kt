@@ -1,5 +1,6 @@
 package com.example.domain.repository
 
+import com.example.domain.model.ActionResult
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.NotificationModel
 import com.example.domain.model.PopularityDetail
@@ -19,4 +20,6 @@ interface MyPageRepository {
     suspend fun getMyAnswer()
 
     suspend fun getMyQuestion()
+
+    suspend fun patchNickName(name: String) :ActionResult<*>
 }

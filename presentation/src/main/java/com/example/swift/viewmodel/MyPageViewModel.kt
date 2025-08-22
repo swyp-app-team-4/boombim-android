@@ -2,6 +2,7 @@ package com.example.swift.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.model.ActionResult
 import com.example.domain.model.ProfileModel
 import com.example.domain.usecase.mypage.FetMyPageAnswerListUseCase
 import com.example.domain.usecase.mypage.FetchMyPageQuestionListUseCase
@@ -9,6 +10,7 @@ import com.example.domain.usecase.mypage.FetchMyProfileUseCase
 import com.example.domain.usecase.mypage.GetMyAnswerUseCase
 import com.example.domain.usecase.mypage.GetMyProfileUseCase
 import com.example.domain.usecase.mypage.GetMyQuestionUseCase
+import com.example.domain.usecase.mypage.PatchUserNickNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
@@ -22,7 +24,8 @@ class MyPageViewModel @Inject constructor(
     fetchMyPageQuestionListUseCase: FetchMyPageQuestionListUseCase,
     getMyAnswerUseCase: GetMyAnswerUseCase,
     getMyQuestionUseCase: GetMyQuestionUseCase,
-    fetchMYPageAnswerListUseCase: FetMyPageAnswerListUseCase
+    fetchMYPageAnswerListUseCase: FetMyPageAnswerListUseCase,
+    private val patchUserNickNameUseCase: PatchUserNickNameUseCase
 
 ): ViewModel(){
 
@@ -54,6 +57,24 @@ class MyPageViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000),
             emptyList()
         )
+
+    fun patchNickName(
+        name: String,
+        onSuccess: () -> Unit,
+        onFail: (msg: String) -> Unit
+    ){
+        viewModelScope.launch {
+            when(val result = patchUserNickNameUseCase(name)){
+                is ActionResult.Fail -> {
+                    onFail(result.msg)
+                }
+                is ActionResult.Success -> {
+                    onSuccess()
+                    profile.value.name = name
+                }
+            }
+        }
+    }
 
 
 
