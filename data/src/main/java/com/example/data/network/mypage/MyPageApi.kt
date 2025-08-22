@@ -1,9 +1,12 @@
 package com.example.data.network.mypage
 
+import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.ProfileModel
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.PATCH
 
 interface MyPageApi {
 
@@ -15,6 +18,11 @@ interface MyPageApi {
 
     @GET("/api/member/my-question")
     suspend fun getMyQuestion() : Response<List<MyPageVoteResponse>>
+
+    @PATCH("/api/member")
+    suspend fun patchNickName(
+        @Body request: PatchNickNameRequest
+    ): Response<Unit>
 
 
 }

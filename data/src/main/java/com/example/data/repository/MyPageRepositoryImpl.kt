@@ -1,7 +1,9 @@
 package com.example.data.repository
 
+import com.example.data.extension.covertApiResultToActionResultIfSuccessEmpty
 import com.example.data.network.mypage.MyPageApi
 import com.example.domain.datasource.MyPageRemoteDataSource
+import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PopularityDetail
@@ -65,5 +67,17 @@ class MyPageRepositoryImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override suspend fun patchNickName(name: String): ActionResult<*> {
+        val result = myPageRemoteDataSource.patchNickName(name)
+        if(result is ApiResult.SuccessEmpty){
+            _myPage.update { profile ->
+                profile.copy(
+                    name = name
+                )
+            }
+        }
+        return result.covertApiResultToActionResultIfSuccessEmpty()
     }
 }

@@ -86,6 +86,9 @@ inline fun <T> ApiResult<T>.covertApiResultToActionResultIfSuccessEmpty(): Actio
         is ApiResult.SuccessEmpty -> {
             ActionResult.Success(Unit)
         }
+        is ApiResult.Success -> {
+            ActionResult.Success(Unit)
+        }
 
         is ApiResult.Fail -> {
             ActionResult.Fail(this.toMessage())
