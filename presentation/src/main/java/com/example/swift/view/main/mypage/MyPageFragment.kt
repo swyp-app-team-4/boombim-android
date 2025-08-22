@@ -15,8 +15,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ProfileModel
-import com.example.swift.view.main.home.notification.tab.EventTabFragment
-import com.example.swift.view.main.home.notification.tab.NewIssueTabFragment
+import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.view.main.mypage.tab.MyPageInterestsTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageMyVoteTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageVoteTabFragment
@@ -32,6 +31,10 @@ class MyPageFragment : Fragment() {
     private val binding get() = _binding!!
     private val myPageViewModel: MyPageViewModel by activityViewModels()
 
+    private val loadingAlertProvider by lazy {
+        LoadingAlertProvider(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,6 +47,7 @@ class MyPageFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initUI()
+
         observeProfile()
     }
 
@@ -62,7 +66,6 @@ class MyPageFragment : Fragment() {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 myPageViewModel.profile.collect { profile ->
                     updateProfileUI(profile)
-                    Log.d("MyPageFragment", profile.name)
                 }
             }
         }

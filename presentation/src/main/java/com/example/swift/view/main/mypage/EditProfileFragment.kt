@@ -84,6 +84,9 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun initNicknameWatcher() {
+        val initialText = binding.editNickname.text?.toString()
+        updateButtonState(!initialText.isNullOrBlank())
+
         binding.editNickname.addTextChangedListener { text ->
             updateButtonState(!text.isNullOrBlank())
         }
