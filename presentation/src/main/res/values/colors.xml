@@ -20,4 +20,7 @@
     <color name="gray_scale_9">#FF212225</color>
     <color name="gray_scale_10">#FF0F0F10</color>
 
+    <color name="green">#3A9256</color>
+    <color name="red">#FC401B</color>
+
 </resources>

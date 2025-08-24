@@ -84,11 +84,31 @@ class EditProfileFragment : Fragment() {
     }
 
     private fun initNicknameWatcher() {
-        val initialText = binding.editNickname.text?.toString()
-        updateButtonState(!initialText.isNullOrBlank())
-
         binding.editNickname.addTextChangedListener { text ->
-            updateButtonState(!text.isNullOrBlank())
+            val nickname = text?.toString()?.trim() ?: ""
+            validateNickname(nickname)
+        }
+    }
+
+    private fun validateNickname(nickname: String) {
+        val regex = "^[a-zA-Z0-9가-힣]{1,20}$".toRegex()
+
+        when {
+            nickname.isBlank() -> {
+                binding.textNicknameRule.text = "한글, 영문, 숫자 (공백포함 20자)"
+                binding.textNicknameRule.setTextColor(requireContext().getColor(R.color.gray_scale_7))
+                updateButtonState(false)
+            }
+            !regex.matches(nickname) -> {
+                binding.textNicknameRule.text = "공백 없이 최대  20자까지 입력 가능합니다."
+                binding.textNicknameRule.setTextColor(requireContext().getColor(R.color.red ))
+                updateButtonState(false)
+            }
+            else -> {
+                binding.textNicknameRule.text = "확인되었습니다 ."
+                binding.textNicknameRule.setTextColor(requireContext().getColor(R.color.green))
+                updateButtonState(true)
+            }
         }
     }
 

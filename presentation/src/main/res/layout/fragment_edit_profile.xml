@@ -71,6 +71,20 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_password_2" />
 
+    <TextView
+        android:id="@+id/text_nickname_rule"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/pretend_regular"
+        android:textSize="12sp"
+        android:textColor="@color/gray_scale_7"
+        tools:text="* 한글, 영문, 숫자 (공백포함 20자)"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edit_nickname"/>
+
+
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_patch"
         android:layout_width="match_parent"
