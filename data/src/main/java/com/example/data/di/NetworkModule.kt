@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
 import com.example.data.network.kakaosearch.KakaoLocalApi
+import com.example.data.network.map.MapApi
 import com.example.data.network.mypage.MyPageApi
 import com.example.data.network.notification.NotificationApi
 import com.example.data.network.vote.VoteApi
@@ -123,6 +124,12 @@ object NetworkModule {
     @Singleton
     fun provideMyPageApi(@AuthRetrofit retrofit: Retrofit): MyPageApi =
         retrofit.create(MyPageApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMapApi(@AuthRetrofit retrofit: Retrofit): MapApi =
+        retrofit.create(MapApi::class.java)
+
 
     @Provides
     @Singleton
