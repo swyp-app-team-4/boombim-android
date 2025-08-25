@@ -5,7 +5,9 @@ import com.example.domain.datasource.MapRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CongestionData
 import com.example.domain.model.CongestionResponse
+import com.example.domain.model.PlaceData
 import com.example.domain.model.PlaceDocumentDto
+import com.example.domain.model.ProfileModel
 import com.example.domain.repository.MapRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +21,11 @@ class MapRepositoryImpl @Inject constructor(
 
 ) : MapRepository{
 
+    private val _placeOverview = MutableStateFlow<PlaceData?>(null)
+
+    private val placeOverview
+        get() = _placeOverview.asStateFlow()
+
     private val _mapList = MutableStateFlow(emptyList<CongestionData>())
 
     private val mapList
@@ -26,6 +33,8 @@ class MapRepositoryImpl @Inject constructor(
 
 
     override fun getViewPortList(): Flow<List<CongestionData>> = mapList
+
+    override fun getPlaceOverview(): Flow<PlaceData?> = placeOverview
 
     override suspend fun postViewPort(
         topLeftLongitude: Double,
@@ -45,6 +54,16 @@ class MapRepositoryImpl @Inject constructor(
         ).first().let { result ->
             if (result is ApiResult.Success) {
                 _mapList.update {
+                    result.data.data
+                }
+            }
+        }
+    }
+
+    override suspend fun getOfficialPlaceOverview(officialPlaceId: Int) {
+        mapRemoteDataSource.getOfficialPlaceOverview(officialPlaceId).first().let { result ->
+            if (result is ApiResult.Success) {
+                _placeOverview.update {
                     result.data.data
                 }
             }
