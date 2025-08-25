@@ -3,6 +3,7 @@ package com.example.data.repository
 import android.adservices.ondevicepersonalization.RequestToken
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.extension.covertApiResultToActionResultIfSuccess
+import com.example.data.extension.covertApiResultToActionResultIfSuccessEmpty
 import com.example.data.network.auth.AuthApi
 import com.example.data.network.auth.request.RefreshTokenRequest
 import com.example.data.network.safeFlow
@@ -52,6 +53,11 @@ class AuthRepositoryImpl @Inject constructor(
             val request = RefreshTokenRequest(refreshToken)
             authApi.refreshToken(request)
         }
+    }
+
+    override suspend fun saveFcmToken(fcmToken: String, deviceType: String): ActionResult<*> {
+        val result = authDataSource.saveFcmToken(fcmToken, deviceType)
+        return result.covertApiResultToActionResultIfSuccessEmpty()
     }
 
 }

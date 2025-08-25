@@ -11,13 +11,21 @@ import android.os.Build
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.boombim.android.R
+import com.example.domain.usecase.UpdateFcmToken
 import com.example.swift.view.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyFirebaseMessagingService : FirebaseMessagingService() {
+
+    @Inject
+    lateinit var updateFcmToken: UpdateFcmToken
 
     // 메시지를 수신할 때 호출 된다.
     // 수신된 RemoteMessage 객체를 기준으로 작업을 수행하고 메시지 데이터를 가져올 수 있다.
@@ -47,13 +55,10 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
     // 등록 토큰이 처음 생성되므로 여기서 토큰을 검색할 수 있다.
     override fun onNewToken(token: String) {
         super.onNewToken(token)
-        sendRegistrationToServer(token)
-    }
 
-
-    // 타사 서버에 토큰을 유지해주는 메서드이다.
-    private fun sendRegistrationToServer(token: String?) {
-        Log.d(TAG, "sendRegistrationTokenToServer($token)")
+        CoroutineScope(Dispatchers.IO).launch{
+            updateFcmToken(token)
+        }
     }
 
     private fun sendNotification(title: String, body: String) {

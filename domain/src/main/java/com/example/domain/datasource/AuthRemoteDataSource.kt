@@ -12,4 +12,6 @@ interface AuthRemoteDataSource {
         expiresIn: Int,
         idToken: String
     ): ApiResult<SocialLoginSignUpResult>
+
+    suspend fun saveFcmToken(token: String, deviceType: String): ApiResult<*>
 }
