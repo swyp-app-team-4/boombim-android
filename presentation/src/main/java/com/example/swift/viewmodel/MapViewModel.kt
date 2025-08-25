@@ -2,7 +2,9 @@ package com.example.swift.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.map.FetchOfficialPlaceUseCase
 import com.example.domain.usecase.map.FetchViewPortPlaceList
+import com.example.domain.usecase.map.GetOfficialPlaceUseCase
 import com.example.domain.usecase.map.GetViewPortPlaceList
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -13,7 +15,9 @@ import javax.inject.Inject
 @HiltViewModel
 class MapViewModel @Inject constructor(
     getViewPortPlaceList: GetViewPortPlaceList,
-    private val fetchViewPortPlaceList: FetchViewPortPlaceList
+    getOfficialPlaceUseCase: GetOfficialPlaceUseCase,
+    private val fetchViewPortPlaceList: FetchViewPortPlaceList,
+    private val fetchOfficialPlaceUseCase: FetchOfficialPlaceUseCase
 ): ViewModel() {
 
     val viewPortPlaceList = getViewPortPlaceList()
@@ -21,6 +25,13 @@ class MapViewModel @Inject constructor(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
             emptyList()
+        )
+
+    val officialPlace = getOfficialPlaceUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            null
         )
 
     fun fetchViewPortList(
@@ -41,6 +52,12 @@ class MapViewModel @Inject constructor(
                 memberLatitude = memberLatitude
             )
         }
+    }
+
+    fun fetchOfficial(placeId: Int){
+       viewModelScope.launch {
+           fetchOfficialPlaceUseCase(placeId)
+       }
     }
 
 }

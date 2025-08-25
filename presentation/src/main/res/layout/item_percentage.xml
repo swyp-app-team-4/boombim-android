@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_vote_card"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/text_ages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:fontFamily="@font/pretend_semibold"
+        android:text="연령대"
+        android:textColor="@color/gray_scale_9"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_under_10_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_ages"/>
+
+    <TextView
+        android:id="@+id/text_10"
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="10대 미만"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintStart_toStartOf="@id/text_under_10_percentage"
+        app:layout_constraintTop_toBottomOf="@id/text_under_10_percentage" />
+
+    <TextView
+        android:id="@+id/text_10_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_under_10_percentage"
+        app:layout_constraintTop_toTopOf="@id/text_under_10_percentage"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="10대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintTop_toBottomOf="@id/text_10_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_10_percentage"/>
+
+    <TextView
+        android:id="@+id/text_20_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_10_percentage"
+        app:layout_constraintTop_toTopOf="@id/text_10_percentage"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="20대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintTop_toBottomOf="@id/text_20_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_20_percentage"/>
+
+    <TextView
+        android:id="@+id/text_30_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_20_percentage"
+        app:layout_constraintTop_toTopOf="@id/text_20_percentage"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="30대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintTop_toBottomOf="@id/text_30_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_30_percentage"/>
+
+    <TextView
+        android:id="@+id/text_40_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_10"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="40대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintTop_toBottomOf="@id/text_40_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_40_percentage"/>
+
+    <TextView
+        android:id="@+id/text_50_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_40_percentage"
+        app:layout_constraintTop_toTopOf="@id/text_40_percentage"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="50대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintTop_toBottomOf="@id/text_50_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_50_percentage"/>
+
+    <TextView
+        android:id="@+id/text_60_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_50_percentage"
+        app:layout_constraintTop_toTopOf="@id/text_50_percentage"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="60대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        app:layout_constraintTop_toBottomOf="@id/text_60_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_60_percentage"/>
+
+    <TextView
+        android:id="@+id/text_70_percentage"
+        android:layout_width="68dp"
+        android:layout_height="40dp"
+        android:text="2%"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:background="@drawable/bg_rounded_background_gray3"
+        android:textColor="@color/gray_scale_9"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toEndOf="@id/text_60_percentage"
+        app:layout_constraintTop_toTopOf="@id/text_60_percentage"/>
+
+    <TextView
+        android:layout_width="68dp"
+        android:layout_height="wrap_content"
+        android:text="70대"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="@color/gray_scale_8"
+        android:fontFamily="@font/pretend_medium"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_70_percentage"
+        app:layout_constraintStart_toStartOf="@id/text_70_percentage"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
