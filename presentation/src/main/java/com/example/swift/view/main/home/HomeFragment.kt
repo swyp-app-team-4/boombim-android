@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,12 +19,15 @@ import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.view.main.home.adapter.PlaceBoomBimAdapter
 import com.example.swift.view.main.home.adapter.PlaceLessBoomBimAdapter
 import com.example.swift.view.main.home.adapter.RegionNewsAdapter
+import com.example.swift.viewmodel.MainViewModel
+import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +40,8 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fetchFcmToken()
 
         initRegionNewsViewPager()
 
@@ -52,6 +58,16 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.homeSearchFragment)
         }
 
+    }
+
+    private fun fetchFcmToken() {
+        FirebaseMessaging.getInstance().token
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val token = task.result
+                    mainViewModel.updateToken(token)
+                }
+            }
     }
 
     private fun initRegionNewsViewPager() = with(binding) {

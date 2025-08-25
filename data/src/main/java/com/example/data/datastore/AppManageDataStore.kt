@@ -28,6 +28,8 @@ class AppManageDataStore @Inject constructor(
         private val KAKAO_REFRESH_TOKEN = stringPreferencesKey("kakao_refresh_token")
         private val NAVER_ACCESS_TOKEN = stringPreferencesKey("naver_access_token")
         private val NAVER_REFRESH_TOKEN = stringPreferencesKey("naver_refresh_token")
+
+        private val SAVED_FCM_TOKEN = stringPreferencesKey("saved_fcm_token")
     }
 
     suspend fun saveAccessToken(token: String) {
@@ -88,6 +90,24 @@ class AppManageDataStore @Inject constructor(
     fun getNaverAccessToken(): Flow<String?> {
         return appDataStore.data.map { preferences ->
             preferences[NAVER_ACCESS_TOKEN]
+        }
+    }
+
+    suspend fun setSavedFcmToken(
+        token: String?
+    ) {
+        appDataStore.edit { preferences ->
+            if (token == null) {
+                preferences.remove(SAVED_FCM_TOKEN)
+            } else {
+                preferences[SAVED_FCM_TOKEN] = token
+            }
+        }
+    }
+
+    fun getSavedFcmToken(): Flow<String?> {
+        return appDataStore.data.map { preferences ->
+            preferences[SAVED_FCM_TOKEN]
         }
     }
 }

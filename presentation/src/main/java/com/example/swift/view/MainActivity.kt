@@ -1,16 +1,20 @@
 package com.example.swift.view
 
+import android.content.Context
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.AttributeSet
 import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -19,6 +23,9 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.ActivityMainBinding
+import com.example.swift.viewmodel.MainViewModel
+import com.example.swift.viewmodel.MapViewModel
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
@@ -29,6 +36,8 @@ import java.security.MessageDigest
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
+
+    private val mainViewModel: MainViewModel by viewModels()
     private val PERMISSION_REQUEST_CODE = 5000
 
     private fun permissionCheck() {
@@ -51,14 +60,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         initNavigation()
 
         bottomNavigate()
 
         permissionCheck()
 
-
     }
+
     private fun initNavigation() {
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController

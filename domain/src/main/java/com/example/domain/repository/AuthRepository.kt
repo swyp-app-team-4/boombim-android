@@ -22,4 +22,6 @@ interface AuthRepository {
     suspend fun postRefreshToken(
         refreshToken: String
     ): Flow<ApiResult<TokenModel>>
+
+    suspend fun saveFcmToken(fcmToken: String, deviceType: String): ActionResult<*>
 }
