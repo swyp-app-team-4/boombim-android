@@ -10,7 +10,7 @@
         android:label="HomeFragment" />
     <fragment
         android:id="@+id/mapFragment"
-        android:name="com.example.swift.view.main.MapFragment"
+        android:name="com.example.swift.view.main.map.MapFragment"
         android:label="MapFragment" />
     <fragment
         android:id="@+id/chattingFragment"

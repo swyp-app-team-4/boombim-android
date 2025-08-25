@@ -1,8 +1,7 @@
-package com.example.swift.view.main
+package com.example.swift.view.main.map
 
 import android.graphics.BitmapFactory
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +17,7 @@ import com.example.swift.util.LocationUtils
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
@@ -75,6 +75,11 @@ class MapFragment : Fragment() {
                     lifecycleScope.launch { moveCameraToCurrentLocation() }
                     setupCameraMoveListener()
                     observePlaces()
+
+                    kakaoMap?.setOnLabelClickListener { kakaoMap, layer, label -> // 라벨 클릭 시 처리할 로직
+                        val place = label.tag as CongestionData
+                        showBottomSheet(place)
+                    }
                 }
             }
         )
@@ -112,12 +117,15 @@ class MapFragment : Fragment() {
         congestionList.forEach { place ->
             val position = LatLng.from(place.coordinate.latitude, place.coordinate.longitude)
             val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_star)
-            val iconOptions = LabelOptions.from(position).setStyles(LabelStyle.from(markerBitmap))
+            val iconOptions = LabelOptions.from(position)
+                .setStyles(LabelStyle.from(markerBitmap))
+                .setTag(place)
 
             val textPosition = LatLng.from(place.coordinate.latitude - 0.0003, place.coordinate.longitude)
             val textOptions = LabelOptions.from(textPosition)
                 .setStyles(LabelStyle.from(LabelTextStyle.from(30, requireContext().getColor(R.color.gray_scale_9))))
                 .setTexts(place.name)
+                .setTag(place)
 
             layer.addLabel(iconOptions)
             layer.addLabel(textOptions)
@@ -150,6 +158,11 @@ class MapFragment : Fragment() {
         val northEast = LatLng.from(center.latitude + latDiff, center.longitude + lngDiff)
 
         return southWest to northEast
+    }
+
+    private fun showBottomSheet(place: CongestionData) {
+        val bottomSheet = PlaceBottomSheetFragment(place)
+        bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 
     override fun onDestroyView() {

@@ -21,4 +21,14 @@
         <item name="submitBackground">@null</item>
     </style>
 
+    <style name="RoundedBottomSheetDialog" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/RoundedBottomSheet</item>
+    </style>
+
+    <style name="RoundedBottomSheet" parent="Widget.Material3.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_sheet_white_20</item>
+    </style>
+
+
+
 </resources>
