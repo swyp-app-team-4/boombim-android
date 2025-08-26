@@ -63,15 +63,15 @@ class MainActivity : AppCompatActivity() {
 
         initNavigation()
 
-        bottomNavigate()
-
         permissionCheck()
 
     }
 
     private fun initNavigation() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
         navController = navHostFragment.navController
+
         binding.navBar.setupWithNavController(navController)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
@@ -89,30 +89,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    private fun bottomNavigate(){
-        binding.navBar.setOnItemSelectedListener { menuItem ->
-            when (menuItem.itemId) {
-                R.id.homeFragment -> {
-                    navController.navigate(R.id.homeFragment)
-                    true
-                }
-                R.id.mapFragment -> {
-                    navController.navigate(R.id.mapFragment)
-                    true
-                }
-                R.id.chattingFragment -> {
-                    navController.navigate(R.id.chattingFragment)
-                    true
-                }
-                R.id.myPageFragment -> {
-                    navController.navigate(R.id.myPageFragment)
-                    true
-                }
-                else -> false
-            }
-        }
-    }
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

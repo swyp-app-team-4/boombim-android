@@ -60,6 +60,18 @@
         android:id="@+id/editProfileFragment"
         android:name="com.example.swift.view.main.mypage.EditProfileFragment"
         android:label="EditProfileFragment" />
+    <activity
+        android:id="@+id/mainActivity"
+        android:name="com.example.swift.view.MainActivity"
+        android:label="MainActivity" />
+    <activity
+        android:id="@+id/onBoardingActivity"
+        android:name="com.example.swift.view.onboarding.OnBoardingActivity"
+        android:label="OnBoardingActivity" />
+    <fragment
+        android:id="@+id/onBoardingFragment"
+        android:name="com.example.swift.view.onboarding.OnBoardingFragment"
+        android:label="OnBoardingFragment" />
 
 
 </navigation>

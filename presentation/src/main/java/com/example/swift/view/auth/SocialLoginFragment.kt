@@ -23,6 +23,7 @@ import com.navercorp.nid.NaverIdLoginSDK
 import dagger.hilt.android.AndroidEntryPoint
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
+import androidx.navigation.NavOptions
 
 @AndroidEntryPoint
 class SocialLoginFragment : Fragment() {
@@ -98,9 +99,17 @@ class SocialLoginFragment : Fragment() {
             accessToken = accessToken,
             refreshToken = refreshToken,
             provider = "kakao",
-            onSuccess = {
-               findNavController().navigate(R.id.homeFragment)
-                Toast.makeText(requireContext(), "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
+            onSuccess = { nameFlag ->
+              if(nameFlag){
+                  val navOptions = NavOptions.Builder()
+                      .setPopUpTo(R.id.socialLoginFragment, true)
+                      .build()
+                  findNavController().navigate(R.id.homeFragment, null, navOptions)
+                  Toast.makeText(requireContext(), "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
+              }else{
+                  Toast.makeText(requireContext(), "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
+                  findNavController().navigate(R.id.editProfileFragment)
+              }
             },
             onFail = { msg ->
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
@@ -113,9 +122,17 @@ class SocialLoginFragment : Fragment() {
             accessToken = accessToken,
             refreshToken = refreshToken,
             provider = "naver",
-            onSuccess = {
-                findNavController().navigate(R.id.homeFragment)
-                Toast.makeText(requireContext(), "네이버 로그인 성공", Toast.LENGTH_SHORT).show()
+            onSuccess = { nameFlag ->
+                if(nameFlag){
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(R.id.socialLoginFragment, true)
+                        .build()
+                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    Toast.makeText(requireContext(), "네이버 로그인 성공", Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(requireContext(), "네이버 로그인 성공", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(R.id.editProfileFragment)
+                }
             },
             onFail = { msg ->
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
