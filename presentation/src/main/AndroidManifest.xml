@@ -25,6 +25,11 @@
 
         <activity
             android:name="com.example.swift.view.MainActivity"
+            android:exported="false"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.example.swift.view.onboarding.OnBoardingActivity"
             android:windowSoftInputMode="adjustPan"
             android:exported="true"
             android:label="@string/app_name"

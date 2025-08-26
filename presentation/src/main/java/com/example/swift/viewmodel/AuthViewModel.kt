@@ -21,7 +21,7 @@ class AuthViewModel @Inject constructor(
         accessToken: String,
         refreshToken: String,
         provider: String,
-        onSuccess: () -> Unit,
+        onSuccess: (nameFlag: Boolean) -> Unit,
         onFail: (msg: String) -> Unit
     ){
         viewModelScope.launch {
@@ -41,7 +41,7 @@ class AuthViewModel @Inject constructor(
                     onFail(result.msg)
                 }
                 is ActionResult.Success -> {
-                    onSuccess()
+                    onSuccess(result.data.nameFlag)
                 }
             }
         }

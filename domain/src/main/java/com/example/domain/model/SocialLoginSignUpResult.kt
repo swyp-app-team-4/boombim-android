@@ -6,4 +6,5 @@ import kotlinx.serialization.Serializable
 data class SocialLoginSignUpResult (
     val accessToken: String,
     val refreshToken: String,
+    val nameFlag: Boolean
 )
