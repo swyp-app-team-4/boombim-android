@@ -2,6 +2,7 @@ package com.example.swift.view.onboarding
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.navigation.findNavController
@@ -10,10 +11,15 @@ import com.boombim.android.R
 import com.boombim.android.databinding.ActivityOnBoardingBinding
 import com.example.domain.model.OnboardingPage
 import com.example.swift.view.MainActivity
+import com.example.swift.viewmodel.MainViewModel
+import com.example.swift.viewmodel.OnBoardingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class OnBoardingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOnBoardingBinding
     private lateinit var pages: List<OnboardingPage>
+    private val onBoardingViewModel: OnBoardingViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -24,6 +30,7 @@ class OnBoardingActivity : AppCompatActivity() {
         initViewPager()
 
         binding.btnSkip.setOnClickListener {
+            onBoardingViewModel.updateNotFirstLaunch()
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             finish()
@@ -34,6 +41,7 @@ class OnBoardingActivity : AppCompatActivity() {
             if (currentItem < pages.lastIndex) {
                 binding.btnStart.isClickable = false
             } else {
+                onBoardingViewModel.updateNotFirstLaunch()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()

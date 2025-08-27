@@ -3,6 +3,7 @@ package com.example.data.datastore
 import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
@@ -30,6 +31,8 @@ class AppManageDataStore @Inject constructor(
         private val NAVER_REFRESH_TOKEN = stringPreferencesKey("naver_refresh_token")
 
         private val SAVED_FCM_TOKEN = stringPreferencesKey("saved_fcm_token")
+
+        private val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
     }
 
     suspend fun saveAccessToken(token: String) {
@@ -90,6 +93,32 @@ class AppManageDataStore @Inject constructor(
     fun getNaverAccessToken(): Flow<String?> {
         return appDataStore.data.map { preferences ->
             preferences[NAVER_ACCESS_TOKEN]
+        }
+    }
+
+    /**
+     * 첫 실행인지 확인 한다. 값이 없으면 true로 준다
+     */
+    fun getIsFirstLaunch(): Flow<Boolean> {
+        return appDataStore.data.map { preferences ->
+            preferences[FIRST_LAUNCH] ?: true
+        }
+    }
+
+    /**
+     * 첫 앱 실행이 끝난 경우 구분
+     */
+    suspend fun setNotFirstLaunch() {
+        appDataStore.edit { preferences ->
+            preferences[FIRST_LAUNCH] = false
+        }
+    }
+
+    suspend fun clearAllUserData() {
+        appDataStore.edit { preferences ->
+            preferences.remove(ACCESS_TOKEN)
+            preferences.remove(REFRESH_TOKEN)
+            preferences.remove(SAVED_FCM_TOKEN)
         }
     }
 

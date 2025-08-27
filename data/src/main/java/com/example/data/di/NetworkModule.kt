@@ -43,7 +43,7 @@ object NetworkModule {
     private const val BASE_URL = "https://api.boombim.p-e.kr/"
     private const val KAKAO_URL = "https://dapi.kakao.com/"
 
-    // OkHttpClient 공통 생성
+
     @Provides
     @Singleton
     fun provideDefaultOkHttpClient(

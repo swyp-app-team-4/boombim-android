@@ -61,6 +61,20 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHostFragment.navController
+
+        // 스플래시에서 넘어온 목적지 처리
+        when (intent.getStringExtra("dest")) {
+            "home" -> {
+                navController.navigate(R.id.homeFragment)
+            }
+            "socialLogin" -> {
+                navController.navigate(R.id.socialLoginFragment)
+            }
+        }
+
         initNavigation()
 
         permissionCheck()
