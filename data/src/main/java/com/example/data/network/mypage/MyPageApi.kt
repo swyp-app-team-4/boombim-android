@@ -1,6 +1,7 @@
 package com.example.data.network.mypage
 
 import com.example.data.network.auth.FcmTokenRequest
+import com.example.data.network.auth.request.RefreshTokenRequest
 import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.ProfileModel
@@ -26,10 +27,17 @@ interface MyPageApi {
         @Body request: PatchNickNameRequest
     ): Response<Unit>
 
+    @POST("api/oauth2/logout")
+    suspend fun logout(
+        @Body request: RefreshTokenRequest
+    ): Response<Unit>
+
     @POST("api/alarm/fcm-token")
     suspend fun sendFcmToken(
         @Body fcmToken: FcmTokenRequest
     ): Response<Unit>
+
+
 
 
 }

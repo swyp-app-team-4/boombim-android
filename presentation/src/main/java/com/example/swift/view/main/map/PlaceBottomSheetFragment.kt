@@ -2,6 +2,7 @@ package com.example.swift.view.main.map
 
 import android.annotation.SuppressLint
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,6 +18,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentPlaceBottomSheetBinding
 import com.example.domain.model.CongestionData
 import com.example.domain.model.PlaceData
+import com.example.swift.util.DateTimeUtils
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -58,6 +61,7 @@ class PlaceBottomSheetFragment(
         setupMap(place.coordinate.longitude, place.coordinate.latitude)
 
         binding.textPlaceName.text = place.name
+
 
         binding.iconBoombim.setImageResource(
             when (place.congestionLevelName) {
@@ -123,6 +127,7 @@ class PlaceBottomSheetFragment(
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("SetTextI18n")
     private fun updateDemographicsUI(data: PlaceData) {
         // 성별
@@ -169,6 +174,8 @@ class PlaceBottomSheetFragment(
             "60s" to ageBinding.text60Percentage,
             "70s" to ageBinding.text70Percentage
         )
+
+        binding.textUpdateTime.text = DateTimeUtils.getTimeAgo(data.observedAt)
 
         data.demographics.filter { it.category == "AGE_GROUP" }.forEach { age ->
             ageMap[age.subCategory]?.text = "${age.rate} %"

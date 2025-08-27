@@ -23,6 +23,13 @@ class MainViewModel @Inject constructor(
     fun updateToken(token: String) {
 
         viewModelScope.launch {
+//            appManageDataStore.clearAllUserData()
+            val newAccess = provider.getAccessToken()
+            val newRefresh = provider.getRefreshToken()
+            Log.d("MainViewModel","AFTER CLEAR => $newAccess , $newRefresh")
+        }
+
+        viewModelScope.launch {
             updateFcmToken(token)
         }
     }

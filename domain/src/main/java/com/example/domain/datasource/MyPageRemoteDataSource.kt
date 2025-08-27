@@ -14,4 +14,6 @@ interface MyPageRemoteDataSource {
     suspend fun getMyQuestion(): Flow<ApiResult<List<MyPageVoteResponse>>>
 
     suspend fun patchNickName(name: String): ApiResult<*>
+
+    suspend fun logout(refresh: String): ApiResult<*>
 }

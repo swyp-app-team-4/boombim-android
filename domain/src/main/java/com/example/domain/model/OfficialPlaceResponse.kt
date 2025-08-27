@@ -15,6 +15,7 @@ data class PlaceData(
     val id: Int,
     val name: String,
     val poiCode: String,
+    val observedAt: String,
     val centroidLatitude: Double,
     val centroidLongitude: Double,
     val polygonCoordinates: String,
