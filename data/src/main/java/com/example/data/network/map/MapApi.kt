@@ -11,12 +11,12 @@ import retrofit2.http.Path
 
 interface MapApi {
 
-    @POST("/official-places")
+    @POST("/official-place")
     suspend fun postViewPort(
         @Body viewport: PostViewPortRequest
     ): Response<CongestionResponse>
 
-    @GET("/official-places/{officialPlaceId}/overview")
+    @GET("/official-place/{officialPlaceId}/overview")
     suspend fun getOfficialPlaceOverview(
         @Path("officialPlaceId") officialPlaceId: Int
     ): Response<OfficialPlaceResponse>

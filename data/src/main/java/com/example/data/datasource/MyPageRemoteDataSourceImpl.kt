@@ -1,5 +1,6 @@
 package com.example.data.datasource
 
+import com.example.data.network.auth.request.RefreshTokenRequest
 import com.example.data.network.mypage.MyPageApi
 import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.data.network.safeFlow
@@ -31,7 +32,12 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun patchNickName(name: String): ApiResult<*> {
         val request = PatchNickNameRequest(name = name)
-        return safeFlow { myPageApi.patchNickName(request) }.first()
+        return safeFlow { myPageApi.patchNickName(request)}.first()
+    }
+
+    override suspend fun logout(refresh: String): ApiResult<*> {
+        val request = RefreshTokenRequest(refresh)
+        return safeFlow { myPageApi.logout(request)}.first()
     }
 
 }

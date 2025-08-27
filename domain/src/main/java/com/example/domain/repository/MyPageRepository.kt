@@ -22,4 +22,6 @@ interface MyPageRepository {
     suspend fun getMyQuestion()
 
     suspend fun patchNickName(name: String) :ActionResult<*>
+
+    suspend fun logout(refresh: String) : ActionResult<*>
 }

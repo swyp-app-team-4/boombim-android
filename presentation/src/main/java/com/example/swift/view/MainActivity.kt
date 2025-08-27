@@ -41,25 +41,66 @@ class MainActivity : AppCompatActivity() {
     private val PERMISSION_REQUEST_CODE = 5000
 
     private fun permissionCheck() {
+        val permissions = mutableListOf<String>()
+
+        // ✅ 알림 권한 (Android 13 이상)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val permissionCheck = ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.POST_NOTIFICATIONS
-            )
-            if (permissionCheck != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(
+            if (ContextCompat.checkSelfPermission(
                     this,
-                    arrayOf(android.Manifest.permission.POST_NOTIFICATIONS),
-                    PERMISSION_REQUEST_CODE
-                )
+                    android.Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                permissions.add(android.Manifest.permission.POST_NOTIFICATIONS)
             }
         }
+
+        // ✅ 위치 권한 (위치 서비스는 보통 FINE_LOCATION 권한 필요)
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        // 필요 시 COARSE_LOCATION 도 같이 요청
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissions.add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        // 권한 요청 실행
+        if (permissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissions.toTypedArray(),
+                PERMISSION_REQUEST_CODE
+            )
+        }
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHostFragment.navController
+
+        // 스플래시에서 넘어온 목적지 처리
+        when (intent.getStringExtra("dest")) {
+            "home" -> {
+                navController.navigate(R.id.homeFragment)
+            }
+            "socialLogin" -> {
+                navController.navigate(R.id.socialLoginFragment)
+            }
+        }
 
         initNavigation()
 

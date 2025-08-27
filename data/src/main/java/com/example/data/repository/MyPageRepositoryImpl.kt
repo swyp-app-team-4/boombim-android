@@ -80,4 +80,9 @@ class MyPageRepositoryImpl @Inject constructor(
         }
         return result.covertApiResultToActionResultIfSuccessEmpty()
     }
+
+    override suspend fun logout(refresh: String): ActionResult<*> {
+        val result = myPageRemoteDataSource.logout(refresh)
+        return result.covertApiResultToActionResultIfSuccessEmpty()
+    }
 }
