@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemVoteBinding
+import com.bumptech.glide.Glide
 import com.example.domain.model.VoteItem
 import com.example.swift.util.DateTimeUtils
 
@@ -38,6 +39,13 @@ class VoteAdapter(
             binding.textTitle.text = item.posName
             binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()
             binding.textTime.text = DateTimeUtils.getTimeAgo(item.createdAt)
+
+            Glide.with(binding.imgPlace.context)
+                .load(item.posImage)
+                .placeholder(R.drawable.icon_gray_circle) // 로딩 중일 때 보여줄 이미지
+                .error(R.drawable.icon_gray_circle)       // 에러 발생 시 보여줄 이미지
+                .centerCrop()
+                .into(binding.imgPlace)
 
             updateIcons(item)
 

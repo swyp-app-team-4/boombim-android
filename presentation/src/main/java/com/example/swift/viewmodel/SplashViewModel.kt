@@ -25,7 +25,6 @@ class SplashViewModel @Inject constructor(
         complete: (dest: String) -> Unit,
     ){
         viewModelScope.launch {
-            appManageDataStore.clearAllUserData()
             Log.d("SplashVM", "refreshToken=${tokenProvider.getRefreshToken()}")
             Log.d("SplashVM", "isFirstLaunch=${appManageDataStore.getIsFirstLaunch().first()}")
             val timeJob = async {

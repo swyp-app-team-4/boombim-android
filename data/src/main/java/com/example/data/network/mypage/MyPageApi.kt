@@ -21,7 +21,7 @@ interface MyPageApi {
     @GET("/api/member/my-question")
     suspend fun getMyQuestion() : Response<List<MyPageVoteResponse>>
 
-    @PATCH("/api/member")
+    @PATCH("/api/member/name")
     suspend fun patchNickName(
         @Body request: PatchNickNameRequest
     ): Response<Unit>

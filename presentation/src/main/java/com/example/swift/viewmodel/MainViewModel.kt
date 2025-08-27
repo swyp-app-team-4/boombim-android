@@ -1,20 +1,27 @@
 package com.example.swift.viewmodel
 
+import android.util.Log
 import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.data.datastore.AppManageDataStore
+import com.example.domain.provider.TokenProvider
 import com.example.domain.usecase.UpdateFcmToken
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val updateFcmToken: UpdateFcmToken
+    private val updateFcmToken: UpdateFcmToken,
+    private val provider: TokenProvider,
+    private val appManageDataStore: AppManageDataStore
 ) : ViewModel() {
 
     fun updateToken(token: String) {
+
         viewModelScope.launch {
             updateFcmToken(token)
         }

@@ -12,6 +12,7 @@ data class VoteResponse(
 @Serializable
 data class VoteItem(
     val voteId: Int,
+    val posImage: String,
     val profile: List<String>,
     val voteDuplicationCnt: Int,
     val createdAt: String,

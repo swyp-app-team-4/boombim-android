@@ -40,7 +40,6 @@ class TokenAuthenticator @Inject constructor(
 
         // 새 토큰 저장
         runBlocking {
-            Log.d("TokenAuthenticator", "New Access Token: ${tokenResponse.accessToken}")
             appManageDataStore.saveAccessToken(tokenResponse.accessToken)
             appManageDataStore.saveRefreshToken(tokenResponse.refreshToken)
         }
