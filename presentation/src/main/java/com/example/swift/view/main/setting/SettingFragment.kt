@@ -56,7 +56,7 @@ class SettingFragment : Fragment() {
                                 R.id.socialLoginFragment,
                                 null,
                                 navOptions {
-                                    popUpTo(R.id.socialLoginFragment) { // 네비게이션 그래프의 시작 지점 ID
+                                    popUpTo(findNavController().graph.startDestinationId) {
                                         inclusive = true
                                     }
                                 }
