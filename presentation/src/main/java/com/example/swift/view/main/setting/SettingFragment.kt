@@ -47,6 +47,29 @@ class SettingFragment : Fragment() {
             )
         }
 
+        binding.containerLoginHistory.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("url", "https://awesome-captain-026.notion.site/2529598992b080198821d47baaf7d23f?pvs=74")
+                putString("title", "개인정보 처리방침")
+            }
+
+            findNavController().navigate(R.id.policyFragment, bundle)
+        }
+
+        binding.containerPrivacy.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("url", "https://awesome-captain-026.notion.site/2529598992b080119479fef036d96aba?pvs=74")
+                putString("title", "서비스 이용약관")
+            }
+
+            findNavController().navigate(R.id.policyFragment, bundle)
+        }
+
+
+        binding.containerMyProfile.setOnClickListener {
+            findNavController().navigate(R.id.myProfileFragment)
+        }
+
         binding.textLogout.setOnClickListener {
             val logoutDialog = LogoutDialog(
                 onConfirm = {
