@@ -72,6 +72,22 @@
         android:id="@+id/onBoardingFragment"
         android:name="com.example.swift.view.onboarding.OnBoardingFragment"
         android:label="OnBoardingFragment" />
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.swift.view.main.setting.MyProfileFragment"
+        android:label="MyProfileFragment" />
+
+    <fragment
+        android:id="@+id/policyFragment"
+        android:name="com.example.swift.view.main.setting.PolicyFragment"
+        android:label="PolicyFragment">
+        <argument
+            android:name="url"
+            app:argType="string" />
+        <argument
+            android:name="title"
+            app:argType="string" />
+    </fragment>
 
 
 </navigation>
