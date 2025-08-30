@@ -88,6 +88,18 @@
             android:name="title"
             app:argType="string" />
     </fragment>
+    <fragment
+        android:id="@+id/congestionSearchFragment"
+        android:name="com.example.swift.view.main.makecongestion.CongestionSearchFragment"
+        android:label="CongestionSearchFragment" />
+    <fragment
+        android:id="@+id/makeCongestionFragment"
+        android:name="com.example.swift.view.main.makecongestion.MakeCongestionFragment"
+        android:label="MakeCongestionFragment" />
+    <fragment
+        android:id="@+id/checkCongestionPlaceFragment"
+        android:name="com.example.swift.view.main.makecongestion.CheckCongestionPlaceFragment"
+        android:label="CheckCongestionPlaceFragment" />
 
 
 </navigation>
