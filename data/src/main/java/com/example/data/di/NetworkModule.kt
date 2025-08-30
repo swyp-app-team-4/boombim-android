@@ -3,6 +3,7 @@ package com.example.data.di
 import android.content.Context
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
+import com.example.data.network.home.HomeApi
 import com.example.data.network.kakaosearch.KakaoLocalApi
 import com.example.data.network.map.MapApi
 import com.example.data.network.mypage.MyPageApi
@@ -122,6 +123,11 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideHomeApi(@AuthRetrofit retrofit: Retrofit): HomeApi =
+        retrofit.create(HomeApi::class.java)
+
+    @Provides
+    @Singleton
     fun provideMyPageApi(@AuthRetrofit retrofit: Retrofit): MyPageApi =
         retrofit.create(MyPageApi::class.java)
 
@@ -135,4 +141,5 @@ object NetworkModule {
     @Singleton
     fun provideKakaoLocalApi(@KakaoRetrofit retrofit: Retrofit): KakaoLocalApi =
         retrofit.create(KakaoLocalApi::class.java)
+
 }
