@@ -18,8 +18,10 @@ import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMakeVoteBinding
+import com.example.swift.view.balloon.PlacePickBalloonFactory
 import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
+import com.skydoves.balloon.balloon
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -29,6 +31,8 @@ class MakeVoteFragment : Fragment() {
     private val binding get() = _binding!!
     private val kakaoSearchViewmodel: KakaoSearchViewModel by activityViewModels()
     private lateinit var adapter: KakaoSearchListAdapter
+
+    private val placePickBalloon by balloon<PlacePickBalloonFactory>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,6 +52,10 @@ class MakeVoteFragment : Fragment() {
         initSearchViewListener()
 
         initTextStyle()
+
+      placePickBalloon.showAlignBottom(
+          binding.iconCurrentLocation
+      )
 
         binding.iconBack.setOnClickListener {
             findNavController().navigate(

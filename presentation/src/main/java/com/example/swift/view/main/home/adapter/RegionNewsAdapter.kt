@@ -12,8 +12,8 @@ class RegionNewsAdapter(private val items: List<RegionResponse>) : RecyclerView.
     inner class NewsViewHolder(val binding: ItemRegionNewsBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: RegionResponse) {
-            binding.textTitle.text = item.area
-            binding.textContent.text = "오늘 ${item.startTime}, ${item.posName}에서 약 ${item.peopleCnt}명 규모 집회 예정되어 있습니다. \n해당 시간대 혼잡이 예상되니 이동 시 유의하세요."
+            binding.textTitle.text = "${item.area} 집회예정"
+            binding.textContent.text = "오늘 ${item.startTime}, ${item.posName}에서 약 ${item.peopleCnt}명 규모 집회 예정되어 있습니다.  해당 시간대 혼잡이 예상되니 이동 시 유의하세요."
         }
     }
 
