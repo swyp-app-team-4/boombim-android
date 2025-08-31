@@ -1,11 +1,16 @@
 package com.example.swift.view.main.home
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,15 +24,18 @@ import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.view.main.home.adapter.PlaceBoomBimAdapter
 import com.example.swift.view.main.home.adapter.PlaceLessBoomBimAdapter
 import com.example.swift.view.main.home.adapter.RegionNewsAdapter
+import com.example.swift.viewmodel.HomeViewModel
 import com.example.swift.viewmodel.MainViewModel
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,6 +66,10 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.homeSearchFragment)
         }
 
+        binding.btnMakeVote.setOnClickListener {
+            findNavController().navigate(R.id.makeCongestionFragment)
+        }
+
     }
 
     private fun fetchFcmToken() {
@@ -70,17 +82,17 @@ class HomeFragment : Fragment() {
             }
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun initRegionNewsViewPager() = with(binding) {
-        val newsList = listOf(
-            RegionNewsModel("국토교통부", "2025.10.01일 오후로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입 2시부터 4시까지..."),
-            RegionNewsModel("서울시청", "강북 지역 주요 도로로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입 점검 예정입니다."),
-            RegionNewsModel("서울시청", "강북 지역 주요 도로로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입 점검 예정입니다."),
-            RegionNewsModel("서울시청", "강북 지역 주요 도로로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입로 점검 예정입 점검 예정입니다.")
-        )
 
-        viewPagerRegionNews.adapter = RegionNewsAdapter(newsList)
-
-        dotsIndicator.attachTo(viewPagerRegionNews)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.region.collect{ list ->
+                    viewPagerRegionNews.adapter = RegionNewsAdapter(list)
+                    dotsIndicator.attachTo(viewPagerRegionNews)
+                }
+            }
+        }
 
     }
 
