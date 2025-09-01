@@ -63,19 +63,15 @@ class OnBoardingActivity : AppCompatActivity() {
 
     private fun initViewPager() {
         binding.container.adapter = OnboardingAdapter(this, pages)
-        binding.progressCalm.max = pages.size
+
+        binding.dotsIndicator.attachTo(binding.container)
 
         binding.container.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                updateProgress(position)
                 updateButtonStyleIfLastPage(position)
             }
         })
-    }
-
-    private fun updateProgress(position: Int) {
-        binding.progressCalm.progress = position + 1
     }
 
     private fun updateButtonStyleIfLastPage(position: Int) {

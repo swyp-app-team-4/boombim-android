@@ -19,6 +19,7 @@ import com.boombim.android.databinding.FragmentPlaceBottomSheetBinding
 import com.example.domain.model.CongestionData
 import com.example.domain.model.PlaceData
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.MapUtil
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -29,7 +30,7 @@ import com.kakao.vectormap.label.LabelStyle
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
-class PlaceBottomSheetFragment(
+class OfficialPlaceBottomSheetFragment(
     private val place: CongestionData
 ) : BottomSheetDialogFragment() {
 
@@ -50,6 +51,7 @@ class PlaceBottomSheetFragment(
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -102,23 +104,20 @@ class PlaceBottomSheetFragment(
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kakaomap: KakaoMap) {
                 kakaoMap = kakaomap
-                addMarker(latitude, longitude)
+
+                MapUtil.addMarker(
+                    context = requireContext(),
+                    kakaoMap = kakaoMap,
+                    latitude = latitude,
+                    longitude = longitude,
+                    markerResId = R.drawable.image_green_pin,
+                    moveCamera = true
+                )
             }
         })
     }
 
-    private fun addMarker(x: Double, y: Double) {
-        kakaoMap?.labelManager?.layer?.let { layer ->
-            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_red_marker)
-            val position = LatLng.from(x, y)
-            val iconOptions = LabelOptions.from(position)
-                .setStyles(LabelStyle.from(markerBitmap))
-
-            layer.addLabel(iconOptions)
-            kakaoMap?.moveCamera(CameraUpdateFactory.newCenterPosition(LatLng.from(x, y)))
-        }
-    }
-
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun observeOfficialPlace() {
         viewLifecycleOwner.lifecycleScope.launch {
             mapViewModel.officialPlace.collectLatest { placeData ->

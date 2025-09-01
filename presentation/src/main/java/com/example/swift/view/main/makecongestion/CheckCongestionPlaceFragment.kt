@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentCheckCongestionPlaceBinding
+import com.example.swift.util.MapUtil
 import com.example.swift.viewmodel.HomeViewModel
 import com.kakao.vectormap.*
 import com.kakao.vectormap.camera.CameraUpdateFactory
@@ -103,7 +104,7 @@ class CheckCongestionPlaceFragment : Fragment() {
         findNavController().navigate(R.id.makeCongestionFragment, bundle)
     }
 
-    private fun showMapView(x: Double, y: Double) {
+    private fun showMapView(longitude: Double, latitude: Double) {
         mapView = binding.mapView
         mapView.start(object : MapLifeCycleCallback() {
             override fun onMapDestroy() = Unit
@@ -111,24 +112,16 @@ class CheckCongestionPlaceFragment : Fragment() {
         }, object : KakaoMapReadyCallback() {
             override fun onMapReady(kMap: KakaoMap) {
                 kakaoMap = kMap
-                addMarker(y, x)
+                MapUtil.addMarker(
+                    context = requireContext(),
+                    kakaoMap = kakaoMap,
+                    latitude = latitude,
+                    longitude = longitude,
+                    markerResId = R.drawable.image_green_pin,
+                    moveCamera = true
+                )
             }
         })
-    }
-
-    private fun addMarker(lat: Double, lng: Double) {
-        kakaoMap?.let { map ->
-            val layer = map.labelManager?.layer ?: return
-
-            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_red_marker)
-            val position = LatLng.from(lat, lng)
-            val iconStyle = LabelStyle.from(markerBitmap)
-
-            val iconOptions = LabelOptions.from(position).setStyles(iconStyle)
-            layer.addLabel(iconOptions)
-
-            map.moveCamera(CameraUpdateFactory.newCenterPosition(position))
-        }
     }
 
     override fun onDestroyView() {

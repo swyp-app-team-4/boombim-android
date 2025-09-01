@@ -5,20 +5,6 @@
     android:background="@color/white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <ProgressBar
-        android:id="@+id/progress_calm"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:max="6"
-        android:progress="1"
-        style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-        android:progressDrawable="@drawable/bg_black_progress_bar"
-        android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/btn_skip"/>
-
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_skip"
         android:layout_width="70dp"
@@ -40,10 +26,23 @@
         android:layout_height="0dp"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
+        android:layout_marginBottom="50dp"
         app:layout_constraintTop_toBottomOf="@id/btn_skip"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@id/btn_start" />
+
+    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+        android:id="@+id/dotsIndicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        app:dotsSize="6dp"
+        app:dotsColor="@color/gray_scale_4"
+        app:selectedDotColor="@color/gray_scale_9"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/container"/>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_start"

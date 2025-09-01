@@ -41,8 +41,10 @@ class MyProfileFragment : Fragment() {
             myPageViewModel.profile.collect() { profile ->
                 if(profile.socialProvider == "KAKAO"){
                     binding.textSocialLogin.text = "카카오"
+                    binding.imageProvider.setImageResource(R.drawable.icon_circle_kakao)
                 } else {
                     binding.textSocialLogin.text = "네이버"
+                    binding.imageProvider.setImageResource(R.drawable.icon_naver_circle)
                 }
             }
         }

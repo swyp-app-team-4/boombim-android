@@ -2,8 +2,10 @@ package com.example.swift.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.map.FetchMemberPlaceUseCase
 import com.example.domain.usecase.map.FetchOfficialPlaceUseCase
 import com.example.domain.usecase.map.FetchViewPortPlaceList
+import com.example.domain.usecase.map.GetMemberPlaceUseCase
 import com.example.domain.usecase.map.GetOfficialPlaceUseCase
 import com.example.domain.usecase.map.GetViewPortPlaceList
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -16,11 +18,20 @@ import javax.inject.Inject
 class MapViewModel @Inject constructor(
     getViewPortPlaceList: GetViewPortPlaceList,
     getOfficialPlaceUseCase: GetOfficialPlaceUseCase,
+    getMemberPlaceUseCase: GetMemberPlaceUseCase,
+    private val fetchMemberPlaceUseCase: FetchMemberPlaceUseCase,
     private val fetchViewPortPlaceList: FetchViewPortPlaceList,
     private val fetchOfficialPlaceUseCase: FetchOfficialPlaceUseCase
 ): ViewModel() {
 
     val viewPortPlaceList = getViewPortPlaceList()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            emptyList()
+        )
+
+    val memberPlaceList = getMemberPlaceUseCase()
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -40,7 +51,8 @@ class MapViewModel @Inject constructor(
         bottomRightLongitude: Double,
         bottomRightLatitude: Double,
         memberLongitude: Double,
-        memberLatitude: Double
+        memberLatitude: Double,
+        zoomLevel: Int
     ) {
         viewModelScope.launch {
             fetchViewPortPlaceList(
@@ -49,7 +61,30 @@ class MapViewModel @Inject constructor(
                 bottomRightLongitude = bottomRightLongitude,
                 bottomRightLatitude = bottomRightLatitude,
                 memberLongitude = memberLongitude,
-                memberLatitude = memberLatitude
+                memberLatitude = memberLatitude,
+                zoomLevel = zoomLevel
+            )
+        }
+    }
+
+    fun fetchMemberPlaceList(
+        topLeftLongitude: Double,
+        topLeftLatitude: Double,
+        bottomRightLongitude: Double,
+        bottomRightLatitude: Double,
+        memberLongitude: Double,
+        memberLatitude: Double,
+        zoomLevel: Int
+    ) {
+        viewModelScope.launch {
+            fetchMemberPlaceUseCase(
+                topLeftLongitude = topLeftLongitude,
+                topLeftLatitude = topLeftLatitude,
+                bottomRightLongitude = bottomRightLongitude,
+                bottomRightLatitude = bottomRightLatitude,
+                memberLongitude = memberLongitude,
+                memberLatitude = memberLatitude,
+                zoomLevel = zoomLevel
             )
         }
     }

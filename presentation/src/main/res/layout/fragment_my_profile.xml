@@ -52,9 +52,10 @@
 
 
         <ImageView
+            android:id="@+id/image_provider"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/icon_circle_kakao"/>
+            tools:src="@drawable/icon_circle_kakao"/>
 
         <TextView
             android:id="@+id/text_social_login"

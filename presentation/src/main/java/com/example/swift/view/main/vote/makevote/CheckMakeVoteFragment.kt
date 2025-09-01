@@ -15,6 +15,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentCheckMakeVoteBinding
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.example.swift.util.LocationUtils
+import com.example.swift.util.MapUtil
 import com.example.swift.view.dialog.CompleteMakeVoteDialog
 import com.example.swift.viewmodel.VoteViewModel
 import com.google.android.gms.location.LocationServices
@@ -73,7 +74,7 @@ class CheckMakeVoteFragment : Fragment() {
         showMapView(longitude!!.toDouble(),latitude!!.toDouble())
     }
 
-    private fun showMapView(x: Double, y: Double){
+    private fun showMapView(longitude: Double, latitude: Double){
 
         mapView = binding.mapView
 
@@ -92,31 +93,17 @@ class CheckMakeVoteFragment : Fragment() {
             override fun onMapReady(kakaomap: KakaoMap) {
                 kakaoMap = kakaomap
 
-                addMarker(y, x)
+                MapUtil.addMarker(
+                    context = requireContext(),
+                    kakaoMap = kakaoMap,
+                    latitude = latitude,
+                    longitude = longitude,
+                    markerResId = R.drawable.image_green_pin,
+                    moveCamera = true
+                )
 
             }
         })
-    }
-
-    private fun addMarker(x: Double, y: Double){
-        kakaoMap?.let { map ->
-            val layer = map.labelManager?.layer ?: return
-
-            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_red_marker)
-            val position = LatLng.from(x, y)
-            val iconStyle = LabelStyle.from(markerBitmap)
-
-            val iconOptions = LabelOptions.from(position)
-                .setStyles(iconStyle)
-
-            layer.addLabel(iconOptions)
-
-           map.moveCamera(
-               CameraUpdateFactory.newCenterPosition(
-                   LatLng.from(x,y)
-               )
-           )
-        }
     }
 
     private fun getUserLocationAndVote(

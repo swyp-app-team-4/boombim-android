@@ -37,6 +37,26 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
             binding.progressSlightlyBusy.progress = item.slightlyBusyCnt
             binding.progressBusy.progress = item.crowedCnt
 
+            if (item.popularRes.size >= 2) {
+                val icon1 = getBoombimIcon(item.popularRes[0])
+                val icon2 = getBoombimIcon(item.popularRes[1])
+
+                if (icon1 != null) {
+                    binding.imageBoombim1.setImageResource(icon1)
+                    binding.imageBoombim1.visibility = View.VISIBLE
+                } else {
+                    binding.imageBoombim1.visibility = View.GONE
+                }
+
+                if (icon2 != null) {
+                    binding.imageBoombim2.setImageResource(icon2)
+                    binding.imageBoombim2.visibility = View.VISIBLE
+                } else {
+                    binding.imageBoombim2.visibility = View.GONE
+                }
+            }
+
+
             val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
 
             item.profile.take(3).forEachIndexed { index, url ->
@@ -59,6 +79,16 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
                     View.GONE
                 }
             }
+        }
+    }
+
+    private fun getBoombimIcon(res: String): Int? {
+        return when (res) {
+            "RELAXED" -> R.drawable.icon_calm_empty
+            "NORMAL" -> R.drawable.icon_normal_empty
+            "SLIGHTLY_BUSY" -> R.drawable.icon_slightly_busy_empty
+            "CROWED" -> R.drawable.icon_busy_empty
+            else -> null
         }
     }
 
