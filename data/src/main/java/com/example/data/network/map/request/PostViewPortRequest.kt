@@ -8,6 +8,7 @@ import kotlinx.serialization.Serializable
 data class PostViewPortRequest(
     val topLeft: Coordinate,
     val bottomRight: Coordinate,
-    val memberCoordinate: Coordinate
+    val memberCoordinate: Coordinate,
+    val zoomLevel: Int
 )
 

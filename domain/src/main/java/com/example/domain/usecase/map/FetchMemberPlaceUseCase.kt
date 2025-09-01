@@ -3,7 +3,7 @@ package com.example.domain.usecase.map
 import com.example.domain.repository.MapRepository
 import javax.inject.Inject
 
-class FetchViewPortPlaceList @Inject constructor(
+class FetchMemberPlaceUseCase @Inject constructor(
     private val mapRepository: MapRepository
 ) {
     suspend operator fun invoke(
@@ -15,13 +15,14 @@ class FetchViewPortPlaceList @Inject constructor(
         memberLatitude: Double,
         zoomLevel: Int
     ){
-        mapRepository.postViewPort(
+        mapRepository.postMemberPlace(
             topLeftLongitude,
             topLeftLatitude,
             bottomRightLongitude,
             bottomRightLatitude,
             memberLongitude,
-            memberLatitude,
-            zoomLevel)
+            memberLatitude
+            ,zoomLevel
+        )
     }
 }

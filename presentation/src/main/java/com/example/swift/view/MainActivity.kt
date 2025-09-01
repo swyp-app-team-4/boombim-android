@@ -102,6 +102,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnMakeVote.setOnClickListener {
+           navController.navigate((R.id.makeCongestionFragment))
+        }
+
         initNavigation()
 
         permissionCheck()
@@ -127,6 +131,9 @@ class MainActivity : AppCompatActivity() {
                     binding.navBar.visibility = View.GONE
                 }
             }
+
+            binding.btnMakeVote.visibility =
+                if (destination.id == R.id.homeFragment) View.VISIBLE else View.GONE
         }
     }
 

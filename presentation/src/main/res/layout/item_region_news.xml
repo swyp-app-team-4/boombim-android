@@ -11,7 +11,7 @@
         android:id="@+id/image_korea_mark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/image_korea_mark"
+        android:src="@drawable/image_police_mark"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
@@ -20,7 +20,7 @@
         android:id="@+id/text_korea_ministry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="국토교통부"
+        android:text="서울경찰청 제공"
         android:textSize="12sp"
         android:fontFamily="@font/pretend_medium"
         android:textColor="#70737C"

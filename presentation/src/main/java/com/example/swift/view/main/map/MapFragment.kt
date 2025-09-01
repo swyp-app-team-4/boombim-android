@@ -13,11 +13,11 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMapBinding
 import com.example.domain.model.CongestionData
+import com.example.domain.model.MemberPlaceData
 import com.example.swift.util.LocationUtils
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
@@ -104,7 +104,20 @@ class MapFragment : Fragment() {
                         bottomRightLongitude = northEast.longitude,
                         bottomRightLatitude = southWest.latitude,
                         memberLongitude = location.longitude,
-                        memberLatitude = location.latitude
+                        memberLatitude = location.latitude,
+                        zoomLevel = map.cameraPosition!!.zoomLevel
+                    )
+                }
+
+                LocationUtils.requestSingleUpdate(fusedLocationClient)?.let { location ->
+                    mapViewModel.fetchMemberPlaceList(
+                        topLeftLongitude = southWest.longitude,
+                        topLeftLatitude = northEast.latitude,
+                        bottomRightLongitude = northEast.longitude,
+                        bottomRightLatitude = southWest.latitude,
+                        memberLongitude = location.longitude,
+                        memberLatitude = location.latitude,
+                        zoomLevel = map.cameraPosition!!.zoomLevel
                     )
                 }
             }
@@ -116,19 +129,26 @@ class MapFragment : Fragment() {
 
         congestionList.forEach { place ->
             val position = LatLng.from(place.coordinate.latitude, place.coordinate.longitude)
-            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.img_star)
+            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.image_green_pin)
             val iconOptions = LabelOptions.from(position)
                 .setStyles(LabelStyle.from(markerBitmap))
                 .setTag(place)
 
-            val textPosition = LatLng.from(place.coordinate.latitude - 0.0003, place.coordinate.longitude)
-            val textOptions = LabelOptions.from(textPosition)
-                .setStyles(LabelStyle.from(LabelTextStyle.from(30, requireContext().getColor(R.color.gray_scale_9))))
-                .setTexts(place.name)
+            layer.addLabel(iconOptions)
+        }
+    }
+
+    private fun addMarkersFromMemberViewModel(congestionList: List<MemberPlaceData>) {
+        val layer = kakaoMap?.labelManager?.layer ?: return
+
+        congestionList.forEach { place ->
+            val position = LatLng.from(place.coordinate.latitude, place.coordinate.longitude)
+            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.image_green_pin)
+            val iconOptions = LabelOptions.from(position)
+                .setStyles(LabelStyle.from(markerBitmap))
                 .setTag(place)
 
             layer.addLabel(iconOptions)
-            layer.addLabel(textOptions)
         }
     }
 
@@ -136,6 +156,12 @@ class MapFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mapViewModel.viewPortPlaceList.collect { addMarkersFromViewModel(it) }
+            }
+        }
+
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mapViewModel.memberPlaceList.collect { addMarkersFromMemberViewModel(it) }
             }
         }
     }
@@ -161,7 +187,7 @@ class MapFragment : Fragment() {
     }
 
     private fun showBottomSheet(place: CongestionData) {
-        val bottomSheet = PlaceBottomSheetFragment(place)
+        val bottomSheet = OfficialPlaceBottomSheetFragment(place)
         bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 

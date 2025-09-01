@@ -67,10 +67,6 @@ class HomeFragment : Fragment() {
             findNavController().navigate(R.id.homeSearchFragment)
         }
 
-        binding.btnMakeVote.setOnClickListener {
-            findNavController().navigate(R.id.makeCongestionFragment)
-        }
-
     }
 
     private fun fetchFcmToken() {

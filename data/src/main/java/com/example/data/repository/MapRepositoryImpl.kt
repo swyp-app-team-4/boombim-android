@@ -5,6 +5,8 @@ import com.example.domain.datasource.MapRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CongestionData
 import com.example.domain.model.CongestionResponse
+import com.example.domain.model.MemberPlaceData
+import com.example.domain.model.MemberPlaceResponse
 import com.example.domain.model.PlaceData
 import com.example.domain.model.PlaceDocumentDto
 import com.example.domain.model.ProfileModel
@@ -26,13 +28,22 @@ class MapRepositoryImpl @Inject constructor(
     private val placeOverview
         get() = _placeOverview.asStateFlow()
 
+    //공식장소
     private val _mapList = MutableStateFlow(emptyList<CongestionData>())
 
     private val mapList
         get() = _mapList.asStateFlow()
 
+    //사용자 장소
+    private val _memberPlaceList = MutableStateFlow(emptyList<MemberPlaceData>())
+
+    private val memberPlaceList
+        get() = _memberPlaceList.asStateFlow()
+
 
     override fun getViewPortList(): Flow<List<CongestionData>> = mapList
+
+    override fun getMemberPlaceList(): Flow<List<MemberPlaceData>> = memberPlaceList
 
     override fun getPlaceOverview(): Flow<PlaceData?> = placeOverview
 
@@ -42,7 +53,8 @@ class MapRepositoryImpl @Inject constructor(
         bottomRightLongitude: Double,
         bottomRightLatitude: Double,
         memberLongitude: Double,
-        memberLatitude: Double
+        memberLatitude: Double,
+        zoomLevel: Int
     ) {
         mapRemoteDataSource.postViewPort(
             topLeftLongitude,
@@ -50,10 +62,37 @@ class MapRepositoryImpl @Inject constructor(
             bottomRightLongitude,
             bottomRightLatitude,
             memberLongitude,
-            memberLatitude
+            memberLatitude,
+            zoomLevel
         ).first().let { result ->
             if (result is ApiResult.Success) {
                 _mapList.update {
+                    result.data.data
+                }
+            }
+        }
+    }
+
+    override suspend fun postMemberPlace(
+        topLeftLongitude: Double,
+        topLeftLatitude: Double,
+        bottomRightLongitude: Double,
+        bottomRightLatitude: Double,
+        memberLongitude: Double,
+        memberLatitude: Double,
+        zoomLevel: Int
+    ) {
+        mapRemoteDataSource.postMemberPlace(
+            topLeftLongitude,
+            topLeftLatitude,
+            bottomRightLongitude,
+            bottomRightLatitude,
+            memberLongitude,
+            memberLatitude,
+            zoomLevel
+        ).first().let { result ->
+            if (result is ApiResult.Success) {
+                _memberPlaceList.update {
                     result.data.data
                 }
             }

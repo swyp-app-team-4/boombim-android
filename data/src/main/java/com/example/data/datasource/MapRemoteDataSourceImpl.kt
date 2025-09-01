@@ -7,6 +7,7 @@ import com.example.domain.datasource.MapRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CongestionResponse
 import com.example.domain.model.Coordinate
+import com.example.domain.model.MemberPlaceResponse
 import com.example.domain.model.OfficialPlaceResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -22,14 +23,34 @@ class MapRemoteDataSourceImpl @Inject constructor(
         bottomRightLongitude: Double,
         bottomRightLatitude: Double,
         memberLongitude: Double,
-        memberLatitude: Double
+        memberLatitude: Double,
+        zoomLevel: Int
     ): Flow<ApiResult<CongestionResponse>> {
         val request = PostViewPortRequest(
             topLeft = Coordinate(topLeftLatitude, topLeftLongitude),
             bottomRight = Coordinate(bottomRightLatitude, bottomRightLongitude),
-            memberCoordinate = Coordinate(memberLatitude, memberLongitude)
+            memberCoordinate = Coordinate(memberLatitude, memberLongitude),
+            zoomLevel
         )
         return safeFlow { mapApi.postViewPort(request)}
+    }
+
+    override suspend fun postMemberPlace(
+        topLeftLongitude: Double,
+        topLeftLatitude: Double,
+        bottomRightLongitude: Double,
+        bottomRightLatitude: Double,
+        memberLongitude: Double,
+        memberLatitude: Double,
+        zoomLevel: Int
+    ): Flow<ApiResult<MemberPlaceResponse>> {
+        val request = PostViewPortRequest(
+            topLeft = Coordinate(topLeftLatitude, topLeftLongitude),
+            bottomRight = Coordinate(bottomRightLatitude, bottomRightLongitude),
+            memberCoordinate = Coordinate(memberLatitude, memberLongitude),
+            zoomLevel
+        )
+        return safeFlow { mapApi.postMemberPlace(request)}
     }
 
     override suspend fun getOfficialPlaceOverview(officialPlaceId: Int): Flow<ApiResult<OfficialPlaceResponse>> {
