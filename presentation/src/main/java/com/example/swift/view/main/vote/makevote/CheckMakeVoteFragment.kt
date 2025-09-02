@@ -121,16 +121,24 @@ class CheckMakeVoteFragment : Fragment() {
             if (userLocation != null) {
                 val userLat = userLocation.latitude.toString()
                 val userLng = userLocation.longitude.toString()
+//
+//                val userLat = "37.50437663505579"
+//                val userLng = "127.04897066287083"
 
 
                 voteViewModel.makeVote(
                     postId, posLat, posLng, userLat, userLng, posName,
-                    onSuccess = { msg ->
+                    onSuccess = {
                         findNavController().navigate(R.id.chattingFragment)
                         CompleteMakeVoteDialog().show(parentFragmentManager, "CompleteMakeVoteDialog")
                     },
                     onFail = { msg ->
-                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                        val errorMessage = when (msg) {
+                            "403" -> "장소가 300m를 초과했습니다."
+                            "409" -> "이미 해당 장소의 투표가 존재합니다."
+                            else -> msg ?: "알 수 없는 오류가 발생했습니다."
+                        }
+                        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
                     }
                 )
             }

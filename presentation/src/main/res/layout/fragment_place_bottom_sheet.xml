@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:fontFamily="@font/pretend_semibold"
-                android:text="공공데이터"
+                android:text="오픈 서울"
                 android:textColor="@color/gray_scale_10"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"

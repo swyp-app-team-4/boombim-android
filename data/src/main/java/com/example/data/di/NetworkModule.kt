@@ -3,6 +3,7 @@ package com.example.data.di
 import android.content.Context
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
+import com.example.data.network.favorite.FavoriteApi
 import com.example.data.network.home.HomeApi
 import com.example.data.network.kakaosearch.KakaoLocalApi
 import com.example.data.network.map.MapApi
@@ -120,6 +121,11 @@ object NetworkModule {
     @Singleton
     fun provideVoteApi(@AuthRetrofit retrofit: Retrofit): VoteApi =
         retrofit.create(VoteApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideFavoriteApi(@AuthRetrofit retrofit: Retrofit): FavoriteApi =
+        retrofit.create(FavoriteApi::class.java)
 
     @Provides
     @Singleton

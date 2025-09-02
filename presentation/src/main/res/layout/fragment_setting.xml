@@ -107,7 +107,7 @@
         app:layout_constraintTop_toBottomOf="@id/container_alert"/>
 
     <LinearLayout
-        android:id="@+id/container_privacy"
+        android:id="@+id/container_use"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
@@ -144,15 +144,15 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_privacy"/>
+        app:layout_constraintTop_toBottomOf="@id/container_use"/>
 
     <LinearLayout
-        android:id="@+id/container_login_history"
+        android:id="@+id/container_privacy"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/container_privacy"
+        app:layout_constraintTop_toBottomOf="@id/container_use"
         android:orientation="horizontal">
 
         <TextView
@@ -184,15 +184,15 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_login_history"/>
+        app:layout_constraintTop_toBottomOf="@id/container_privacy"/>
 
     <LinearLayout
-        android:id="@+id/container_service"
+        android:id="@+id/container_service_explain"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/container_login_history"
+        app:layout_constraintTop_toBottomOf="@id/container_privacy"
         android:orientation="horizontal">
 
         <TextView
@@ -224,7 +224,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/container_service"/>
+        app:layout_constraintTop_toBottomOf="@id/container_service_explain"/>
 
     <LinearLayout
         android:id="@+id/container_customer_center"
@@ -232,7 +232,7 @@
         android:layout_height="48dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintTop_toBottomOf="@id/container_service"
+        app:layout_constraintTop_toBottomOf="@id/container_service_explain"
         android:orientation="horizontal">
 
         <TextView

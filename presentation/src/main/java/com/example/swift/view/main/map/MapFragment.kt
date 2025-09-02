@@ -76,10 +76,17 @@ class MapFragment : Fragment() {
                     setupCameraMoveListener()
                     observePlaces()
 
-                    kakaoMap?.setOnLabelClickListener { kakaoMap, layer, label -> // 라벨 클릭 시 처리할 로직
-                        val place = label.tag as CongestionData
-                        showBottomSheet(place)
+                    kakaoMap?.setOnLabelClickListener { _, _, label ->
+                        when (val tag = label.tag) {
+                            is CongestionData -> {
+                                showBottomSheet(tag)
+                            }
+                            is MemberPlaceData -> {
+                                showMemberBottomSheet(tag)
+                            }
+                        }
                     }
+
                 }
             }
         )
@@ -188,6 +195,11 @@ class MapFragment : Fragment() {
 
     private fun showBottomSheet(place: CongestionData) {
         val bottomSheet = OfficialPlaceBottomSheetFragment(place)
+        bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+    }
+
+    private fun showMemberBottomSheet(place: MemberPlaceData) {
+        val bottomSheet = MemberPlaceBottomSheetFragment(place)
         bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 

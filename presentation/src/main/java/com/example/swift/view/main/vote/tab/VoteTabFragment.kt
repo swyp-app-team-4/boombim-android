@@ -115,6 +115,7 @@ class VoteTabFragment : Fragment() {
 
             location?.let {
                 voteViewModel.fetchVoteList(it.latitude, it.longitude)
+//                voteViewModel.fetchVoteList("37.50437663505579".toDouble(), "127.04897066287083".toDouble())
             }
         }
     }

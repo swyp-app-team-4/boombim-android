@@ -187,6 +187,8 @@ class MakeCongestionFragment : Fragment() {
                     congestionMessage = message,
                     latitude = location.latitude,
                     longitude = location.longitude,
+//                    latitude = "37.50437663505579".toDouble(),
+//                    longitude = "127.04897066287083".toDouble(),
                     onSuccess = { msg ->
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                         findNavController().navigate(

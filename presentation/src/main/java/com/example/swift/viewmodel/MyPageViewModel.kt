@@ -10,6 +10,7 @@ import com.example.domain.usecase.mypage.FetchMyProfileUseCase
 import com.example.domain.usecase.mypage.GetMyAnswerUseCase
 import com.example.domain.usecase.mypage.GetMyProfileUseCase
 import com.example.domain.usecase.mypage.GetMyQuestionUseCase
+import com.example.domain.usecase.mypage.PatchProfileImageUseCase
 import com.example.domain.usecase.mypage.PatchUserNickNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
@@ -25,7 +26,8 @@ class MyPageViewModel @Inject constructor(
     getMyAnswerUseCase: GetMyAnswerUseCase,
     getMyQuestionUseCase: GetMyQuestionUseCase,
     fetchMYPageAnswerListUseCase: FetMyPageAnswerListUseCase,
-    private val patchUserNickNameUseCase: PatchUserNickNameUseCase
+    private val patchUserNickNameUseCase: PatchUserNickNameUseCase,
+    private val patchProfileImageUseCase: PatchProfileImageUseCase
 
 ): ViewModel(){
 
@@ -73,6 +75,15 @@ class MyPageViewModel @Inject constructor(
                     profile.value.name = name
                 }
             }
+        }
+    }
+
+    fun patchProfileImage(
+        imagePath: String
+    ){
+        viewModelScope.launch {
+           patchProfileImageUseCase(imagePath)
+            profile.value.profile = imagePath
         }
     }
 

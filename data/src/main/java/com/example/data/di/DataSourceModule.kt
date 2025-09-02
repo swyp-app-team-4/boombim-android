@@ -1,6 +1,7 @@
 package com.example.data.di
 
 import com.example.data.datasource.AuthRemoteDataSourceImpl
+import com.example.data.datasource.FavoriteRemoteDatasourceImpl
 import com.example.data.datasource.HomeRemoteDataSourceImpl
 import com.example.data.datasource.KakaoSearchRemoteDataSourceImpl
 import com.example.data.datasource.MapRemoteDataSourceImpl
@@ -8,6 +9,7 @@ import com.example.data.datasource.MyPageRemoteDataSourceImpl
 import com.example.data.datasource.NotificationRemoteDataSourceImpl
 import com.example.data.datasource.VoteRemoteDataSourceImpl
 import com.example.domain.datasource.AuthRemoteDataSource
+import com.example.domain.datasource.FavoriteRemoteDatasource
 import com.example.domain.datasource.HomeRemoteDataSource
 import com.example.domain.datasource.KakaoSearchRemoteDataSource
 import com.example.domain.datasource.MapRemoteDataSource
@@ -65,5 +67,10 @@ abstract class DataSourceModule {
     abstract fun bindHomeRemoteSource(
         homeRemoteDataSource: HomeRemoteDataSourceImpl
     ): HomeRemoteDataSource
+    @Binds
+    @Singleton
+    abstract fun bindFavoriteRemoteSource(
+        favoriteRemoteDataSource: FavoriteRemoteDatasourceImpl
+    ): FavoriteRemoteDatasource
 
 }

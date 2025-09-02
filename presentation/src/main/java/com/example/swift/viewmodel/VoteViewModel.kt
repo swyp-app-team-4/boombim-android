@@ -111,15 +111,16 @@ class VoteViewModel @Inject constructor(
         userLatitude: String,
         userLongitude: String,
         posName: String,
-        onSuccess: (msg: String) -> Unit,
+        onSuccess: () -> Unit,
         onFail: (msg: String) -> Unit
     ){
         viewModelScope.launch{
-            when (makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)) {
-                is ApiResult.Success -> onSuccess("성공")
-                is ApiResult.SuccessEmpty -> onSuccess("성공")
-                is ApiResult.Fail.Error -> onFail("위치가 500m를 넘었습니다!")
-                is ApiResult.Fail.Exception -> onFail("알수없는 오류")
+          val result = makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)
+            when(result){
+                is ApiResult.Success -> onSuccess()
+                is ApiResult.Fail.Error -> onFail(result.code.toString() ?: "투표 생성 실패")
+                is ApiResult.Fail.Exception -> onFail("예상치 못한 오류")
+                is ApiResult.SuccessEmpty ->  onSuccess()
             }
         }
     }

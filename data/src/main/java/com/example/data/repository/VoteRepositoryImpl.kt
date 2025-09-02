@@ -6,6 +6,7 @@ import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.model.MyVoteItem
 import com.example.domain.model.NotificationModel
+import com.example.domain.model.VoteErrorResponse
 import com.example.domain.model.VoteItem
 import com.example.domain.model.VoteResponse
 import com.example.domain.model.onSuccess
@@ -108,10 +109,10 @@ class VoteRepositoryImpl @Inject constructor(
         userLatitude: String,
         userLongitude: String,
         posName: String
-    ): ApiResult<Unit> {
+    ): ApiResult<VoteErrorResponse> {
         return try {
             when(val response = voteRemoteDataSource.makeVote(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)){
-                is ApiResult.Success -> ApiResult.Success(Unit)
+                is ApiResult.Success -> ApiResult.Success(response.data)
                 is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
                 is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
                 is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)

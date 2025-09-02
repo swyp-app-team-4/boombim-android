@@ -7,6 +7,7 @@ import com.example.data.network.vote.request.EndVoteRequest
 import com.example.data.network.vote.request.MakeVoteRequest
 import com.example.domain.datasource.VoteRemoteDataSource
 import com.example.domain.model.ApiResult
+import com.example.domain.model.VoteErrorResponse
 import com.example.domain.model.VoteResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -28,7 +29,7 @@ class VoteRemoteDataSourceImpl @Inject constructor(
     override suspend fun postVote(voteId: Int, answer: String): ApiResult<Unit> {
         val request = PostVoteRequest(voteId, answer)
 
-        return safeFlow { voteApi.makeVote(request)}.first()
+        return safeFlow { voteApi.attemptVote(request)}.first()
     }
 
     override suspend fun patchVote(voteId: Int): ApiResult<Unit> {
@@ -44,7 +45,7 @@ class VoteRemoteDataSourceImpl @Inject constructor(
         userLatitude: String,
         userLongitude: String,
         posName: String
-    ): ApiResult<Unit> {
+    ): ApiResult<VoteErrorResponse> {
         val request = MakeVoteRequest(postId,posLatitude, posLongitude, userLatitude, userLongitude, posName)
 
         return safeFlow { voteApi.makeVote(request)}.first()

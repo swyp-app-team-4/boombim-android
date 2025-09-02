@@ -47,10 +47,10 @@ class SettingFragment : Fragment() {
             )
         }
 
-        binding.containerLoginHistory.setOnClickListener {
+        binding.containerUse.setOnClickListener {
             val bundle = Bundle().apply {
-                putString("url", "https://awesome-captain-026.notion.site/2529598992b080198821d47baaf7d23f?pvs=74")
-                putString("title", "개인정보 처리방침")
+                putString("url", "https://awesome-captain-026.notion.site/2529598992b080119479fef036d96aba?source=copy_link")
+                putString("title", "이용약관")
             }
 
             findNavController().navigate(R.id.policyFragment, bundle)
@@ -58,8 +58,26 @@ class SettingFragment : Fragment() {
 
         binding.containerPrivacy.setOnClickListener {
             val bundle = Bundle().apply {
-                putString("url", "https://awesome-captain-026.notion.site/2529598992b080119479fef036d96aba?pvs=74")
-                putString("title", "서비스 이용약관")
+                putString("url", "https://awesome-captain-026.notion.site/2529598992b080198821d47baaf7d23f?source=copy_link")
+                putString("title", "개인정보")
+            }
+
+            findNavController().navigate(R.id.policyFragment, bundle)
+        }
+
+        binding.containerServiceExplain.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("url", "https://awesome-captain-026.notion.site/25b9598992b08065a7ccf361e3f8ccf8?source=copy_link")
+                putString("title", "이용안내")
+            }
+
+            findNavController().navigate(R.id.policyFragment, bundle)
+        }
+
+        binding.containerCustomerCenter.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("url", "https://awesome-captain-026.notion.site/25b9598992b0804fb058d1310b6ecdf0?source=copy_link")
+                putString("title", "고객센터")
             }
 
             findNavController().navigate(R.id.policyFragment, bundle)

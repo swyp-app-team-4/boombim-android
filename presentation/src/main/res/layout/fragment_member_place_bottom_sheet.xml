@@ -35,7 +35,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
                 android:fontFamily="@font/pretend_semibold"
-                android:text="공공데이터"
+                android:text="현장피드"
                 android:textColor="@color/gray_scale_10"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -43,6 +43,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
+                android:id="@+id/icon_favorite"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -102,14 +103,30 @@
                 app:layout_constraintTop_toTopOf="@id/text_place_address"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/button_announce"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:background="@drawable/bg_radius_30_background_main_color"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="20dp"
+                android:layout_marginEnd="20dp"
+                android:text="붐빔 알리기"
+                android:textColor="@color/white"
+                android:stateListAnimator="@null"
+                android:textSize="14sp"
+                android:fontFamily="@font/pretend_medium"
+                app:layout_constraintTop_toBottomOf="@id/text_update_time"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <View
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="8dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="12dp"
                 android:background="#ECECEC"
-                app:layout_constraintTop_toBottomOf="@id/icon_marker"/>
+                app:layout_constraintTop_toBottomOf="@id/button_announce"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
