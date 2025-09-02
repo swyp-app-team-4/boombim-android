@@ -41,8 +41,10 @@ class PolicyFragment : Fragment() {
         val title = arguments?.getString("title")
 
         when(title) {
-            "개인정보 처리방침" -> binding.webView.loadUrl(url ?: "")
-            "서비스 이용약관" -> binding.webView.loadUrl(url ?: "")
+            "이용약관" -> binding.webView.loadUrl(url ?: "")
+            "개인정보" -> binding.webView.loadUrl(url ?: "")
+            "이용안내" -> binding.webView.loadUrl(url ?: "")
+            "고객센터" -> binding.webView.loadUrl(url ?: "")
             else -> ""
         }
 
