@@ -121,6 +121,9 @@ class CheckMakeVoteFragment : Fragment() {
             if (userLocation != null) {
                 val userLat = userLocation.latitude.toString()
                 val userLng = userLocation.longitude.toString()
+//
+//                val userLat = "37.50437663505579"
+//                val userLng = "127.04897066287083"
 
 
                 voteViewModel.makeVote(

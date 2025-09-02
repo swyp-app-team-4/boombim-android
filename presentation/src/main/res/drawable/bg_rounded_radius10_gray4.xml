@@ -8,5 +8,5 @@
         android:color="@color/gray_scale_4"/> <!-- 옅은 회색 -->
 
     <!-- 모서리 둥글기 -->
-    <corners android:radius="8dp"/>
+    <corners android:radius="10dp"/>
 </shape>

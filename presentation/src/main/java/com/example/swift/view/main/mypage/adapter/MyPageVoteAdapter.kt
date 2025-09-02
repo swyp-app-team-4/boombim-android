@@ -85,8 +85,8 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
     private fun getBoombimIcon(res: String): Int? {
         return when (res) {
             "RELAXED" -> R.drawable.icon_calm_empty
-            "NORMAL" -> R.drawable.icon_normal_empty
-            "SLIGHTLY_BUSY" -> R.drawable.icon_slightly_busy_empty
+            "COMMONLY" -> R.drawable.icon_normal_empty
+            "BUSY" -> R.drawable.icon_slightly_busy_empty
             "CROWED" -> R.drawable.icon_busy_empty
             else -> null
         }

@@ -4,6 +4,7 @@ import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.model.MyVoteItem
 import com.example.domain.model.NotificationModel
+import com.example.domain.model.VoteErrorResponse
 import com.example.domain.model.VoteItem
 import kotlinx.coroutines.flow.Flow
 
@@ -29,5 +30,5 @@ interface VoteRepository {
         userLatitude: String,
         userLongitude: String,
         posName: String
-    ): ApiResult<Unit>
+    ): ApiResult<VoteErrorResponse>
 }

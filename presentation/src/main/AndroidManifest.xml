@@ -27,11 +27,13 @@
         <activity
             android:name="com.example.swift.view.MainActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop" />
 
         <activity
             android:name="com.example.swift.view.onboarding.OnBoardingActivity"
             android:exported="false"
+            android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop" />
 
         <activity
