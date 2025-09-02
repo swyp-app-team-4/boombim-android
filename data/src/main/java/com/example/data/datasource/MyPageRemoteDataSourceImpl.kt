@@ -7,9 +7,15 @@ import com.example.data.network.safeFlow
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.MyPageVoteResponse
+import com.example.domain.model.PatchProfileImageResponse
 import com.example.domain.model.ProfileModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 import javax.inject.Inject
 
 class MyPageRemoteDataSourceImpl @Inject constructor(
@@ -38,6 +44,19 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
     override suspend fun logout(refresh: String): ApiResult<*> {
         val request = RefreshTokenRequest(refresh)
         return safeFlow { myPageApi.logout(request)}.first()
+    }
+
+    override suspend fun patchProfileImage(imagePath: String): ApiResult<PatchProfileImageResponse> {
+        val file = File(imagePath)
+
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        val multipartBody = MultipartBody.Part.createFormData(
+            name = "multipartFile",
+            filename = file.name,
+            body = requestFile
+        )
+
+        return safeFlow { myPageApi.patchProfileImage(multipartBody)}.first()
     }
 
 }

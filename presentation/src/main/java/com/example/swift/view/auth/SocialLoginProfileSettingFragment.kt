@@ -1,4 +1,4 @@
-package com.example.swift.view.main.mypage
+package com.example.swift.view.auth
 
 import android.net.Uri
 import android.os.Bundle
@@ -11,22 +11,18 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
-import androidx.recyclerview.widget.GridLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentEditProfileBinding
-import com.boombim.android.databinding.FragmentMyPageInterestsTabBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ImageAddType
-import com.example.domain.model.InterestsPlaceModel
 import com.example.swift.view.dialog.ImagePickerDialogFragment
-import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.viewmodel.MyPageViewModel
-import com.example.swift.viewmodel.VoteViewModel
 import kotlinx.coroutines.launch
 
-class EditProfileFragment : Fragment() {
+class SocialLoginProfileSettingFragment : Fragment() {
     private var _binding: FragmentEditProfileBinding? = null
     private val binding get() = _binding!!
     private val myPageViewModel: MyPageViewModel by activityViewModels()
@@ -45,28 +41,28 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initBackButton()
+
         observeProfile()
+
         initNicknameWatcher()
+
         initProfileImageClick()
-        
+
         binding.btnPatch.setOnClickListener{
             myPageViewModel.patchNickName(
                 binding.editNickname.text.toString(),
                 onSuccess = {
+                    val navOptions = NavOptions.Builder()
+                        .setPopUpTo(R.id.socialLoginProfileSettingFragment, true)
+                        .build()
+
                     Toast.makeText(requireContext(), "변경이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                            },
+                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                },
                 onFail = {
                     Toast.makeText(requireContext(), "변경 실패", Toast.LENGTH_SHORT).show()
                 }
             )
-
-            val tag = binding.imageProfile.tag
-
-            if (tag is String) {
-                myPageViewModel.patchProfileImage(
-                    imagePath = tag
-                )
-            }
         }
     }
 
@@ -171,7 +167,6 @@ class EditProfileFragment : Fragment() {
         }
         return null
     }
-
 
 
 

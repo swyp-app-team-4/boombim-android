@@ -104,11 +104,14 @@ class SocialLoginFragment : Fragment() {
                   val navOptions = NavOptions.Builder()
                       .setPopUpTo(R.id.socialLoginFragment, true)
                       .build()
+
                   findNavController().navigate(R.id.homeFragment, null, navOptions)
+
                   Toast.makeText(requireContext(), "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
               }else{
                   Toast.makeText(requireContext(), "카카오 로그인 성공", Toast.LENGTH_SHORT).show()
-                  findNavController().navigate(R.id.editProfileFragment)
+
+                  findNavController().navigate(R.id.socialLoginProfileSettingFragment)
               }
             },
             onFail = { msg ->
@@ -128,10 +131,12 @@ class SocialLoginFragment : Fragment() {
                         .setPopUpTo(R.id.socialLoginFragment, true)
                         .build()
                     findNavController().navigate(R.id.homeFragment, null, navOptions)
+
                     Toast.makeText(requireContext(), "네이버 로그인 성공", Toast.LENGTH_SHORT).show()
                 }else{
                     Toast.makeText(requireContext(), "네이버 로그인 성공", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.editProfileFragment)
+
+                    findNavController().navigate(R.id.socialLoginProfileSettingFragment)
                 }
             },
             onFail = { msg ->

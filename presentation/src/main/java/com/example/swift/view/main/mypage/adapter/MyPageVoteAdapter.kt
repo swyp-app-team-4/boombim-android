@@ -37,24 +37,30 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
             binding.progressSlightlyBusy.progress = item.slightlyBusyCnt
             binding.progressBusy.progress = item.crowedCnt
 
-            if (item.popularRes.size >= 2) {
+            if (item.popularRes.isNotEmpty()) {
                 val icon1 = getBoombimIcon(item.popularRes[0])
-                val icon2 = getBoombimIcon(item.popularRes[1])
-
                 if (icon1 != null) {
                     binding.imageBoombim1.setImageResource(icon1)
                     binding.imageBoombim1.visibility = View.VISIBLE
                 } else {
                     binding.imageBoombim1.visibility = View.GONE
                 }
+            } else {
+                binding.imageBoombim1.visibility = View.GONE
+            }
 
+            if (item.popularRes.size >= 2) {
+                val icon2 = getBoombimIcon(item.popularRes[1])
                 if (icon2 != null) {
                     binding.imageBoombim2.setImageResource(icon2)
                     binding.imageBoombim2.visibility = View.VISIBLE
                 } else {
                     binding.imageBoombim2.visibility = View.GONE
                 }
+            } else {
+                binding.imageBoombim2.visibility = View.GONE
             }
+
 
 
             val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
@@ -87,7 +93,7 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
             "RELAXED" -> R.drawable.icon_calm_empty
             "COMMONLY" -> R.drawable.icon_normal_empty
             "BUSY" -> R.drawable.icon_slightly_busy_empty
-            "CROWED" -> R.drawable.icon_busy_empty
+            "CROWDED" -> R.drawable.icon_busy_empty
             else -> null
         }
     }

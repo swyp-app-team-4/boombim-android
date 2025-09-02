@@ -100,6 +100,10 @@
         android:id="@+id/checkCongestionPlaceFragment"
         android:name="com.example.swift.view.main.makecongestion.CheckCongestionPlaceFragment"
         android:label="CheckCongestionPlaceFragment" />
+    <fragment
+        android:id="@+id/socialLoginProfileSettingFragment"
+        android:name="com.example.swift.view.auth.SocialLoginProfileSettingFragment"
+        android:label="SocialLoginProfileSettingFragment" />
 
 
 </navigation>

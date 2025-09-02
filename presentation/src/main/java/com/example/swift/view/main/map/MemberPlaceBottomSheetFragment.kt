@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMemberPlaceBottomSheetBinding
 import com.boombim.android.databinding.FragmentPlaceBottomSheetBinding
@@ -52,6 +53,11 @@ class MemberPlaceBottomSheetFragment (
         setupBottomSheet()
 
         binding.textPlaceName.text = place.name
+
+        binding.buttonAnnounce.setOnClickListener {
+            dismiss()
+            findNavController().navigate(R.id.makeCongestionFragment)
+        }
         
         binding.iconFavorite.setOnClickListener { 
             favoriteViewModel.postFavorite(

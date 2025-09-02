@@ -7,6 +7,19 @@
     android:padding="15dp"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <TextView
+        android:id="@+id/text_no_news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="오늘 예정된 집회 소식이 없습니다."
+        android:textColor="@color/gray_scale_8"
+        android:textSize="14sp"
+        android:fontFamily="@font/pretend_regular"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <ImageView
         android:id="@+id/image_korea_mark"
         android:layout_width="wrap_content"

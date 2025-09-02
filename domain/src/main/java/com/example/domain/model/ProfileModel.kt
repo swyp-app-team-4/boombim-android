@@ -5,7 +5,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class ProfileModel (
     var name: String = "",
-    val profile: String = "",
+    var profile: String = "",
     val email: String = "",
     val socialProvider: String = "",
     val voteCnt: Int = 0,

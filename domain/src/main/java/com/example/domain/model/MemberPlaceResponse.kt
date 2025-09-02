@@ -19,5 +19,6 @@ data class MemberPlaceData(
     @SerialName("coordinate") val coordinate: Coordinate,
     @SerialName("distance") val distance: Double,
     @SerialName("congestionLevelName") val congestionLevelName: String,
-    @SerialName("congestionMessage") val congestionMessage: String
+    @SerialName("congestionMessage") val congestionMessage: String,
+    val clusterSize: Int? = null,
 )
