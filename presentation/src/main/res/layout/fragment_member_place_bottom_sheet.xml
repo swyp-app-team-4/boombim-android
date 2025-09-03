@@ -47,6 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
+                android:layout_marginEnd="6dp"
                 android:padding="11dp"
                 android:src="@drawable/icon_star"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -69,7 +70,7 @@
                 android:id="@+id/icon_marker"
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/icon_marker_gray"
+                android:src="@drawable/icon_clock"
                 app:layout_constraintStart_toStartOf="@id/text_place_name"
                 app:layout_constraintTop_toBottomOf="@id/text_place_name" />
 
@@ -77,31 +78,14 @@
                 android:id="@+id/text_place_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:fontFamily="@font/pretend_semibold"
-                android:textColor="@color/gray_scale_8"
-                android:textSize="14sp"
-                app:layout_constraintStart_toEndOf="@id/icon_marker"
-                app:layout_constraintTop_toBottomOf="@id/text_place_name"
-                tools:text="서울특별시 강남로 331" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/icon_clock"
-                app:layout_constraintEnd_toStartOf="@+id/text_update_time"
-                app:layout_constraintTop_toTopOf="@id/text_place_address"/>
-
-            <TextView
-                android:id="@+id/text_update_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 tools:text="14분전"
                 android:textSize="13sp"
                 android:layout_marginEnd="16dp"
                 android:textColor="@color/gray_scale_9"
                 android:fontFamily="@font/pretend_regular"
-                app:layout_constraintTop_toTopOf="@id/text_place_address"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintStart_toEndOf="@id/icon_marker"
+                app:layout_constraintTop_toBottomOf="@id/text_place_name" />
+
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_announce"
@@ -116,7 +100,7 @@
                 android:stateListAnimator="@null"
                 android:textSize="14sp"
                 android:fontFamily="@font/pretend_medium"
-                app:layout_constraintTop_toBottomOf="@id/text_update_time"
+                app:layout_constraintTop_toBottomOf="@id/icon_marker"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -127,6 +111,79 @@
                 android:layout_marginTop="12dp"
                 android:background="#ECECEC"
                 app:layout_constraintTop_toBottomOf="@id/button_announce"/>
+
+            <HorizontalScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/divider"
+                android:layout_marginTop="10dp"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="68dp"
+                        android:layout_height="34dp"
+                        android:background="@drawable/tab_background_selector"
+                        android:fontFamily="@font/pretend_regular"
+                        android:layout_marginStart="16dp"
+                        android:text="최신순"
+                        android:gravity="center"
+                        android:textColor="@color/tab_text_selector"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="64dp"
+                        android:layout_height="34dp"
+                        android:text="붐빔"
+                        android:gravity="center"
+                        android:background="@drawable/tab_background_selector"
+                        android:fontFamily="@font/pretend_regular"
+                        android:textColor="@color/tab_text_selector"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"/>
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="34dp"
+                        android:text="약간붐빔"
+                        android:gravity="center"
+                        android:background="@drawable/tab_background_selector"
+                        android:fontFamily="@font/pretend_regular"
+                        android:textColor="@color/tab_text_selector"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"/>
+
+                    <TextView
+                        android:layout_width="64dp"
+                        android:layout_height="34dp"
+                        android:text="보통"
+                        android:gravity="center"
+                        android:background="@drawable/tab_background_selector"
+                        android:fontFamily="@font/pretend_regular"
+                        android:textColor="@color/tab_text_selector"
+                        android:textSize="14sp"
+                        android:layout_marginStart="8dp"/>
+
+                    <TextView
+                        android:layout_width="64dp"
+                        android:layout_height="34dp"
+                        android:text="여유"
+                        android:gravity="center"
+                        android:background="@drawable/tab_background_selector"
+                        android:fontFamily="@font/pretend_regular"
+                        android:textColor="@color/tab_text_selector"
+                        android:textSize="14sp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="8dp"/>
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

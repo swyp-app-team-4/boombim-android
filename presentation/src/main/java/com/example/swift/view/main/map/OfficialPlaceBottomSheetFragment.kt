@@ -5,17 +5,21 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.RoundedCorner
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentPlaceBottomSheetBinding
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.example.domain.model.CongestionData
 import com.example.domain.model.PlaceData
 import com.example.swift.util.DateTimeUtils
@@ -39,8 +43,6 @@ class OfficialPlaceBottomSheetFragment(
     private var _binding: FragmentPlaceBottomSheetBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mapView: MapView
-    private var kakaoMap: KakaoMap? = null
     private val mapViewModel: MapViewModel by activityViewModels()
 
     override fun getTheme(): Int = R.style.RoundedBottomSheetDialog
@@ -62,9 +64,13 @@ class OfficialPlaceBottomSheetFragment(
         }
 
         setupBottomSheet()
-        setupMap(place.coordinate.longitude, place.coordinate.latitude)
 
         binding.textPlaceName.text = place.officialPlaceName
+
+        Glide.with(binding.mapView.context)
+            .load(place.imageUrl)
+            .centerCrop()
+            .into(binding.mapView)
 
 
         binding.iconBoombim.setImageResource(
@@ -95,28 +101,6 @@ class OfficialPlaceBottomSheetFragment(
             layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
             layoutParams = layoutParams
         }
-    }
-
-    private fun setupMap(longitude: Double, latitude: Double) {
-        mapView = binding.mapView
-
-        mapView.start(object : MapLifeCycleCallback() {
-            override fun onMapDestroy() {}
-            override fun onMapError(p0: Exception?) {}
-        }, object : KakaoMapReadyCallback() {
-            override fun onMapReady(kakaomap: KakaoMap) {
-                kakaoMap = kakaomap
-
-                MapUtil.addMarker(
-                    context = requireContext(),
-                    kakaoMap = kakaoMap,
-                    latitude = latitude,
-                    longitude = longitude,
-                    markerResId = R.drawable.image_green_pin,
-                    moveCamera = true
-                )
-            }
-        })
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

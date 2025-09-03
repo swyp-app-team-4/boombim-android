@@ -47,6 +47,10 @@ class SettingFragment : Fragment() {
             )
         }
 
+        binding.containerAlert.setOnClickListener{
+            findNavController().navigate(R.id.alertFragment)
+        }
+
         binding.containerUse.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("url", "https://awesome-captain-026.notion.site/2529598992b080119479fef036d96aba?source=copy_link")
@@ -97,7 +101,7 @@ class SettingFragment : Fragment() {
                                 R.id.socialLoginFragment,
                                 null,
                                 navOptions {
-                                    popUpTo(findNavController().graph.startDestinationId) {
+                                    popUpTo(findNavController().graph.id) {
                                         inclusive = true
                                     }
                                 }

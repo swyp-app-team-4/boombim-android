@@ -66,7 +66,8 @@ class CheckMakeVoteFragment : Fragment() {
                 postId = id,
                 posLat = latitude,
                 posLng = longitude,
-                posName = placeName
+                posName = placeName,
+                address = addressName
             )
         }
 
@@ -110,7 +111,8 @@ class CheckMakeVoteFragment : Fragment() {
         postId: Int,
         posLat: String,
         posLng: String,
-        posName: String
+        posName: String,
+        address: String
     ) {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
@@ -127,10 +129,13 @@ class CheckMakeVoteFragment : Fragment() {
 
 
                 voteViewModel.makeVote(
-                    postId, posLat, posLng, userLat, userLng, posName,
+                    postId, posLat, posLng, userLat, userLng, posName,address,
                     onSuccess = {
                         findNavController().navigate(R.id.chattingFragment)
-                        CompleteMakeVoteDialog().show(parentFragmentManager, "CompleteMakeVoteDialog")
+                        CompleteMakeVoteDialog().show(
+                            parentFragmentManager,
+                            "CompleteMakeVoteDialog"
+                        )
                     },
                     onFail = { msg ->
                         val errorMessage = when (msg) {
@@ -139,7 +144,7 @@ class CheckMakeVoteFragment : Fragment() {
                             else -> msg ?: "알 수 없는 오류가 발생했습니다."
                         }
                         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-                    }
+                    },
                 )
             }
         }

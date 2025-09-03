@@ -108,10 +108,11 @@ class VoteRepositoryImpl @Inject constructor(
         posLongitude: String,
         userLatitude: String,
         userLongitude: String,
-        posName: String
+        posName: String,
+        address: String
     ): ApiResult<VoteErrorResponse> {
         return try {
-            when(val response = voteRemoteDataSource.makeVote(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)){
+            when(val response = voteRemoteDataSource.makeVote(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName, address)){
                 is ApiResult.Success -> ApiResult.Success(response.data)
                 is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
                 is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)

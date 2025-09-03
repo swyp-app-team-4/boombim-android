@@ -9,5 +9,6 @@ data class MakeVoteRequest (
     val posLongitude: String,
     val userLatitude: String,
     val userLongitude: String,
-    val posName: String
+    val posName: String,
+    val address: String
 )

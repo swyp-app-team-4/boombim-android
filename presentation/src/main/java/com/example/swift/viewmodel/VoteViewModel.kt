@@ -111,11 +111,12 @@ class VoteViewModel @Inject constructor(
         userLatitude: String,
         userLongitude: String,
         posName: String,
+        address: String,
         onSuccess: () -> Unit,
         onFail: (msg: String) -> Unit
     ){
         viewModelScope.launch{
-          val result = makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)
+          val result = makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName, address)
             when(result){
                 is ApiResult.Success -> onSuccess()
                 is ApiResult.Fail.Error -> onFail(result.code.toString() ?: "투표 생성 실패")
