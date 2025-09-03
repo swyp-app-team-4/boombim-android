@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 data class CheckUserPlaceRequest (
     val uuid: String,
     val name : String,
+    val address: String,
     val latitude: Double,
     val longitude: Double
 )

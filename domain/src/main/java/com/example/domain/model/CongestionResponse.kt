@@ -12,8 +12,9 @@ data class CongestionResponse(
 
 @Serializable
 data class CongestionData(
-    val id: Int,
-    val name: String,
+    val officialPlaceId: Int,
+    val officialPlaceName: String,
+    val imageUrl: String,
     val coordinate: Coordinate,
     val distance: Double,
     val congestionLevelName: String,

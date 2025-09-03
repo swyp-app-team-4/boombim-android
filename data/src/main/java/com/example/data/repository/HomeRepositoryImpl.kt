@@ -45,11 +45,12 @@ class HomeRepositoryImpl @Inject constructor(
     override suspend fun checkUserPlace(
         uuid: String,
         name: String,
+        address: String,
         latitude: Double,
         longitude: Double
     ): Flow<ApiResult<CheckUserPlaceResponse>> {
         return safeFlow {
-            val request = CheckUserPlaceRequest(uuid, name, latitude, longitude)
+            val request = CheckUserPlaceRequest(uuid, name,address, latitude, longitude)
             val result = homeApi.checkUserPlace(request)
 
             result

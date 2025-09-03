@@ -42,11 +42,12 @@ class HomeViewModel @Inject constructor(
         name: String,
         latitude: Double,
         longitude: Double,
+        address: String,
         onSuccess: (id: Int) -> Unit,
         onFailure: (msg:String) -> Unit
     ) {
         viewModelScope.launch {
-            checkUserPlaceUseCase(uuid, name, latitude, longitude).collect{ result ->
+            checkUserPlaceUseCase(uuid, name, address, latitude, longitude).collect{ result ->
                 when(result) {
                     is ApiResult.Success -> {
                         val id = result.data.data.memberPlaceId

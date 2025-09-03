@@ -16,6 +16,7 @@ interface HomeRepository {
     suspend fun checkUserPlace(
         uuid: String,
         name: String,
+        address: String,
         latitude: Double,
         longitude: Double
     ): Flow<ApiResult<CheckUserPlaceResponse>>

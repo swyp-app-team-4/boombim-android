@@ -8,4 +8,8 @@ interface FavoriteRepository {
     suspend fun postFavorite(
         memberPlaceId: Int
     ) : ActionResult<PostFavoriteResponse>
+
+    suspend fun deleteFavorite(
+        memberPlaceId: Int
+    ) : ActionResult<PostFavoriteResponse>
 }

@@ -58,13 +58,13 @@ class OfficialPlaceBottomSheetFragment(
         super.onViewCreated(view, savedInstanceState)
 
         lifecycleScope.launch {
-            mapViewModel.fetchOfficial(place.id)
+            mapViewModel.fetchOfficial(place.officialPlaceId)
         }
 
         setupBottomSheet()
         setupMap(place.coordinate.longitude, place.coordinate.latitude)
 
-        binding.textPlaceName.text = place.name
+        binding.textPlaceName.text = place.officialPlaceName
 
 
         binding.iconBoombim.setImageResource(

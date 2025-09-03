@@ -84,6 +84,7 @@ class CheckCongestionPlaceFragment : Fragment() {
                 placeName,
                 latitude,
                 longitude,
+                addressName,
                 onSuccess = { placeId -> serverPlaceId = placeId },
                 onFailure = { msg ->
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

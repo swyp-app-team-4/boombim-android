@@ -17,5 +17,10 @@ class FavoriteRepositoryImpl @Inject constructor(
         return result.covertApiResultToActionResultIfSuccess()
     }
 
+    override suspend fun deleteFavorite(memberPlaceId: Int): ActionResult<PostFavoriteResponse> {
+        val result = favoriteRemoteDatasource.deleteFavorite(memberPlaceId)
+        return result.covertApiResultToActionResultIfSuccess()
+    }
+
 
 }

@@ -19,4 +19,8 @@ class FavoriteRemoteDatasourceImpl @Inject constructor(
         return safeFlow { favoriteApi.postFavorite(request) }.first()
     }
 
+    override suspend fun deleteFavorite(memberPlaceId: Int): ApiResult<PostFavoriteResponse> {
+        return safeFlow { favoriteApi.deleteFavorite(memberPlaceId)}.first()
+    }
+
 }

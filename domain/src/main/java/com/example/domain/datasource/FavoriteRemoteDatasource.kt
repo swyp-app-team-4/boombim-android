@@ -8,4 +8,8 @@ interface FavoriteRemoteDatasource {
     suspend fun postFavorite(
         memberPlaceId: Int
     ) : ApiResult<PostFavoriteResponse>
+
+    suspend fun deleteFavorite(
+        memberPlaceId: Int
+    ) : ApiResult<PostFavoriteResponse>
 }
