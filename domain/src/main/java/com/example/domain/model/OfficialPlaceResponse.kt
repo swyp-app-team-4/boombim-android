@@ -12,15 +12,16 @@ data class OfficialPlaceResponse(
 
 @Serializable
 data class PlaceData(
-    val id: Int,
-    val name: String,
+    val officialPlaceId: Long,
+    val officialPlaceName: String,
     val poiCode: String,
     val observedAt: String,
     val centroidLatitude: Double,
     val centroidLongitude: Double,
     val polygonCoordinates: String,
     val demographics: List<Demographic>,
-    val forecasts: List<Forecast>
+    val forecasts: List<Forecast>,
+    val imageUrl: String
 )
 
 @Serializable

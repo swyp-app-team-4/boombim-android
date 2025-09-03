@@ -1,7 +1,9 @@
 package com.example.domain.repository
 
 import com.example.domain.model.ActionResult
+import com.example.domain.model.FavoriteData
 import com.example.domain.model.PostFavoriteResponse
+import kotlinx.coroutines.flow.Flow
 
 interface FavoriteRepository {
 
@@ -12,4 +14,8 @@ interface FavoriteRepository {
     suspend fun deleteFavorite(
         memberPlaceId: Int
     ) : ActionResult<PostFavoriteResponse>
+
+    suspend fun getFavorites()
+
+    suspend fun getFavoriteList() : Flow<List<FavoriteData>>
 }

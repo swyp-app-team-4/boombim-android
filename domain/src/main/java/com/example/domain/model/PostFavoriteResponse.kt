@@ -7,10 +7,10 @@ data class PostFavoriteResponse(
     val code: Int,
     val status: String,
     val message: String,
-    val data: FavoriteData?
+    val data: FavoriteDataId?
 )
 
 @Serializable
-data class FavoriteData(
+data class FavoriteDataId(
     val favoriteId: Int
 )

@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.usecase.favorite.DeleteFavoriteUseCase
+import com.example.domain.usecase.favorite.FetchFavoriteUseCase
+import com.example.domain.usecase.favorite.GetFavoriteUseCase
 import com.example.domain.usecase.favorite.PostFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
@@ -13,8 +15,18 @@ import javax.inject.Inject
 @HiltViewModel
 class FavoriteViewModel @Inject constructor(
     private val postFavoriteUseCase: PostFavoriteUseCase,
-    private val deleteFavoriteUseCase: DeleteFavoriteUseCase
+    private val deleteFavoriteUseCase: DeleteFavoriteUseCase,
+    getFavoriteUseCase: GetFavoriteUseCase,
+    private val fetchFavoriteUseCase: FetchFavoriteUseCase
 ) : ViewModel() {
+
+    init {
+        viewModelScope.launch {
+            fetchFavoriteUseCase()
+        }
+    }
+
+
 
     fun postFavorite(
         memberPlaceId: Int,
