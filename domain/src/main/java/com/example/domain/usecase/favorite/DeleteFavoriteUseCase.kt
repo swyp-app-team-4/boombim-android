@@ -7,6 +7,7 @@ class DeleteFavoriteUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ){
     suspend operator fun invoke(
-        memberPlaceId: Int
-    ) = favoriteRepository.deleteFavorite(memberPlaceId)
+        memberPlaceId: Int,
+        placeType: String
+    ) = favoriteRepository.deleteFavorite(memberPlaceId, placeType)
 }

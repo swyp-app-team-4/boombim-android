@@ -51,6 +51,10 @@ class SettingFragment : Fragment() {
             findNavController().navigate(R.id.alertFragment)
         }
 
+        binding.textDeleteAccount.setOnClickListener {
+            findNavController().navigate(R.id.withDrawFragment)
+        }
+
         binding.containerUse.setOnClickListener {
             val bundle = Bundle().apply {
                 putString("url", "https://awesome-captain-026.notion.site/2529598992b080119479fef036d96aba?source=copy_link")

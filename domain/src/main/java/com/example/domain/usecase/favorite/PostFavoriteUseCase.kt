@@ -7,6 +7,7 @@ class PostFavoriteUseCase @Inject constructor(
     private val favoriteRepository: FavoriteRepository
 ) {
     suspend operator fun invoke(
-        memberPlaceId: Int
-    ) = favoriteRepository.postFavorite(memberPlaceId)
+        memberPlaceId: Int,
+        placeType: String
+    ) = favoriteRepository.postFavorite(memberPlaceId, placeType)
 }

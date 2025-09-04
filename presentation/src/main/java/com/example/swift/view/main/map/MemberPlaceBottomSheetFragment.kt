@@ -87,6 +87,7 @@ class MemberPlaceBottomSheetFragment (
         if (place.isFavorite) {
             favoriteViewModel.deleteFavorite(
                 place.memberPlaceId,
+                place.placeType,
                 onSuccess = {
                     setFavoriteState(false)
                 },
@@ -96,6 +97,7 @@ class MemberPlaceBottomSheetFragment (
             // 즐겨찾기 아님 → 등록 API 호출
             favoriteViewModel.postFavorite(
                 place.memberPlaceId,
+                place.placeType,
                 onSuccess = {
                     setFavoriteState(true)
                 },

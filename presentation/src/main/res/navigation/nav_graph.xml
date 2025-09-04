@@ -108,6 +108,10 @@
         android:id="@+id/alertFragment"
         android:name="com.example.swift.view.main.setting.AlertFragment"
         android:label="AlertFragment" />
+    <fragment
+        android:id="@+id/withDrawFragment"
+        android:name="com.example.swift.view.main.setting.WithDrawFragment"
+        android:label="WithDrawFragment" />
 
 
 </navigation>

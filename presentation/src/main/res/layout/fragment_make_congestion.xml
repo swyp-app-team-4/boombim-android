@@ -227,7 +227,7 @@
             android:layout_marginTop="18dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
-            android:text="주변 상황 설명을 남겨주세요."
+            android:hint="주변 상황 설명을 남겨주세요."
             android:textSize="14sp"
             android:fontFamily="@font/pretend_regular"
             android:textColor="@color/gray_scale_7"

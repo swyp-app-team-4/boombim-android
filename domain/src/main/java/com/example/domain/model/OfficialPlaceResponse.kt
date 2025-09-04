@@ -14,6 +14,7 @@ data class OfficialPlaceResponse(
 data class PlaceData(
     val officialPlaceId: Long,
     val officialPlaceName: String,
+    val placeType: String,
     val poiCode: String,
     val observedAt: String,
     val centroidLatitude: Double,
@@ -21,7 +22,8 @@ data class PlaceData(
     val polygonCoordinates: String,
     val demographics: List<Demographic>,
     val forecasts: List<Forecast>,
-    val imageUrl: String
+    val imageUrl: String,
+    val isFavorite: Boolean
 )
 
 @Serializable

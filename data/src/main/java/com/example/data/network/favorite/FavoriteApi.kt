@@ -19,7 +19,8 @@ interface FavoriteApi {
 
     @DELETE("/favorite")
     suspend fun deleteFavorite(
-        @Query("memberPlaceId") memberPlaceId: Int
+        @Query("memberPlaceId") memberPlaceId: Int,
+        @Query("placeType") placeType: String
     ): Response<PostFavoriteResponse>
 
     @GET("/favorite")

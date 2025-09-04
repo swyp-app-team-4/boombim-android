@@ -8,11 +8,13 @@ import kotlinx.coroutines.flow.Flow
 interface FavoriteRemoteDatasource {
 
     suspend fun postFavorite(
-        memberPlaceId: Int
+        memberPlaceId: Int,
+        placeType: String
     ) : ApiResult<PostFavoriteResponse>
 
     suspend fun deleteFavorite(
-        memberPlaceId: Int
+        memberPlaceId: Int,
+        placeType: String
     ) : ApiResult<PostFavoriteResponse>
 
     suspend fun getFavorites() : Flow<ApiResult<FavoriteResponse>>

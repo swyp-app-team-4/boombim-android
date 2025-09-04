@@ -26,14 +26,14 @@ class FavoriteRepositoryImpl @Inject constructor(
 
     override suspend fun getFavoriteList(): Flow<List<FavoriteData>> = favoriteList
 
-    override suspend fun postFavorite(memberPlaceId: Int): ActionResult<PostFavoriteResponse> {
-        val result =  favoriteRemoteDatasource.postFavorite(memberPlaceId)
+    override suspend fun postFavorite(memberPlaceId: Int, placeType: String): ActionResult<PostFavoriteResponse> {
+        val result =  favoriteRemoteDatasource.postFavorite(memberPlaceId, placeType)
 
         return result.covertApiResultToActionResultIfSuccess()
     }
 
-    override suspend fun deleteFavorite(memberPlaceId: Int): ActionResult<PostFavoriteResponse> {
-        val result = favoriteRemoteDatasource.deleteFavorite(memberPlaceId)
+    override suspend fun deleteFavorite(memberPlaceId: Int, placeType: String): ActionResult<PostFavoriteResponse> {
+        val result = favoriteRemoteDatasource.deleteFavorite(memberPlaceId, placeType)
         val actionResult = result.covertApiResultToActionResultIfSuccess()
 
         if (actionResult is ActionResult.Success) {

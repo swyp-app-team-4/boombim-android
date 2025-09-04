@@ -24,6 +24,7 @@ import com.example.domain.model.CongestionData
 import com.example.domain.model.PlaceData
 import com.example.swift.util.DateTimeUtils
 import com.example.swift.util.MapUtil
+import com.example.swift.viewmodel.FavoriteViewModel
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -44,6 +45,7 @@ class OfficialPlaceBottomSheetFragment(
     private val binding get() = _binding!!
 
     private val mapViewModel: MapViewModel by activityViewModels()
+    private val favoriteViewModel: FavoriteViewModel by activityViewModels()
 
     override fun getTheme(): Int = R.style.RoundedBottomSheetDialog
 
@@ -64,6 +66,12 @@ class OfficialPlaceBottomSheetFragment(
         }
 
         setupBottomSheet()
+
+        updateFavoriteIcon(place.isFavorite)
+
+        binding.iconFavorite.setOnClickListener {
+            toggleFavorite()
+        }
 
         binding.textPlaceName.text = place.officialPlaceName
 
@@ -180,6 +188,43 @@ class OfficialPlaceBottomSheetFragment(
 
         progressBar.progress = rate.toInt()
         textView.text = "${rate}%"
+    }
+
+    private fun toggleFavorite() {
+        if (place.isFavorite) {
+            favoriteViewModel.deleteFavorite(
+                place.officialPlaceId,
+                place.placeType,
+                onSuccess = {
+                    setFavoriteState(false)
+                },
+                onFail = {}
+            )
+        } else {
+            // 즐겨찾기 아님 → 등록 API 호출
+            favoriteViewModel.postFavorite(
+                place.officialPlaceId,
+                place.placeType,
+                onSuccess = {
+                    setFavoriteState(true)
+                },
+                onFail = {}
+            )
+        }
+    }
+
+    private fun setFavoriteState(isFavorite: Boolean) {
+        place.isFavorite = isFavorite
+        updateFavoriteIcon(isFavorite)
+    }
+
+    private fun updateFavoriteIcon(isFavorite: Boolean) {
+        val iconRes = if (isFavorite) {
+            R.drawable.icon_star_yellow
+        } else {
+            R.drawable.icon_star
+        }
+        binding.iconFavorite.setImageResource(iconRes)
     }
 
     override fun onDestroyView() {

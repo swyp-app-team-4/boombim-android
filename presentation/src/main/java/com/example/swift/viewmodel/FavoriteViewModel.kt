@@ -30,11 +30,12 @@ class FavoriteViewModel @Inject constructor(
 
     fun postFavorite(
         memberPlaceId: Int,
+        placeType: String,
         onSuccess: () -> Unit,
         onFail: () -> Unit
     ) {
         viewModelScope.launch {
-            val result = postFavoriteUseCase(memberPlaceId)
+            val result = postFavoriteUseCase(memberPlaceId,placeType)
             when(result) {
                 is ActionResult.Success -> {
                     onSuccess()
@@ -49,11 +50,12 @@ class FavoriteViewModel @Inject constructor(
 
     fun deleteFavorite(
         memberPlaceId: Int,
+        placeType:String,
         onSuccess: () -> Unit,
         onFail: () -> Unit
     ) {
         viewModelScope.launch {
-            val result = deleteFavoriteUseCase(memberPlaceId)
+            val result = deleteFavoriteUseCase(memberPlaceId,placeType)
             when(result) {
                 is ActionResult.Success -> {
                     onSuccess()

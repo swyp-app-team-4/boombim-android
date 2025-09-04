@@ -27,4 +27,6 @@ interface MyPageRepository {
     suspend fun logout(refresh: String) : ActionResult<*>
 
     suspend fun patchProfileImage(imagePath: String): ActionResult<PatchProfileImageResponse>
+
+    suspend fun deleteMember(reason: String): ActionResult<*>
 }

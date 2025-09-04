@@ -15,14 +15,14 @@ class FavoriteRemoteDatasourceImpl @Inject constructor(
     private val favoriteApi: FavoriteApi
 ) : FavoriteRemoteDatasource{
 
-    override suspend fun postFavorite(memberPlaceId: Int): ApiResult<PostFavoriteResponse> {
-        val request = FavoriteRequest(memberPlaceId)
+    override suspend fun postFavorite(memberPlaceId: Int, placeType: String): ApiResult<PostFavoriteResponse> {
+        val request = FavoriteRequest(placeType, memberPlaceId)
 
         return safeFlow { favoriteApi.postFavorite(request) }.first()
     }
 
-    override suspend fun deleteFavorite(memberPlaceId: Int): ApiResult<PostFavoriteResponse> {
-        return safeFlow { favoriteApi.deleteFavorite(memberPlaceId)}.first()
+    override suspend fun deleteFavorite(memberPlaceId: Int, placeType: String): ApiResult<PostFavoriteResponse> {
+        return safeFlow { favoriteApi.deleteFavorite(memberPlaceId, placeType)}.first()
     }
 
     override suspend fun getFavorites(): Flow<ApiResult<FavoriteResponse>> {
