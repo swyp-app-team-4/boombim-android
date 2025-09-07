@@ -5,6 +5,7 @@ import com.example.domain.datasource.MapRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CongestionData
 import com.example.domain.model.CongestionResponse
+import com.example.domain.model.MemberCongestionItem
 import com.example.domain.model.MemberPlaceData
 import com.example.domain.model.MemberPlaceResponse
 import com.example.domain.model.PlaceData
@@ -28,6 +29,11 @@ class MapRepositoryImpl @Inject constructor(
     private val placeOverview
         get() = _placeOverview.asStateFlow()
 
+    private val _memberPlaceOverview = MutableStateFlow(emptyList<MemberCongestionItem>())
+
+    private val memberPlaceOverview
+        get() = _memberPlaceOverview.asStateFlow()
+
     //공식장소
     private val _mapList = MutableStateFlow(emptyList<CongestionData>())
 
@@ -41,9 +47,13 @@ class MapRepositoryImpl @Inject constructor(
         get() = _memberPlaceList.asStateFlow()
 
 
+
+
     override fun getViewPortList(): Flow<List<CongestionData>> = mapList
 
     override fun getMemberPlaceList(): Flow<List<MemberPlaceData>> = memberPlaceList
+
+    override fun getMemberPlaceDetailList(): Flow<List<MemberCongestionItem>> = memberPlaceOverview
 
     override fun getPlaceOverview(): Flow<PlaceData?> = placeOverview
 
@@ -104,6 +114,16 @@ class MapRepositoryImpl @Inject constructor(
             if (result is ApiResult.Success) {
                 _placeOverview.update {
                     result.data.data
+                }
+            }
+        }
+    }
+
+    override suspend fun getMemberPlaceDetail(officialPlaceId: Int) {
+        mapRemoteDataSource.getMemberPlaceDetail(officialPlaceId).first().let{ result ->
+            if (result is ApiResult.Success) {
+                _memberPlaceOverview.update {
+                    result.data.data.memberCongestionItems
                 }
             }
         }

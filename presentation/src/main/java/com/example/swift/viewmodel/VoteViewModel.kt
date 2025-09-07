@@ -83,7 +83,7 @@ class VoteViewModel @Inject constructor(
             when (postVoteUseCase(voteId, voteAnswerType)) {
                 is ApiResult.Success -> onSuccess("투표 성공")
                 is ApiResult.SuccessEmpty -> onSuccess("투표 성공")
-                is ApiResult.Fail.Error -> onFail("완료된 투표입니다.")
+                is ApiResult.Fail.Error -> onFail("본인이 생성한 투표에는 참여할 수 없습니다.")
                 is ApiResult.Fail.Exception -> onFail("투표 실패")
             }
         }

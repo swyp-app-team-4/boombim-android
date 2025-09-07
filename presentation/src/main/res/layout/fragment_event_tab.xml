@@ -34,18 +34,6 @@
         app:layout_constraintStart_toEndOf="@id/text_notice"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <ImageView
-        android:id="@+id/icon_read"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/icon_read"
-        android:paddingTop="22dp"
-        android:paddingEnd="20dp"
-        android:paddingBottom="10dp"
-        android:paddingStart="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_event"
         android:layout_width="match_parent"

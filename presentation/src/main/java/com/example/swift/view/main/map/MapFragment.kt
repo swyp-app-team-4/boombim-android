@@ -42,6 +42,9 @@ class MapFragment : Fragment() {
     private val mapViewModel: MapViewModel by activityViewModels()
     private var isFirstMove = true
 
+    private enum class TabType { ALL, OFFICIAL, MEMBER }
+    private var selectedTab: TabType = TabType.ALL
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mapView: MapView
     private var kakaoMap: KakaoMap? = null
@@ -57,6 +60,38 @@ class MapFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+
+        selectedTab = TabType.ALL
+        binding.textAll.isSelected = true
+        binding.textNotice.isSelected = false
+        binding.textEvent.isSelected = false
+
+        with(binding) {
+            textAll.setOnClickListener {
+                selectedTab = TabType.ALL
+                textAll.isSelected = true
+                textNotice.isSelected = false
+                textEvent.isSelected = false
+                refreshMarkers()
+            }
+
+            textNotice.setOnClickListener {
+                selectedTab = TabType.OFFICIAL
+                textAll.isSelected = false
+                textNotice.isSelected = true
+                textEvent.isSelected = false
+                refreshMarkers()
+            }
+
+            textEvent.setOnClickListener {
+                selectedTab = TabType.MEMBER
+                textAll.isSelected = false
+                textNotice.isSelected = false
+                textEvent.isSelected = true
+                refreshMarkers()
+            }
+        }
+
 
         setupMapView()
     }
@@ -90,6 +125,24 @@ class MapFragment : Fragment() {
                 }
             }
         )
+    }
+
+    private fun refreshMarkers() {
+        val layer = kakaoMap?.labelManager?.layer ?: return
+        layer.removeAll() // 기존 마커 제거
+
+        when (selectedTab) {
+            TabType.ALL -> {
+                addMarkersFromViewModel(mapViewModel.viewPortPlaceList.value)
+                addMarkersFromMemberViewModel(mapViewModel.memberPlaceList.value)
+            }
+            TabType.OFFICIAL -> {
+                addMarkersFromViewModel(mapViewModel.viewPortPlaceList.value)
+            }
+            TabType.MEMBER -> {
+                addMarkersFromMemberViewModel(mapViewModel.memberPlaceList.value)
+            }
+        }
     }
 
     private fun setupCameraMoveListener() {
@@ -136,7 +189,15 @@ class MapFragment : Fragment() {
 
         congestionList.forEach { place ->
             val position = LatLng.from(place.coordinate.latitude, place.coordinate.longitude)
-            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.image_green_pin)
+
+            val markerResId = when (place.congestionLevelName) {
+                "여유" -> R.drawable.image_green_pin
+                "보통" -> R.drawable.image_blue_pin
+                "약간 붐빔" -> R.drawable.image_yellow_pin
+                else -> R.drawable.image_pink_pin
+            }
+
+            val markerBitmap = BitmapFactory.decodeResource(resources, markerResId)
             val iconOptions = LabelOptions.from(position)
                 .setStyles(LabelStyle.from(markerBitmap))
                 .setTag(place)
@@ -150,7 +211,14 @@ class MapFragment : Fragment() {
 
         congestionList.forEach { place ->
             val position = LatLng.from(place.coordinate.latitude, place.coordinate.longitude)
-            val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.image_green_pin)
+            val markerResId = when (place.congestionLevelName) {
+                "여유" -> R.drawable.image_green_pin
+                "보통" -> R.drawable.image_blue_pin
+                "약간 붐빔" -> R.drawable.image_yellow_pin
+                else -> R.drawable.image_pink_pin
+            }
+
+            val markerBitmap = BitmapFactory.decodeResource(resources, markerResId)
             val iconOptions = LabelOptions.from(position)
                 .setStyles(LabelStyle.from(markerBitmap))
                 .setTag(place)
@@ -162,16 +230,25 @@ class MapFragment : Fragment() {
     private fun observePlaces() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mapViewModel.viewPortPlaceList.collect { addMarkersFromViewModel(it) }
+                mapViewModel.viewPortPlaceList.collect {
+                    if (selectedTab == TabType.ALL || selectedTab == TabType.OFFICIAL) {
+                        refreshMarkers()
+                    }
+                }
             }
         }
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                mapViewModel.memberPlaceList.collect { addMarkersFromMemberViewModel(it) }
+                mapViewModel.memberPlaceList.collect {
+                    if (selectedTab == TabType.ALL || selectedTab == TabType.MEMBER) {
+                        refreshMarkers()
+                    }
+                }
             }
         }
     }
+
 
     private suspend fun moveCameraToCurrentLocation() {
         LocationUtils.getLastKnownLocation(requireContext(), fusedLocationClient)?.let {

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <ImageView
+        android:id="@+id/image_place"
+        android:layout_width="150dp"
+        android:layout_height="210dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="12dp"
+        android:background="@drawable/bg_radius_10"
+        android:clipToOutline="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:ignore="MissingConstraints"
+        tools:src="@drawable/image_place2" />
+
+    <TextView
+        android:id="@+id/text_place_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="노들섬"
+        android:textSize="16sp"
+        android:textColor="@color/gray_scale_1"
+        android:fontFamily="@font/pretend_semibold"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="@id/image_place"
+        app:layout_constraintBottom_toTopOf="@id/text_update"/>
+
+    <ImageView
+        android:id="@+id/icon_clock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_clock_white"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_place"
+        app:layout_constraintStart_toStartOf="@id/image_place"/>
+
+    <TextView
+        android:id="@+id/text_update"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="1일전"
+        android:textSize="12sp"
+        android:textColor="@color/gray_scale_1"
+        android:fontFamily="@font/pretend_regular"
+        android:layout_marginBottom="10dp"
+        android:layout_marginStart="3dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_place"
+        app:layout_constraintStart_toEndOf="@id/icon_clock"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_star_circle"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="14dp"
+        app:layout_constraintBottom_toBottomOf="@id/image_place"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+
+
+    <ImageView
+        android:id="@+id/icon_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_status_congestion"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

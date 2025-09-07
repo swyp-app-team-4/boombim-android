@@ -9,6 +9,8 @@ import com.example.domain.usecase.favorite.FetchFavoriteUseCase
 import com.example.domain.usecase.favorite.GetFavoriteUseCase
 import com.example.domain.usecase.favorite.PostFavoriteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -20,11 +22,18 @@ class FavoriteViewModel @Inject constructor(
     private val fetchFavoriteUseCase: FetchFavoriteUseCase
 ) : ViewModel() {
 
-    init {
+   fun fetchFavorites() {
         viewModelScope.launch {
             fetchFavoriteUseCase()
         }
     }
+
+    val favoriteList = getFavoriteUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            emptyList()
+        )
 
 
 

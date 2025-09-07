@@ -3,6 +3,7 @@ package com.example.swift.view.main.vote.adapter
 import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.DiffUtil
@@ -37,15 +38,19 @@ class VoteAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: VoteItem) {
             binding.textTitle.text = item.posName
-            binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()
+            binding.textPeopleInterests.text = (item.relaxedCnt + item.crowedCnt + item.commonly + item.slightlyBusyCnt).toString()
             binding.textTime.text = DateTimeUtils.getTimeAgo(item.createdAt)
 
-            Glide.with(binding.imgPlace.context)
-                .load(item.posImage)
-                .placeholder(R.drawable.icon_gray_circle) // 로딩 중일 때 보여줄 이미지
-                .error(R.drawable.icon_gray_circle)       // 에러 발생 시 보여줄 이미지
-                .centerCrop()
-                .into(binding.imgPlace)
+            val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
+
+            item.profile.take(3).forEachIndexed { index, url ->
+                imageViews[index].visibility = View.VISIBLE
+                Glide.with(binding.root.context)
+                    .load(url)
+                    .placeholder(R.drawable.icon_gray_circle)
+                    .circleCrop()
+                    .into(imageViews[index])
+            }
 
             updateIcons(item)
 

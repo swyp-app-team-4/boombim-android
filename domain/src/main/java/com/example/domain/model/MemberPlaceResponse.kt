@@ -22,5 +22,6 @@ data class MemberPlaceData(
     @SerialName("congestionMessage") val congestionMessage: String,
     val clusterSize: Int? = null,
     val placeType: String,
+    val createdAt: String,
     @SerialName("isFavorite") var isFavorite: Boolean
 )

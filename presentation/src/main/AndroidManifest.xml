@@ -9,13 +9,12 @@
 
     <application
         android:name="com.example.swift.BoomBimApp"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:usesCleartextTraffic="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Swift"
         tools:targetApi="31">
@@ -26,6 +25,12 @@
 
         <activity
             android:name="com.example.swift.view.MainActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan"
+            android:launchMode="singleTop" />
+
+        <activity
+            android:name="com.example.swift.view.auth.SocialLoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustPan"
             android:launchMode="singleTop" />

@@ -1,5 +1,6 @@
 package com.example.swift.view.main.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentChattingBinding
 import com.boombim.android.databinding.FragmentSettingBinding
+import com.example.swift.view.MainActivity
+import com.example.swift.view.auth.SocialLoginActivity
 import com.example.swift.view.dialog.LogoutDialog
 import com.example.swift.view.main.vote.tab.MyDiscussionTabFragment
 import com.example.swift.view.main.vote.tab.VoteTabFragment
@@ -91,6 +94,15 @@ class SettingFragment : Fragment() {
             findNavController().navigate(R.id.policyFragment, bundle)
         }
 
+        binding.containerQuestion.setOnClickListener {
+            val bundle = Bundle().apply {
+                putString("url", "https://naver.me/5jBB5pIh")
+                putString("title", "건의사항")
+            }
+
+            findNavController().navigate(R.id.policyFragment, bundle)
+        }
+
 
         binding.containerMyProfile.setOnClickListener {
             findNavController().navigate(R.id.myProfileFragment)
@@ -101,17 +113,9 @@ class SettingFragment : Fragment() {
                 onConfirm = {
                     settingViewModel.logout(
                         onSuccess = {
-                            findNavController().navigate(
-                                R.id.socialLoginFragment,
-                                null,
-                                navOptions {
-                                    popUpTo(findNavController().graph.id) {
-                                        inclusive = true
-                                    }
-                                }
-                            )
-
-
+                            val intent = Intent(requireContext(), SocialLoginActivity::class.java)
+                            startActivity(intent)
+                            requireActivity().finish()
                         },
                         onFail = { msg ->
                            Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()

@@ -14,19 +14,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_notice"
+        android:id="@+id/text_all"
         android:layout_width="80dp"
         android:layout_height="34dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/tab_background_selector"
+        android:fontFamily="@font/pretend_regular"
+        android:text="전체"
+        android:gravity="center"
+        android:textColor="@color/tab_text_selector"
+        android:textSize="14sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_notice"
+        android:layout_width="80dp"
+        android:layout_height="34dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="25dp"
         android:background="@drawable/tab_background_selector"
         android:fontFamily="@font/pretend_regular"
         android:text="오픈서울"
         android:gravity="center"
         android:textColor="@color/tab_text_selector"
         android:textSize="14sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/text_all"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/text_event"
@@ -38,7 +53,7 @@
         android:fontFamily="@font/pretend_regular"
         android:textColor="@color/tab_text_selector"
         android:textSize="14sp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="25dp"
         android:layout_marginStart="6dp"
         app:layout_constraintStart_toEndOf="@id/text_notice"
         app:layout_constraintTop_toTopOf="parent"/>

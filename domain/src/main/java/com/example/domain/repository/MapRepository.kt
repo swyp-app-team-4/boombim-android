@@ -1,6 +1,7 @@
 package com.example.domain.repository
 
 import com.example.domain.model.CongestionData
+import com.example.domain.model.MemberCongestionItem
 import com.example.domain.model.MemberPlaceData
 import com.example.domain.model.PlaceData
 import kotlinx.coroutines.flow.Flow
@@ -11,7 +12,10 @@ interface MapRepository {
 
     fun getMemberPlaceList(): Flow<List<MemberPlaceData>>
 
+    fun getMemberPlaceDetailList(): Flow<List<MemberCongestionItem>>
+
     fun getPlaceOverview(): Flow<PlaceData?>
+
 
     suspend fun postViewPort(
         topLeftLongitude: Double,
@@ -34,4 +38,6 @@ interface MapRepository {
     )
 
     suspend fun getOfficialPlaceOverview(officialPlaceId: Int)
+
+    suspend fun getMemberPlaceDetail(officialPlaceId: Int)
 }

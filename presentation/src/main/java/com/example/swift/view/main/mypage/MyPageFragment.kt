@@ -51,6 +51,11 @@ class MyPageFragment : Fragment() {
         observeProfile()
     }
 
+    override fun onResume() {
+        super.onResume()
+        myPageViewModel.refreshProfile()
+    }
+
     private fun initUI() {
         initTabLayout()
         binding.iconSetting.setOnClickListener {

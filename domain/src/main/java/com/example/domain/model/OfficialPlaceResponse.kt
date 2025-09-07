@@ -23,7 +23,8 @@ data class PlaceData(
     val demographics: List<Demographic>,
     val forecasts: List<Forecast>,
     val imageUrl: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val legalDong: String
 )
 
 @Serializable

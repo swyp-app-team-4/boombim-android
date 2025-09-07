@@ -2,9 +2,11 @@ package com.example.swift.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.domain.usecase.map.FetchMemberPlaceDetailUseCase
 import com.example.domain.usecase.map.FetchMemberPlaceUseCase
 import com.example.domain.usecase.map.FetchOfficialPlaceUseCase
 import com.example.domain.usecase.map.FetchViewPortPlaceList
+import com.example.domain.usecase.map.GetMemberPlaceDetailUseCase
 import com.example.domain.usecase.map.GetMemberPlaceUseCase
 import com.example.domain.usecase.map.GetOfficialPlaceUseCase
 import com.example.domain.usecase.map.GetViewPortPlaceList
@@ -21,7 +23,9 @@ class MapViewModel @Inject constructor(
     getMemberPlaceUseCase: GetMemberPlaceUseCase,
     private val fetchMemberPlaceUseCase: FetchMemberPlaceUseCase,
     private val fetchViewPortPlaceList: FetchViewPortPlaceList,
-    private val fetchOfficialPlaceUseCase: FetchOfficialPlaceUseCase
+    private val fetchOfficialPlaceUseCase: FetchOfficialPlaceUseCase,
+    private val fetchMemberPlaceDetailUseCase: FetchMemberPlaceDetailUseCase,
+    getMemberPlaceDetailUseCase: GetMemberPlaceDetailUseCase
 ): ViewModel() {
 
     val viewPortPlaceList = getViewPortPlaceList()
@@ -44,6 +48,19 @@ class MapViewModel @Inject constructor(
             SharingStarted.WhileSubscribed(5000L),
             null
         )
+
+    val memberPlaceDetailList = getMemberPlaceDetailUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000L),
+            emptyList()
+        )
+
+    fun fetchMemberPlaceList(officialPlaceId: Int){
+        viewModelScope.launch {
+            fetchMemberPlaceDetailUseCase(officialPlaceId)
+        }
+    }
 
     fun fetchViewPortList(
         topLeftLongitude: Double,

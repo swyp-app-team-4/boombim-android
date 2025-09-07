@@ -52,17 +52,28 @@ class SocialLoginProfileSettingFragment : Fragment() {
             myPageViewModel.patchNickName(
                 binding.editNickname.text.toString(),
                 onSuccess = {
-                    val navOptions = NavOptions.Builder()
-                        .setPopUpTo(R.id.socialLoginProfileSettingFragment, true)
-                        .build()
-
                     Toast.makeText(requireContext(), "변경이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                    findNavController().navigate(R.id.homeFragment, null, navOptions)
+                    findNavController().navigate(
+                        R.id.homeFragment, null,
+                        navOptions {
+                            popUpTo(R.id.socialLoginProfileSettingFragment) {
+                                inclusive = true
+                            }
+                        }
+                    )
                 },
                 onFail = {
                     Toast.makeText(requireContext(), "변경 실패", Toast.LENGTH_SHORT).show()
                 }
             )
+
+            val tag = binding.imageProfile.tag
+
+            if (tag is String) {
+                myPageViewModel.patchProfileImage(
+                    imagePath = tag
+                )
+            }
         }
     }
 

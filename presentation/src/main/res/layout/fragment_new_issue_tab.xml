@@ -20,13 +20,13 @@
         <ImageView
             android:id="@+id/icon_circle"
             android:src="@drawable/image_3d_app_logo"
-            android:layout_width="220dp"
-            android:layout_height="220dp" />
+            android:layout_width="180dp"
+            android:layout_height="180dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="관심 장소를 추가하고"
+            android:text="투표에 참여하면"
             android:layout_marginTop="10dp"
             android:textSize="16sp"
             android:fontFamily="@font/pretend_medium"
@@ -35,16 +35,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="붐비지 않는 장소를 추천 받아 보세요"
+            android:text="새로운 알림을 받을 수 있어요"
             android:textSize="16sp"
             android:fontFamily="@font/pretend_medium"
             android:textColor="@color/gray_scale_10"/>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="148dp"
-            android:layout_height="44dp"
-            android:background="@drawable/icon_add_btn"
-            android:layout_marginTop="12dp"/>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

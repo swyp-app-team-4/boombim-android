@@ -11,6 +11,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,22 +21,29 @@ import com.example.domain.model.InterestsPlaceModel
 import com.example.domain.model.PlaceBoomBimModel
 import com.example.domain.model.PlaceLessBoomBimModel
 import com.example.domain.model.RegionNewsModel
+import com.example.swift.util.LocationUtils
 import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.view.main.home.adapter.PlaceBoomBimAdapter
 import com.example.swift.view.main.home.adapter.PlaceLessBoomBimAdapter
 import com.example.swift.view.main.home.adapter.RegionNewsAdapter
+import com.example.swift.viewmodel.FavoriteViewModel
 import com.example.swift.viewmodel.HomeViewModel
 import com.example.swift.viewmodel.MainViewModel
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
+@RequiresApi(Build.VERSION_CODES.O)
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val mainViewModel: MainViewModel by activityViewModels()
     private val homeViewModel: HomeViewModel by activityViewModels()
+    private val favoriteViewModel: FavoriteViewModel by activityViewModels()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,12 +51,15 @@ class HomeFragment : Fragment() {
     ): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
 
+
         return binding.root
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        fetchLessBoomBimPlace()
 
         fetchFcmToken()
 
@@ -63,10 +74,29 @@ class HomeFragment : Fragment() {
         binding.iconAlert.setOnClickListener {
             findNavController().navigate(R.id.notificationFragment)
         }
-        binding.iconSearch.setOnClickListener {
-            findNavController().navigate(R.id.homeSearchFragment)
-        }
 
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        lifecycleScope.launch {
+            favoriteViewModel.fetchFavorites()
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun fetchLessBoomBimPlace(){
+        lifecycleScope.launch {
+            fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+            val location = LocationUtils.getLastKnownLocation(requireContext(), fusedLocationClient)
+                ?: LocationUtils.requestSingleUpdate(fusedLocationClient)
+
+            location?.let {
+                homeViewModel.fetchLessBoomBimList(it.latitude, it.longitude)
+            }
+        }
     }
 
     private fun fetchFcmToken() {
@@ -93,46 +123,46 @@ class HomeFragment : Fragment() {
 
     }
 
-    private fun initLessBoomBimPlace() = with((binding)){
-        val placeList = listOf(
-            PlaceLessBoomBimModel("노들섬", "14분 전", "congestion"),    // 혼잡
-            PlaceLessBoomBimModel("시청 광장", "20분 전", "normal"),      // 보통
-            PlaceLessBoomBimModel("뚝섬 유원지", "5분 전", "relaxed"),     // 여유
-            PlaceLessBoomBimModel("여의도 한강공원", "1시간 전", "congestion"),
-            PlaceLessBoomBimModel("경복궁", "30분 전", "normal"),
-            PlaceLessBoomBimModel("남산서울타워", "25분 전", "relaxed")
-        )
-
-        val adapter = PlaceLessBoomBimAdapter(placeList)
-        val layoutManager = GridLayoutManager(requireContext(), 2, GridLayoutManager.HORIZONTAL, false)
-        recyclerLessBoomBim.layoutManager = layoutManager
-        recyclerLessBoomBim.adapter = adapter
+    private fun initLessBoomBimPlace() = with(binding) {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.lessBoomBimList.collect { list ->
+                    val adapter = PlaceLessBoomBimAdapter(list)
+                    val layoutManager = GridLayoutManager(
+                        requireContext(),
+                        2,
+                        GridLayoutManager.HORIZONTAL,
+                        false
+                    )
+                    recyclerLessBoomBim.layoutManager = layoutManager
+                    recyclerLessBoomBim.adapter = adapter
+                }
+            }
+        }
     }
 
     private fun initInterestsPlace() = with(binding) {
-        val interestsList = listOf(
-            InterestsPlaceModel("강남역", "10분 전 업데이트됨", "congestion"),
-            InterestsPlaceModel("홍대입구", "5분 전 업데이트됨", "normal"),
-            InterestsPlaceModel("광화문", "1시간 전 업데이트됨", "relaxed")
-        )
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                favoriteViewModel.favoriteList.collect{ list ->
+                    val adapter = InterestsPlaceAdapter(list)
+                    recyclerInterestPlace.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false) // 세로형
+                    recyclerInterestPlace.adapter = adapter
+                }
+            }
 
-        val adapter = InterestsPlaceAdapter(interestsList)
-        recyclerInterestPlace.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false) // 세로형
-        recyclerInterestPlace.adapter = adapter
+        }
     }
 
     private fun initPlaceBoomBimList() = with(binding) {
-        val items = listOf(
-            PlaceBoomBimModel("시청 광장", "강남역 1번출구", 2,"congestion", "14분전"),
-            PlaceBoomBimModel("경복궁", "강남역 1번출구", 1,"normal", "14분전"),
-            PlaceBoomBimModel("한강 공원", "강남역 1번출구", 3,"congestion", "14분전"),
-            PlaceBoomBimModel("시청 광장", "강남역 1번출구", 4,"congestion", "14분전"),
-            PlaceBoomBimModel("경복궁", "강남역 1번출구", 5,"normal", "14분전"),
-        )
-        val list = items.sortedBy { it.ranking }
-
-        recyclerBoomBim.layoutManager = LinearLayoutManager(requireContext())
-        recyclerBoomBim.adapter = PlaceBoomBimAdapter(list)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                homeViewModel.boomBimList.collect { list ->
+                    recyclerBoomBim.layoutManager = LinearLayoutManager(requireContext())
+                    recyclerBoomBim.adapter = PlaceBoomBimAdapter(list)
+                }
+            }
+        }
     }
 
     override fun onDestroyView() {

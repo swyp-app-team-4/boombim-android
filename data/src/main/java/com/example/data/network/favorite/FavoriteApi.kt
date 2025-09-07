@@ -2,7 +2,6 @@ package com.example.data.network.favorite
 
 import com.example.data.network.favorite.request.FavoriteRequest
 import com.example.domain.model.FavoriteResponse
-import com.example.domain.model.PostFavoriteResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -15,13 +14,13 @@ interface FavoriteApi {
     @POST("/favorite")
     suspend fun postFavorite(
         @Body body: FavoriteRequest
-    ): Response<PostFavoriteResponse>
+    ): Response<Unit>
 
     @DELETE("/favorite")
     suspend fun deleteFavorite(
-        @Query("memberPlaceId") memberPlaceId: Int,
+        @Query("placeId") memberPlaceId: Int,
         @Query("placeType") placeType: String
-    ): Response<PostFavoriteResponse>
+    ): Response<Unit>
 
     @GET("/favorite")
     suspend fun getFavorites(): Response<FavoriteResponse>

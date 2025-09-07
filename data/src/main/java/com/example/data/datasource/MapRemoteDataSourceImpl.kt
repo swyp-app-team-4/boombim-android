@@ -7,6 +7,7 @@ import com.example.domain.datasource.MapRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CongestionResponse
 import com.example.domain.model.Coordinate
+import com.example.domain.model.MemberPlaceDetailResponse
 import com.example.domain.model.MemberPlaceResponse
 import com.example.domain.model.OfficialPlaceResponse
 import kotlinx.coroutines.flow.Flow
@@ -55,6 +56,12 @@ class MapRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getOfficialPlaceOverview(officialPlaceId: Int): Flow<ApiResult<OfficialPlaceResponse>> {
         return safeFlow { mapApi.getOfficialPlaceOverview(officialPlaceId) }
+    }
+
+    override suspend fun getMemberPlaceDetail(memberPlaceId: Int): Flow<ApiResult<MemberPlaceDetailResponse>> {
+        return safeFlow {
+            mapApi.getMemberPlaceDetail(memberPlaceId)
+        }
     }
 
 }

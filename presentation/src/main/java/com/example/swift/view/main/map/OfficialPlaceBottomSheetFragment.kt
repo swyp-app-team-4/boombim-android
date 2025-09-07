@@ -74,6 +74,7 @@ class OfficialPlaceBottomSheetFragment(
         }
 
         binding.textPlaceName.text = place.officialPlaceName
+        binding.textPlaceAddress.text = place.legalDong
 
         Glide.with(binding.mapView.context)
             .load(place.imageUrl)

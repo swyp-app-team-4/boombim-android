@@ -31,7 +31,7 @@ interface MapApi {
 
     @GET("/member-place/{memberPlaceId}")
     suspend fun getMemberPlaceDetail(
-        @Path("memberPlaceId") memberPlaceId: Long,
+        @Path("memberPlaceId") memberPlaceId: Int,
         @Query("size") size: Int? = 30,
         @Query("cursor") cursor: Long? = null
     ): Response<MemberPlaceDetailResponse>

@@ -6,7 +6,6 @@ import com.example.data.network.safeFlow
 import com.example.domain.datasource.FavoriteRemoteDatasource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.FavoriteResponse
-import com.example.domain.model.PostFavoriteResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
 import javax.inject.Inject
@@ -15,13 +14,13 @@ class FavoriteRemoteDatasourceImpl @Inject constructor(
     private val favoriteApi: FavoriteApi
 ) : FavoriteRemoteDatasource{
 
-    override suspend fun postFavorite(memberPlaceId: Int, placeType: String): ApiResult<PostFavoriteResponse> {
+    override suspend fun postFavorite(memberPlaceId: Int, placeType: String): ApiResult<Unit> {
         val request = FavoriteRequest(placeType, memberPlaceId)
 
         return safeFlow { favoriteApi.postFavorite(request) }.first()
     }
 
-    override suspend fun deleteFavorite(memberPlaceId: Int, placeType: String): ApiResult<PostFavoriteResponse> {
+    override suspend fun deleteFavorite(memberPlaceId: Int, placeType: String): ApiResult<Unit> {
         return safeFlow { favoriteApi.deleteFavorite(memberPlaceId, placeType)}.first()
     }
 

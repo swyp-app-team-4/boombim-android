@@ -26,13 +26,16 @@ data class MemberPlaceSummary(
     val address: String,
     val latitude: Double,
     val longitude: Double,
-    val imageUrl: String,
-    val isFavorite: Boolean
+    val imageUrl: String?,
+    val isFavorite: Boolean,
+    val placeType: String
 )
 
 @Serializable
 data class MemberCongestionItem(
     val memberCongestionId: Int,
+    val memberProfile: String,
+    val memberName: String,
     val congestionLevelName: String,
     val congestionLevelMessage: String,
     val createdAt: String

@@ -2,12 +2,13 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/main_color"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <ImageView
         android:layout_width="350dp"
         android:layout_height="60dp"
-        android:src="@drawable/icon_app_name"
+        android:src="@drawable/icon_app_logo_white"
         android:layout_marginTop="150dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -34,4 +34,10 @@ class MainViewModel @Inject constructor(
         }
     }
 
+    fun setNotificationAllowed(allowed: Boolean) {
+        viewModelScope.launch {
+            appManageDataStore.setNotificationAllowed(allowed)
+        }
+    }
+
 }

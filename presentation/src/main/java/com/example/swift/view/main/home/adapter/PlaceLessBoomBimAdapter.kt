@@ -1,27 +1,38 @@
 package com.example.swift.view.main.home.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemLessBoomBimBinding
+import com.bumptech.glide.Glide
 import com.example.domain.model.PlaceLessBoomBimModel
+import com.example.swift.util.DateTimeUtils
 
+@RequiresApi(Build.VERSION_CODES.O)
 class PlaceLessBoomBimAdapter(private val items: List<PlaceLessBoomBimModel>) :
     RecyclerView.Adapter<PlaceLessBoomBimAdapter.PlaceViewHolder>() {
 
     inner class PlaceViewHolder(val binding: ItemLessBoomBimBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PlaceLessBoomBimModel) {
-            binding.textPlaceName.text = item.placeName
-            binding.textTime.text = item.time
+            binding.textPlaceName.text = item.officialPlaceName
+            binding.textTime.text = DateTimeUtils.getTimeAgo(item.observedAt)
 
-            val statusIconRes = when (item.status) {
-                "congestion" -> R.drawable.icon_status_congestion
-                "normal" -> R.drawable.icon_status_moderate
-                "relaxed" -> R.drawable.icon_status_relaxation
-                else -> R.drawable.icon_status_moderate
+            val statusIconRes = when (item.congestionLevelName) {
+                "붐빔" -> R.drawable.icon_busy_small
+                "약간 붐빔" -> R.drawable.icon_slightly_busy_small
+                "여유" -> R.drawable.icon_calm_small
+                else -> R.drawable.icon_normal_small
             }
+
+            Glide.with(binding.imagePlace.context)
+                .load(item.imageUrl)
+                .centerCrop()
+                .error(R.drawable.icon_image_load_fail)
+                .into(binding.imagePlace)
 
             binding.iconStatus.setImageResource(statusIconRes)
         }

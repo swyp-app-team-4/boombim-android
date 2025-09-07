@@ -3,14 +3,14 @@ package com.example.domain.model
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PostFavoriteResponse(
+data class MakeAutoMessageResponse (
     val code: Int,
     val status: String,
     val message: String,
-    val data: FavoriteDataId?
+    val data: MessageData
 )
 
 @Serializable
-data class FavoriteDataId(
-    val favoriteId: Int
+data class MessageData(
+    val generatedCongestionMessage: String
 )

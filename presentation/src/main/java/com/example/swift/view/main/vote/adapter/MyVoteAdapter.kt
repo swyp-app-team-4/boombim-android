@@ -3,12 +3,14 @@ package com.example.swift.view.main.vote.adapter
 import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemMyVoteBinding
+import com.bumptech.glide.Glide
 import com.example.domain.model.MyVoteItem
 import com.example.swift.util.DateTimeUtils
 
@@ -26,6 +28,17 @@ class MyVoteAdapter (
 
             binding.btnEndVote.setOnClickListener {
                 onBtnClick(item)
+            }
+
+            val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
+
+            item.profile.take(3).forEachIndexed { index, url ->
+                imageViews[index].visibility = View.VISIBLE
+                Glide.with(binding.root.context)
+                    .load(url)
+                    .placeholder(R.drawable.icon_gray_circle)
+                    .circleCrop()
+                    .into(imageViews[index])
             }
 
             binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()

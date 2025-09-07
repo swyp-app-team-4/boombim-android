@@ -32,8 +32,6 @@ class MakeVoteFragment : Fragment() {
     private val kakaoSearchViewmodel: KakaoSearchViewModel by activityViewModels()
     private lateinit var adapter: KakaoSearchListAdapter
 
-    private val placePickBalloon by balloon<PlacePickBalloonFactory>()
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -52,10 +50,6 @@ class MakeVoteFragment : Fragment() {
         initSearchViewListener()
 
         initTextStyle()
-
-      placePickBalloon.showAlignBottom(
-          binding.iconCurrentLocation
-      )
 
         binding.iconBack.setOnClickListener {
             findNavController().navigate(

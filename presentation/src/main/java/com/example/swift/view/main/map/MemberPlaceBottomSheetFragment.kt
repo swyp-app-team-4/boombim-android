@@ -1,20 +1,27 @@
 package com.example.swift.view.main.map
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMemberPlaceBottomSheetBinding
 import com.boombim.android.databinding.FragmentPlaceBottomSheetBinding
 import com.example.domain.model.CongestionData
+import com.example.domain.model.MemberCongestionItem
 import com.example.domain.model.MemberPlaceData
+import com.example.swift.util.DateTimeUtils
+import com.example.swift.view.main.map.adapter.MemberPlaceDetailAdapter
 import com.example.swift.viewmodel.FavoriteViewModel
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -25,7 +32,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MemberPlaceBottomSheetFragment (
+@RequiresApi(Build.VERSION_CODES.O)
+class MemberPlaceBottomSheetFragment(
     private val place: MemberPlaceData
 ) : BottomSheetDialogFragment() {
 
@@ -33,85 +41,169 @@ class MemberPlaceBottomSheetFragment (
     private val binding get() = _binding!!
 
     private val favoriteViewModel: FavoriteViewModel by activityViewModels()
+    private val mapViewModel: MapViewModel by activityViewModels()
+
+    private lateinit var detailAdapter: MemberPlaceDetailAdapter
 
     override fun getTheme(): Int = R.style.RoundedBottomSheetDialog
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMemberPlaceBottomSheetBinding.inflate(inflater, container, false)
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setupBottomSheet()
+        initBottomSheet()
+        initUi()
+        initRecyclerView()
 
+        // 데이터 불러오기
+        mapViewModel.fetchMemberPlaceList(place.memberPlaceId)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mapViewModel.fetchMemberPlaceList(place.memberPlaceId)
+    }
+
+    private fun initUi() {
         binding.textPlaceName.text = place.name
-
-        updateFavoriteIcon(place.isFavorite)
+        binding.textTime.text = DateTimeUtils.getTimeAgo(place.createdAt)
+        updateFavoriteUi(place.isFavorite)
 
         binding.buttonAnnounce.setOnClickListener {
             dismiss()
-            findNavController().navigate(R.id.makeCongestionFragment)
+            findNavController().navigate(R.id.chattingFragment)
         }
-        
+
         binding.iconFavorite.setOnClickListener {
-            toggleFavorite()
+            handleFavoriteClick()
         }
 
+        binding.iconBoombim.setImageResource(
+            when (place.congestionLevelName) {
+                "여유" -> R.drawable.icon_calm_small
+                "보통" -> R.drawable.icon_normal_small
+                "약간 붐빔" -> R.drawable.icon_slightly_busy_small
+                else -> R.drawable.icon_busy_small
+            }
+        )
     }
 
-    private fun setupBottomSheet() {
-        dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)?.apply {
+    private fun initBottomSheet() {
+        dialog?.findViewById<FrameLayout>(com.google.android.material.R.id.design_bottom_sheet)
+            ?.apply {
+                background = ContextCompat.getDrawable(
+                    requireContext(),
+                    R.drawable.bg_bottom_sheet_white_20
+                )
+                clipToOutline = true
 
-            background = ContextCompat.getDrawable(requireContext(), R.drawable.bg_bottom_sheet_white_20)
-            clipToOutline = true
+                val behavior = BottomSheetBehavior.from(this)
+                val screenHeight = resources.displayMetrics.heightPixels
+                behavior.peekHeight = (screenHeight * 0.5).toInt()
+                behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+                behavior.isDraggable = true
+                behavior.isHideable = true
 
-            val behavior = BottomSheetBehavior.from(this)
-            val screenHeight = resources.displayMetrics.heightPixels
-            behavior.peekHeight = (screenHeight * 0.5).toInt()
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            behavior.isDraggable = true
-            behavior.isHideable = true
+                layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
+                layoutParams = layoutParams
+            }
+    }
 
-            layoutParams.height = ViewGroup.LayoutParams.MATCH_PARENT
-            layoutParams = layoutParams
+    private fun initRecyclerView() {
+        detailAdapter = MemberPlaceDetailAdapter(emptyList())
+        binding.recycler.apply {
+            adapter = detailAdapter
+            layoutManager = LinearLayoutManager(requireContext())
+        }
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            mapViewModel.memberPlaceDetailList.collect { list ->
+                detailAdapter.updateItems(list)
+                setupFilterButtons(list)
+            }
         }
     }
 
-    private fun toggleFavorite() {
+    private fun setupFilterButtons(originalList: List<MemberCongestionItem>) {
+        val buttons = listOf(
+            binding.containerCongestion.getChildAt(0) as TextView, // 최신순
+            binding.containerCongestion.getChildAt(1) as TextView, // 붐빔
+            binding.containerCongestion.getChildAt(2) as TextView, // 약간붐빔
+            binding.containerCongestion.getChildAt(3) as TextView, // 보통
+            binding.containerCongestion.getChildAt(4) as TextView  // 여유
+        )
+
+        fun selectButton(selected: TextView) {
+            buttons.forEach { it.isSelected = false }
+            selected.isSelected = true
+        }
+
+        buttons[0].setOnClickListener {
+            selectButton(it as TextView)
+            val sorted = originalList.sortedByDescending { item -> item.createdAt }
+            detailAdapter.updateItems(sorted)
+        }
+
+        buttons[1].setOnClickListener {
+            selectButton(it as TextView)
+            val filtered = originalList.filter { item -> item.congestionLevelName == "붐빔" }
+            detailAdapter.updateItems(filtered)
+        }
+
+        buttons[2].setOnClickListener {
+            selectButton(it as TextView)
+            val filtered = originalList.filter { item -> item.congestionLevelName == "약간붐빔" }
+            detailAdapter.updateItems(filtered)
+        }
+
+        buttons[3].setOnClickListener {
+            selectButton(it as TextView)
+            val filtered = originalList.filter { item -> item.congestionLevelName == "보통" }
+            detailAdapter.updateItems(filtered)
+        }
+
+        buttons[4].setOnClickListener {
+            selectButton(it as TextView)
+            val filtered = originalList.filter { item -> item.congestionLevelName == "여유" }
+            detailAdapter.updateItems(filtered)
+        }
+
+        detailAdapter.updateItems(originalList.sortedByDescending { it.createdAt })
+    }
+
+
+    private fun handleFavoriteClick() {
         if (place.isFavorite) {
             favoriteViewModel.deleteFavorite(
                 place.memberPlaceId,
                 place.placeType,
-                onSuccess = {
-                    setFavoriteState(false)
-                },
+                onSuccess = { applyFavoriteState(false) },
                 onFail = {}
             )
         } else {
-            // 즐겨찾기 아님 → 등록 API 호출
             favoriteViewModel.postFavorite(
                 place.memberPlaceId,
                 place.placeType,
-                onSuccess = {
-                    setFavoriteState(true)
-                },
+                onSuccess = { applyFavoriteState(true) },
                 onFail = {}
             )
         }
     }
 
-    private fun setFavoriteState(isFavorite: Boolean) {
+    private fun applyFavoriteState(isFavorite: Boolean) {
         place.isFavorite = isFavorite
-        updateFavoriteIcon(isFavorite)
+        updateFavoriteUi(isFavorite)
     }
 
-    private fun updateFavoriteIcon(isFavorite: Boolean) {
+    private fun updateFavoriteUi(isFavorite: Boolean) {
         val iconRes = if (isFavorite) {
             R.drawable.icon_star_yellow
         } else {

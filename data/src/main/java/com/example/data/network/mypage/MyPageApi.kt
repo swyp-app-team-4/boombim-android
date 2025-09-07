@@ -49,7 +49,7 @@ interface MyPageApi {
         @Part multipartFile: MultipartBody.Part
     ): Response<PatchProfileImageResponse>
 
-    @DELETE("/api/member")
+    @POST("/api/member")
     suspend fun deleteAccount(
         @Body request: DeleteAccountRequest
     ): Response<Unit>

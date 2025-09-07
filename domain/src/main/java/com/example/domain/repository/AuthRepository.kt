@@ -14,7 +14,7 @@ interface AuthRepository {
         refreshToken: String,
         expiresIn: Int,
         idToken: String
-    ): ActionResult<SocialLoginSignUpResult>
+    ): ApiResult<SocialLoginSignUpResult>
 
     /**
      *  토큰을 갱신한다

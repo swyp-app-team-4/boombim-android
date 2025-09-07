@@ -20,9 +20,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MyPageViewModel @Inject constructor(
-    fetchMyProfileUseCase: FetchMyProfileUseCase,
+    private val fetchMyProfileUseCase: FetchMyProfileUseCase,
     getMyProfileUseCase: GetMyProfileUseCase,
-    fetchMyPageQuestionListUseCase: FetchMyPageQuestionListUseCase,
+    private val fetchMyPageQuestionListUseCase: FetchMyPageQuestionListUseCase,
     getMyAnswerUseCase: GetMyAnswerUseCase,
     getMyQuestionUseCase: GetMyQuestionUseCase,
     fetchMYPageAnswerListUseCase: FetMyPageAnswerListUseCase,
@@ -34,8 +34,8 @@ class MyPageViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             fetchMyProfileUseCase()
-            fetchMyPageQuestionListUseCase()
             fetchMYPageAnswerListUseCase()
+            fetchMyPageQuestionListUseCase()
         }
     }
 
@@ -60,6 +60,18 @@ class MyPageViewModel @Inject constructor(
             emptyList()
         )
 
+    fun refreshProfile() {
+        viewModelScope.launch {
+            fetchMyProfileUseCase()
+        }
+    }
+
+    fun refreshVoteList(){
+        viewModelScope.launch {
+            fetchMyPageQuestionListUseCase()
+        }
+    }
+
     fun patchNickName(
         name: String,
         onSuccess: () -> Unit,
@@ -72,7 +84,6 @@ class MyPageViewModel @Inject constructor(
                 }
                 is ActionResult.Success -> {
                     onSuccess()
-                    profile.value.name = name
                 }
             }
         }
@@ -83,7 +94,6 @@ class MyPageViewModel @Inject constructor(
     ){
         viewModelScope.launch {
            patchProfileImageUseCase(imagePath)
-            profile.value.profile = imagePath
         }
     }
 

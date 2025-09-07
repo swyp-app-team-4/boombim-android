@@ -11,6 +11,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.ActivityOnBoardingBinding
 import com.example.domain.model.OnboardingPage
 import com.example.swift.view.MainActivity
+import com.example.swift.view.auth.SocialLoginActivity
 import com.example.swift.viewmodel.MainViewModel
 import com.example.swift.viewmodel.OnBoardingViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -27,11 +28,12 @@ class OnBoardingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         initPages()
+
         initViewPager()
 
         binding.btnSkip.setOnClickListener {
             onBoardingViewModel.updateNotFirstLaunch()
-            val intent = Intent(this, MainActivity::class.java)
+            val intent = Intent(this, SocialLoginActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -42,7 +44,7 @@ class OnBoardingActivity : AppCompatActivity() {
                 binding.btnStart.isClickable = false
             } else {
                 onBoardingViewModel.updateNotFirstLaunch()
-                val intent = Intent(this, MainActivity::class.java)
+                val intent = Intent(this, SocialLoginActivity::class.java)
                 startActivity(intent)
                 finish()
             }

@@ -33,6 +33,8 @@ class AppManageDataStore @Inject constructor(
         private val SAVED_FCM_TOKEN = stringPreferencesKey("saved_fcm_token")
 
         private val FIRST_LAUNCH = booleanPreferencesKey("first_launch")
+
+        private val NOTIFICATION_ALLOWED = booleanPreferencesKey("notification_allowed")
     }
 
     suspend fun saveAccessToken(token: String) {
@@ -137,6 +139,20 @@ class AppManageDataStore @Inject constructor(
     fun getSavedFcmToken(): Flow<String?> {
         return appDataStore.data.map { preferences ->
             preferences[SAVED_FCM_TOKEN]
+        }
+    }
+
+    suspend fun setNotificationAllowed(
+        allowed: Boolean
+    ) {
+        appDataStore.edit { preferences ->
+            preferences[NOTIFICATION_ALLOWED] = allowed
+        }
+    }
+
+    fun getNotificationAllowed(): Flow<Boolean> {
+        return appDataStore.data.map { preferences ->
+            preferences[NOTIFICATION_ALLOWED] ?: false //따로 설정하지 않은 경우 허용 처리로 본다.
         }
     }
 }

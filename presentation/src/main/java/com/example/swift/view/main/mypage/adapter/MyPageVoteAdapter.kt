@@ -65,11 +65,16 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
 
             val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
 
+            imageViews.forEach { imageView ->
+                imageView.setImageResource(R.drawable.icon_gray_circle)
+            }
+
             item.profile.take(3).forEachIndexed { index, url ->
                 imageViews[index].visibility = View.VISIBLE
                 Glide.with(binding.root.context)
                     .load(url)
                     .placeholder(R.drawable.icon_gray_circle)
+                    .error(R.drawable.icon_gray_circle)
                     .circleCrop()
                     .into(imageViews[index])
             }

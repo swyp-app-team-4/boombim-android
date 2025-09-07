@@ -20,7 +20,8 @@ data class CongestionData(
     val distance: Double,
     val congestionLevelName: String,
     val congestionMessage: String,
-    var isFavorite: Boolean
+    var isFavorite: Boolean,
+    val legalDong: String
 )
 
 @Serializable

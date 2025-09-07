@@ -1,5 +1,6 @@
 package com.example.swift.view.main.setting
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentWithdrawBinding
+import com.example.swift.view.MainActivity
+import com.example.swift.view.auth.SocialLoginActivity
 import com.example.swift.viewmodel.SettingViewModel
 
 class WithDrawFragment : Fragment() {
@@ -85,13 +88,10 @@ class WithDrawFragment : Fragment() {
             reason = finalReason,
             onSuccess = { msg ->
                 Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(
-                    R.id.socialLoginFragment,
-                    null,
-                    navOptions {
-                        popUpTo(findNavController().graph.id) { inclusive = true }
-                    }
-                )
+
+                val intent = Intent(requireContext(), SocialLoginActivity::class.java)
+                startActivity(intent)
+                requireActivity().finish()
             },
             onFail = {
                 Toast.makeText(requireContext(), "탈퇴 실패", Toast.LENGTH_SHORT).show()

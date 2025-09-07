@@ -99,7 +99,7 @@ class CheckMakeVoteFragment : Fragment() {
                     kakaoMap = kakaoMap,
                     latitude = latitude,
                     longitude = longitude,
-                    markerResId = R.drawable.image_green_pin,
+                    markerResId = R.drawable.icon_red_marker,
                     moveCamera = true
                 )
 

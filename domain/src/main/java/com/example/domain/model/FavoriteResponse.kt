@@ -13,12 +13,15 @@ data class FavoriteResponse(
 @Serializable
 data class FavoriteData(
     val favoriteId: Int,
-    val memberPlaceId: Int,
-    val latitude: Double,
-    val longitude: Double,
-    val memberPlaceName: String,
-    val congestionLevelName: String,
-    val congestionMessage: String,
-    val observedAt: String
+    val placeId: Int,
+    val placeType: String,
+    val name: String,
+    val imageUrl: String? = null,
+    val congestionLevelName: String? = null,
+    val observedAt: String? = null,
+    val todayUpdateCount: Int? = null,
+    val updatedToday: Boolean? = null
 )
+
+
 
