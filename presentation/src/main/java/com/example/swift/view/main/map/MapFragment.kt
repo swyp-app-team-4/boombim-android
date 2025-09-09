@@ -1,23 +1,29 @@
 package com.example.swift.view.main.map
 
 import android.graphics.BitmapFactory
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMapBinding
 import com.example.domain.model.CongestionData
+import com.example.domain.model.Coordinate
 import com.example.domain.model.MemberPlaceData
 import com.example.swift.util.LocationUtils
+import com.example.swift.view.main.map.adapter.NearByAdapter
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
 import com.kakao.vectormap.LatLng
@@ -42,8 +48,10 @@ class MapFragment : Fragment() {
     private val mapViewModel: MapViewModel by activityViewModels()
     private var isFirstMove = true
 
-    private enum class TabType { ALL, OFFICIAL, MEMBER }
-    private var selectedTab: TabType = TabType.ALL
+    private enum class TabType { OFFICIAL, MEMBER }
+    private var selectedTab: TabType = TabType.OFFICIAL
+
+    private lateinit var nearByAdapter: NearByAdapter
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var mapView: MapView
@@ -54,30 +62,24 @@ class MapFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ) = FragmentMapBinding.inflate(inflater, container, false).also { _binding = it }.root
+    ): View {
+        _binding = FragmentMapBinding.inflate(inflater, container, false)
+
+        return binding.root
+    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
 
-        selectedTab = TabType.ALL
-        binding.textAll.isSelected = true
-        binding.textNotice.isSelected = false
+        selectedTab = TabType.OFFICIAL
+        binding.textNotice.isSelected = true
         binding.textEvent.isSelected = false
 
         with(binding) {
-            textAll.setOnClickListener {
-                selectedTab = TabType.ALL
-                textAll.isSelected = true
-                textNotice.isSelected = false
-                textEvent.isSelected = false
-                refreshMarkers()
-            }
-
             textNotice.setOnClickListener {
                 selectedTab = TabType.OFFICIAL
-                textAll.isSelected = false
                 textNotice.isSelected = true
                 textEvent.isSelected = false
                 refreshMarkers()
@@ -85,15 +87,33 @@ class MapFragment : Fragment() {
 
             textEvent.setOnClickListener {
                 selectedTab = TabType.MEMBER
-                textAll.isSelected = false
                 textNotice.isSelected = false
                 textEvent.isSelected = true
                 refreshMarkers()
             }
         }
 
-
         setupMapView()
+
+        initBottomSheet()
+
+        initNearBy()
+    }
+
+    private fun initNearBy() {
+        val bottomSheetBinding = binding.nearbyBottomSheet
+
+        bottomSheetBinding.recycle.layoutManager = LinearLayoutManager(requireContext())
+        nearByAdapter = NearByAdapter(emptyList())
+        bottomSheetBinding.recycle.adapter = nearByAdapter
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mapViewModel.viewPortPlaceList.collect { list ->
+                    nearByAdapter.updateItems(list)
+                }
+            }
+        }
     }
 
     private fun setupMapView() {
@@ -132,10 +152,6 @@ class MapFragment : Fragment() {
         layer.removeAll() // 기존 마커 제거
 
         when (selectedTab) {
-            TabType.ALL -> {
-                addMarkersFromViewModel(mapViewModel.viewPortPlaceList.value)
-                addMarkersFromMemberViewModel(mapViewModel.memberPlaceList.value)
-            }
             TabType.OFFICIAL -> {
                 addMarkersFromViewModel(mapViewModel.viewPortPlaceList.value)
             }
@@ -231,7 +247,7 @@ class MapFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mapViewModel.viewPortPlaceList.collect {
-                    if (selectedTab == TabType.ALL || selectedTab == TabType.OFFICIAL) {
+                    if (selectedTab == TabType.OFFICIAL) {
                         refreshMarkers()
                     }
                 }
@@ -241,13 +257,14 @@ class MapFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mapViewModel.memberPlaceList.collect {
-                    if (selectedTab == TabType.ALL || selectedTab == TabType.MEMBER) {
+                    if (selectedTab == TabType.MEMBER) {
                         refreshMarkers()
                     }
                 }
             }
         }
     }
+
 
 
     private suspend fun moveCameraToCurrentLocation() {
@@ -275,9 +292,19 @@ class MapFragment : Fragment() {
         bottomSheet.show(parentFragmentManager, bottomSheet.tag)
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun showMemberBottomSheet(place: MemberPlaceData) {
         val bottomSheet = MemberPlaceBottomSheetFragment(place)
         bottomSheet.show(parentFragmentManager, bottomSheet.tag)
+    }
+
+    private fun initBottomSheet() {
+        val bottomSheet = binding.nearbyBottomSheet.root
+        val behavior = BottomSheetBehavior.from(bottomSheet)
+
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+        behavior.isHideable = false
+        behavior.peekHeight = (resources.displayMetrics.heightPixels * 0.1).toInt()
     }
 
     override fun onDestroyView() {

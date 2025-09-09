@@ -1,40 +1,33 @@
 package com.example.swift.view.main.map.adapter
 
 import android.annotation.SuppressLint
-import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemMemberPlaceDetailBinding
-import com.boombim.android.databinding.ItemMyPaceInterestsBinding
+import com.boombim.android.databinding.ItemNearByBinding
 import com.bumptech.glide.Glide
-import com.example.domain.model.FavoriteData
+import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberCongestionItem
 import com.example.swift.util.DateTimeUtils
-import com.example.swift.view.main.mypage.adapter.MyPageInterestsPlaceAdapter
 
-@RequiresApi(Build.VERSION_CODES.O)
-class MemberPlaceDetailAdapter (
-    private var items: List<MemberCongestionItem>,
-    private val onReportClick: (MemberCongestionItem) -> Unit
-) :
-    RecyclerView.Adapter<MemberPlaceDetailAdapter.PlaceViewHolder>() {
+class NearByAdapter  (private var items: List<CongestionData>) :
+    RecyclerView.Adapter<NearByAdapter.PlaceViewHolder>() {
 
     @SuppressLint("NotifyDataSetChanged")
-    fun updateItems(newItems: List<MemberCongestionItem>) {
+    fun updateItems(newItems: List<CongestionData>) {
         this.items = newItems
         notifyDataSetChanged()
     }
 
-    inner class PlaceViewHolder(val binding: ItemMemberPlaceDetailBinding) :
+    inner class PlaceViewHolder(val binding: ItemNearByBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: MemberCongestionItem) {
-            binding.textName.text = item.memberName
-            binding.textTime.text = DateTimeUtils.getTimeAgo(item.createdAt)
-            binding.textContent.text = item.congestionLevelMessage
+        fun bind(item: CongestionData) {
+            binding.textPlaceName.text = item.officialPlaceName
+            binding.textUpdateTime.text = "방금전"
+            binding.textPlaceAddress.text = item.legalDong
 
             val statusIconRes = when (item.congestionLevelName) {
                 "붐빔" -> R.drawable.icon_busy_small
@@ -43,23 +36,20 @@ class MemberPlaceDetailAdapter (
                 else -> R.drawable.icon_normal_small
             }
 
-            Glide.with(binding.imageProfile.context)
-                .load(item.memberProfile)
+            Glide.with(binding.imagePlace.context)
+                .load(item.imageUrl)
                 .centerCrop()
                 .error(R.drawable.icon_gray_circle)
-                .into(binding.imageProfile)
+                .into(binding.imagePlace)
 
-            binding.iconStatus.setImageResource(statusIconRes)
+            binding.iconBoombim.setImageResource(statusIconRes)
 
-            binding.iconReport.setOnClickListener {
-                onReportClick(item)
-            }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val binding = ItemMemberPlaceDetailBinding.inflate(inflater, parent, false)
+        val binding = ItemNearByBinding.inflate(inflater, parent, false)
         return PlaceViewHolder(binding)
     }
 

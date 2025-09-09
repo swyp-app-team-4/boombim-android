@@ -141,7 +141,7 @@ class CheckMakeVoteFragment : Fragment() {
                         val errorMessage = when (msg) {
                             "403" -> "장소가 300m를 초과했습니다."
                             "409" -> "이미 해당 장소의 투표가 존재합니다."
-                            else -> msg ?: "알 수 없는 오류가 발생했습니다."
+                            else -> msg ?: "투표가 이미 존재합니다"
                         }
                         Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
                     },

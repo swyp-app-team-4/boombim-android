@@ -46,6 +46,7 @@ class PolicyFragment : Fragment() {
             "이용안내" -> binding.webView.loadUrl(url ?: "")
             "고객센터" -> binding.webView.loadUrl(url ?: "")
             "건의사항" -> binding.webView.loadUrl(url ?: "")
+            "신고하기" -> binding.webView.loadUrl(url ?: "")
             else -> ""
         }
 

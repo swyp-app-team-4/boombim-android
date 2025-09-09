@@ -24,7 +24,9 @@ data class PlaceData(
     val forecasts: List<Forecast>,
     val imageUrl: String,
     val isFavorite: Boolean,
-    val legalDong: String
+    val legalDong: String,
+    val congestionLevelName: String,
+    val congestionMessage: String
 )
 
 @Serializable

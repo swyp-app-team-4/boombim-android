@@ -20,5 +20,6 @@ data class PopularityDetail(
     val slightlyBusyCnt: Int,
     val crowedCnt: Int,
     val voteAllCnt: Int,
-    val voteStatus: String
+    val voteStatus: String,
+    val voteDuplicationCnt: Int? = null,
 )

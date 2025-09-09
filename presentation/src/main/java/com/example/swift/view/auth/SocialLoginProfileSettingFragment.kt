@@ -91,8 +91,8 @@ class SocialLoginProfileSettingFragment : Fragment() {
             myPageViewModel.profile.collect { profile ->
                 Glide.with(requireContext())
                     .load(profile.profile)
-                    .placeholder(R.drawable.icon_edit_profile)
-                    .error(R.drawable.icon_edit_profile)
+                    .placeholder(R.drawable.icon_gray_circle)
+                    .error(R.drawable.icon_gray_circle)
                     .into(binding.imageProfile)
             }
         }

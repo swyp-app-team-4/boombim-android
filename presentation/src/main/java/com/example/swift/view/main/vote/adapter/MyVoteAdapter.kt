@@ -62,7 +62,7 @@ class MyVoteAdapter (
                 binding.btnEndVote.setTextColor(
                     ContextCompat.getColor(binding.root.context, R.color.gray_scale_7) // 흰색으로
                 )
-                binding.btnEndVote.setBackgroundResource(R.drawable.bg_rounded_gray_4)
+                binding.btnEndVote.setBackgroundResource(R.drawable.bg_rounded_gray3)
             }
 
             binding.btnEndVote.isEnabled = item.voteStatus != "END"

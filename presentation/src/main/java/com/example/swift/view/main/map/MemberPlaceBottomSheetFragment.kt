@@ -118,7 +118,18 @@ class MemberPlaceBottomSheetFragment(
     }
 
     private fun initRecyclerView() {
-        detailAdapter = MemberPlaceDetailAdapter(emptyList())
+        detailAdapter = MemberPlaceDetailAdapter(
+            emptyList(),
+            onReportClick = {
+                val bundle = Bundle().apply {
+                    dismiss()
+                    putString("url", "https://naver.me/F8uupoGw")
+                    putString("title", "신고하기")
+                }
+
+                findNavController().navigate(R.id.policyFragment, bundle)
+            }
+        )
         binding.recycler.apply {
             adapter = detailAdapter
             layoutManager = LinearLayoutManager(requireContext())

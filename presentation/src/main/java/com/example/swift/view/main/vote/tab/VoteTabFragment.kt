@@ -53,16 +53,18 @@ class VoteTabFragment : Fragment() {
         initVote()
     }
 
-    private fun initVote() = with((binding)){
+    private fun initVote() = with(binding) {
 
         lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                voteViewModel.voteList.collect{ voteList ->
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                voteViewModel.voteList.collect { voteList ->
+
+                    // 리스트가 비어있으면 add_place_layout 보이기
+                    addPlaceLayout.visibility = if (voteList.isEmpty()) View.VISIBLE else View.GONE
+
                     val adapter = VoteAdapter(
                         onVoteClick = { voteModel ->
-                            if (voteModel.selectedIcon == -1) {
-                                return@VoteAdapter
-                            }
+                            if (voteModel.selectedIcon == -1) return@VoteAdapter
 
                             val message = when (voteModel.selectedIcon) {
                                 0 -> "여유"

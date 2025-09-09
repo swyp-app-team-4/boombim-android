@@ -38,7 +38,7 @@ class VoteAdapter(
         @SuppressLint("SetTextI18n")
         fun bind(item: VoteItem) {
             binding.textTitle.text = item.posName
-            binding.textPeopleInterests.text = (item.relaxedCnt + item.crowedCnt + item.commonly + item.slightlyBusyCnt).toString()
+            binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()
             binding.textTime.text = DateTimeUtils.getTimeAgo(item.createdAt)
 
             val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
