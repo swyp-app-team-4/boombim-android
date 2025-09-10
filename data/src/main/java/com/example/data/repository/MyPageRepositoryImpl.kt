@@ -92,4 +92,9 @@ class MyPageRepositoryImpl @Inject constructor(
         val result = myPageRemoteDataSource.patchProfileImage(imagePath)
         return result.covertApiResultToActionResultIfSuccess()
     }
+
+    override suspend fun deleteMember(reason: String): ActionResult<*> {
+        val result = myPageRemoteDataSource.deleteUser(reason)
+        return result.covertApiResultToActionResultIfSuccessEmpty()
+    }
 }

@@ -67,7 +67,7 @@
         android:id="@+id/btn_make_vote"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:background="@drawable/bg_rounded_main_color"
+        android:background="@drawable/bg_radius_8_background_main_color"
         android:stateListAnimator="@null"
         android:text="이 위치로 질문하기"
         android:textSize="18sp"

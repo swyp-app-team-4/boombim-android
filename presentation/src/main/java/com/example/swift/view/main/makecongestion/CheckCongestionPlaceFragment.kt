@@ -84,6 +84,7 @@ class CheckCongestionPlaceFragment : Fragment() {
                 placeName,
                 latitude,
                 longitude,
+                addressName,
                 onSuccess = { placeId -> serverPlaceId = placeId },
                 onFailure = { msg ->
                     Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
@@ -117,7 +118,7 @@ class CheckCongestionPlaceFragment : Fragment() {
                     kakaoMap = kakaoMap,
                     latitude = latitude,
                     longitude = longitude,
-                    markerResId = R.drawable.image_green_pin,
+                    markerResId = R.drawable.icon_red_marker,
                     moveCamera = true
                 )
             }

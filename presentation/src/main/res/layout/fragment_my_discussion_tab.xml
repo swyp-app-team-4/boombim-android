@@ -2,7 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/text_all"
@@ -12,8 +13,8 @@
         android:layout_marginTop="12dp"
         android:background="@drawable/tab_background_selector"
         android:fontFamily="@font/pretend_regular"
-        android:text="전체"
         android:gravity="center"
+        android:text="전체"
         android:textColor="@color/tab_text_selector"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,6 +56,7 @@
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="50dp"/>
+
 
 
 

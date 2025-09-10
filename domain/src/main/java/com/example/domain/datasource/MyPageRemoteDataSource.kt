@@ -19,4 +19,6 @@ interface MyPageRemoteDataSource {
     suspend fun logout(refresh: String): ApiResult<*>
 
     suspend fun patchProfileImage(imagePath: String): ApiResult<PatchProfileImageResponse>
+
+    suspend fun deleteUser(reason: String): ApiResult<*>
 }

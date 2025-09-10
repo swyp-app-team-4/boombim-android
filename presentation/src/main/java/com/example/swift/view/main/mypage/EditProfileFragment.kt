@@ -45,15 +45,32 @@ class EditProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initBackButton()
+
         observeProfile()
+
         initNicknameWatcher()
+
         initProfileImageClick()
+
+       lifecycleScope.launch {
+           myPageViewModel.profile.collect{
+               binding.editNickname.hint = it.name
+           }
+       }
         
         binding.btnPatch.setOnClickListener{
             myPageViewModel.patchNickName(
                 binding.editNickname.text.toString(),
                 onSuccess = {
                     Toast.makeText(requireContext(), "변경이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    findNavController().navigate(
+                        R.id.myPageFragment, null,
+                        navOptions {
+                            popUpTo(R.id.editProfileFragment) {
+                                inclusive = true
+                            }
+                        }
+                    )
                             },
                 onFail = {
                     Toast.makeText(requireContext(), "변경 실패", Toast.LENGTH_SHORT).show()
@@ -84,8 +101,8 @@ class EditProfileFragment : Fragment() {
             myPageViewModel.profile.collect { profile ->
                 Glide.with(requireContext())
                     .load(profile.profile)
-                    .placeholder(R.drawable.icon_edit_profile)
-                    .error(R.drawable.icon_edit_profile)
+                    .placeholder(R.drawable.icon_gray_circle)
+                    .error(R.drawable.icon_gray_circle)
                     .into(binding.imageProfile)
             }
         }
@@ -108,12 +125,12 @@ class EditProfileFragment : Fragment() {
                 updateButtonState(false)
             }
             !regex.matches(nickname) -> {
-                binding.textNicknameRule.text = "공백 없이 최대  20자까지 입력 가능합니다."
+                binding.textNicknameRule.text = "공백 없이 최대  20자까지 입력 가능합니다"
                 binding.textNicknameRule.setTextColor(requireContext().getColor(R.color.red ))
                 updateButtonState(false)
             }
             else -> {
-                binding.textNicknameRule.text = "확인되었습니다 ."
+                binding.textNicknameRule.text = "확인되었습니다"
                 binding.textNicknameRule.setTextColor(requireContext().getColor(R.color.green))
                 updateButtonState(true)
             }

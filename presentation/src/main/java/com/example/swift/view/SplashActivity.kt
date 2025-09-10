@@ -14,6 +14,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.boombim.android.databinding.ActivityMainBinding
 import com.boombim.android.databinding.ActivitySplashBinding
+import com.example.swift.view.auth.SocialLoginActivity
 import com.example.swift.view.onboarding.OnBoardingActivity
 import com.example.swift.viewmodel.MainViewModel
 import com.example.swift.viewmodel.SplashViewModel
@@ -46,9 +47,7 @@ class SplashActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 "소셜로그인프래그먼트" -> {
-                    val intent = Intent(this, MainActivity::class.java).apply {
-                        putExtra("dest", "socialLogin")
-                    }
+                    val intent = Intent(this, SocialLoginActivity::class.java)
                     startActivity(intent)
                 }
             }

@@ -14,8 +14,9 @@ class MakeVoteUseCase @Inject constructor(
         posLongitude: String,
         userLatitude: String,
         userLongitude: String,
-        posName: String
+        posName: String,
+        address: String
     ): ApiResult<VoteErrorResponse>{
-        return voteRepository.makeVote(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)
+        return voteRepository.makeVote(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName, address)
     }
 }

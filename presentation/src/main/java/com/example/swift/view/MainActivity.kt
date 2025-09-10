@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -30,58 +31,13 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.security.MessageDigest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
-
-    private val mainViewModel: MainViewModel by viewModels()
-    private val PERMISSION_REQUEST_CODE = 5000
-
-    private fun permissionCheck() {
-        val permissions = mutableListOf<String>()
-
-        // ✅ 알림 권한 (Android 13 이상)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(
-                    this,
-                    android.Manifest.permission.POST_NOTIFICATIONS
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                permissions.add(android.Manifest.permission.POST_NOTIFICATIONS)
-            }
-        }
-
-        // ✅ 위치 권한 (위치 서비스는 보통 FINE_LOCATION 권한 필요)
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-
-        // 필요 시 COARSE_LOCATION 도 같이 요청
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissions.add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-
-        // 권한 요청 실행
-        if (permissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                permissions.toTypedArray(),
-                PERMISSION_REQUEST_CODE
-            )
-        }
-    }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,8 +53,8 @@ class MainActivity : AppCompatActivity() {
             "home" -> {
                 navController.navigate(R.id.homeFragment)
             }
-            "socialLogin" -> {
-                navController.navigate(R.id.socialLoginFragment)
+            "edit" -> {
+                navController.navigate(R.id.socialLoginProfileSettingFragment)
             }
         }
 
@@ -107,8 +63,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         initNavigation()
-
-        permissionCheck()
 
     }
 
@@ -136,26 +90,5 @@ class MainActivity : AppCompatActivity() {
                 if (destination.id == R.id.homeFragment) View.VISIBLE else View.GONE
         }
     }
-
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CODE -> {
-                if (grantResults.isEmpty() || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(applicationContext, "Permission is denied", Toast.LENGTH_SHORT)
-                        .show()
-                } else {
-                    Toast.makeText(applicationContext, "Permission is granted", Toast.LENGTH_SHORT)
-                        .show()
-                }
-            }
-        }
-    }
-
 }
 

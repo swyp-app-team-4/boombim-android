@@ -2,6 +2,7 @@ package com.example.data.network.map
 
 import com.example.data.network.map.request.PostViewPortRequest
 import com.example.domain.model.CongestionResponse
+import com.example.domain.model.MemberPlaceDetailResponse
 import com.example.domain.model.MemberPlaceResponse
 import com.example.domain.model.OfficialPlaceResponse
 import retrofit2.Response
@@ -9,6 +10,7 @@ import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface MapApi {
 
@@ -27,5 +29,11 @@ interface MapApi {
         @Body viewport: PostViewPortRequest
     ): Response<MemberPlaceResponse>
 
+    @GET("/member-place/{memberPlaceId}")
+    suspend fun getMemberPlaceDetail(
+        @Path("memberPlaceId") memberPlaceId: Int,
+        @Query("size") size: Int? = 30,
+        @Query("cursor") cursor: Long? = null
+    ): Response<MemberPlaceDetailResponse>
 
 }

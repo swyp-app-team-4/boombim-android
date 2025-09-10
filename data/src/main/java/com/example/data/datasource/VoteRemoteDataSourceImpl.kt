@@ -44,9 +44,10 @@ class VoteRemoteDataSourceImpl @Inject constructor(
         posLongitude: String,
         userLatitude: String,
         userLongitude: String,
-        posName: String
+        posName: String,
+        address: String
     ): ApiResult<VoteErrorResponse> {
-        val request = MakeVoteRequest(postId,posLatitude, posLongitude, userLatitude, userLongitude, posName)
+        val request = MakeVoteRequest(postId,posLatitude, posLongitude, userLatitude, userLongitude, posName, address)
 
         return safeFlow { voteApi.makeVote(request)}.first()
     }

@@ -25,7 +25,7 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
         @SuppressLint("SetTextI18n")
         fun bind(item: PopularityDetail) {
 
-            binding.textPeopleInterests.text = (item.relaxedCnt + item.commonly + item.slightlyBusyCnt + item.crowedCnt).toString()
+            binding.textPeopleInterests.text = item.voteDuplicationCnt.toString()
             binding.textTitle.text = item.posName
             binding.textCalmCount.text =item.relaxedCnt.toString()
             binding.textNormalCount.text =item.commonly.toString()
@@ -65,11 +65,16 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
 
             val imageViews = listOf(binding.userImg1, binding.userImg2, binding.userImg3)
 
+            imageViews.forEach { imageView ->
+                imageView.setImageResource(R.drawable.icon_gray_circle)
+            }
+
             item.profile.take(3).forEachIndexed { index, url ->
                 imageViews[index].visibility = View.VISIBLE
                 Glide.with(binding.root.context)
                     .load(url)
                     .placeholder(R.drawable.icon_gray_circle)
+                    .error(R.drawable.icon_gray_circle)
                     .circleCrop()
                     .into(imageViews[index])
             }
@@ -90,10 +95,10 @@ class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
 
     private fun getBoombimIcon(res: String): Int? {
         return when (res) {
-            "RELAXED" -> R.drawable.icon_calm_empty
-            "COMMONLY" -> R.drawable.icon_normal_empty
-            "BUSY" -> R.drawable.icon_slightly_busy_empty
-            "CROWDED" -> R.drawable.icon_busy_empty
+            "RELAXED" -> R.drawable.icon_calm_small
+            "COMMONLY" -> R.drawable.icon_normal_small
+            "BUSY" -> R.drawable.icon_slightly_busy_small
+            "CROWDED" -> R.drawable.icon_busy_small
             else -> null
         }
     }

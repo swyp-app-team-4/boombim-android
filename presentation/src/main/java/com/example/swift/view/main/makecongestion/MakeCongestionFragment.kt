@@ -18,6 +18,7 @@ import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMakeCongestionBinding
 import com.example.swift.util.LocationUtils
+import com.example.swift.viewmodel.HomeViewModel
 import com.example.swift.viewmodel.MakeCongestionViewModel
 import com.google.android.gms.location.LocationServices
 import com.kakao.vectormap.*
@@ -34,6 +35,7 @@ class MakeCongestionFragment : Fragment() {
     private var _binding: FragmentMakeCongestionBinding? = null
     private val binding get() = _binding!!
     private val viewModel: MakeCongestionViewModel by activityViewModels()
+    private val homeViewModel: HomeViewModel by activityViewModels()
 
     private var selectedCongestionLevel: Int? = null
     private var kakaoMap: KakaoMap? = null
@@ -58,6 +60,43 @@ class MakeCongestionFragment : Fragment() {
             findNavController().navigate(
                 R.id.congestionSearchFragment)
         }
+
+        binding.iconBack.setOnClickListener {
+            findNavController().navigate(
+                R.id.homeFragment, null,
+                navOptions {
+                    popUpTo(R.id.makeCongestionFragment) {
+                        inclusive = true
+                    }
+                }
+            )
+        }
+
+        binding.btnMakeAi.setOnClickListener {
+            val placeName = arguments?.getString("placeName") ?: ""
+            val congestionLevelName = when(selectedCongestionLevel) {
+                1 -> "Calm"
+                2 -> "Normal"
+                3 -> "Slightly Busy"
+                4 -> "Busy"
+                else -> "Unknown"
+            }
+            val message = binding.textContent.text.toString()
+
+            homeViewModel.makeAutoMessage(
+                memberPlaceName = placeName,
+                congestionLevelName = congestionLevelName,
+                congestionMessage = message,
+                onSuccess = { generatedMessage ->
+                    binding.textContent.setText(generatedMessage)
+                    Toast.makeText(requireContext(), "AI 메시지 생성 완료", Toast.LENGTH_SHORT).show()
+                },
+                onFailure = {
+                    Toast.makeText(requireContext(), "AI 메시지 생성 실패", Toast.LENGTH_SHORT).show()
+                }
+            )
+        }
+
 
         binding.btnShare.setOnClickListener { shareCongestion() }
     }

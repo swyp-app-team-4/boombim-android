@@ -83,7 +83,7 @@ class VoteViewModel @Inject constructor(
             when (postVoteUseCase(voteId, voteAnswerType)) {
                 is ApiResult.Success -> onSuccess("투표 성공")
                 is ApiResult.SuccessEmpty -> onSuccess("투표 성공")
-                is ApiResult.Fail.Error -> onFail("완료된 투표입니다.")
+                is ApiResult.Fail.Error -> onFail("본인이 생성한 투표에는 참여할 수 없습니다.")
                 is ApiResult.Fail.Exception -> onFail("투표 실패")
             }
         }
@@ -111,11 +111,12 @@ class VoteViewModel @Inject constructor(
         userLatitude: String,
         userLongitude: String,
         posName: String,
+        address: String,
         onSuccess: () -> Unit,
         onFail: (msg: String) -> Unit
     ){
         viewModelScope.launch{
-          val result = makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName)
+          val result = makeVoteUseCase(postId, posLatitude, posLongitude, userLatitude, userLongitude, posName, address)
             when(result){
                 is ApiResult.Success -> onSuccess()
                 is ApiResult.Fail.Error -> onFail(result.code.toString() ?: "투표 생성 실패")

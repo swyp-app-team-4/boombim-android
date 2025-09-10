@@ -28,25 +28,26 @@ class AuthRepositoryImpl @Inject constructor(
         refreshToken: String,
         expiresIn: Int,
         idToken: String
-    ): ActionResult<SocialLoginSignUpResult> {
-        val result = authDataSource.socialLogin(
-            provider = provider,
-            accessToken = accessToken,
-            refreshToken = refreshToken,
-            expiresIn = expiresIn,
-            idToken = idToken
-        )
+    ): ApiResult<SocialLoginSignUpResult> {
+        return try {
+            when (val response =
+                authDataSource.socialLogin(provider, accessToken, refreshToken, expiresIn, idToken)
+            ) {
+                is ApiResult.Success -> {
+                    appManageDataStore.saveAccessToken(response.data.accessToken)
+                    appManageDataStore.saveRefreshToken(response.data.refreshToken)
+                    ApiResult.Success(response.data)
+                }
 
-        if (result is ApiResult.Success) {
-            val body = result.data
-            val access = body.accessToken
-            val refresh = body.refreshToken
-
-            access.let { appManageDataStore.saveAccessToken(it) }
-            refresh.let { appManageDataStore.saveRefreshToken(it) }
+                is ApiResult.SuccessEmpty -> ApiResult.SuccessEmpty
+                is ApiResult.Fail.Error -> ApiResult.Fail.Error(response.code, response.message)
+                is ApiResult.Fail.Exception -> ApiResult.Fail.Exception(response.e)
+            }
+        } catch (e: Exception) {
+            ApiResult.Fail.Exception(e)
         }
-        return result.covertApiResultToActionResultIfSuccess()
     }
+
 
     override suspend fun postRefreshToken(refreshToken: String): Flow<ApiResult<TokenModel>> {
         return safeFlow {

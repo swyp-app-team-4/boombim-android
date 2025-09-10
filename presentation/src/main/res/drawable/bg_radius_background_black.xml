@@ -5,6 +5,6 @@
     <corners android:radius="20dp" />
 
     <!-- 배경색 (사진처럼 주황색) -->
-    <solid android:color="@color/black" />
+    <solid android:color="@color/gray_scale_4" />
 
 </shape>

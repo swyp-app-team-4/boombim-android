@@ -29,6 +29,20 @@
         <item name="android:background">@drawable/bg_bottom_sheet_white_20</item>
     </style>
 
+    <style name="CustomSwitchStyle" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="track">@drawable/toggle_track</item>
+        <item name="android:thumb">@drawable/toggle_thumb</item>
+        <item name="showText">false</item>
+        <item name="switchMinWidth">36dp</item>
+        <item name="switchPadding">0dp</item>
+        <item name="thumbTextPadding">0dp</item>
+    </style>
+
+    <style name="MyRadioButton" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/gray_scale_5</item>
+        <item name="colorControlActivated">@color/main_color</item>
+    </style>
+
 
 
 </resources>

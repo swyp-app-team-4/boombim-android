@@ -51,6 +51,11 @@ class MyPageFragment : Fragment() {
         observeProfile()
     }
 
+    override fun onResume() {
+        super.onResume()
+        myPageViewModel.refreshProfile()
+    }
+
     private fun initUI() {
         initTabLayout()
         binding.iconSetting.setOnClickListener {
@@ -79,8 +84,8 @@ class MyPageFragment : Fragment() {
 
         Glide.with(this)
             .load(profile.profile)
-            .placeholder(R.drawable.icon_edit_profile)
-            .error(R.drawable.icon_edit_profile)
+            .placeholder(R.drawable.icon_gray_circle)
+            .error(R.drawable.icon_gray_circle)
             .into(binding.iconProfile)
     }
 

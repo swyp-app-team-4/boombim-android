@@ -36,17 +36,36 @@ class MyPageMyVoteTabFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initMyQuestion()
+
+        lifecycleScope.launch {
+            myPageViewModel.refreshVoteList()
+        }
     }
 
-    private fun initMyQuestion(){
+    override fun onResume() {
+        super.onResume()
+
+        lifecycleScope.launch {
+            myPageViewModel.refreshVoteList()
+        }
+    }
+
+    private fun initMyQuestion() = with(binding){
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED){
                 myPageViewModel.myQuestion.collect { list ->
+                    if(list.isEmpty()){
+                        recyclerVoteSection.visibility = View.GONE
+                        addPlaceLayout.visibility = View.VISIBLE
+                    }else {
+                        recyclerVoteSection.visibility = View.VISIBLE
+                        addPlaceLayout.visibility = View.GONE
 
-                    val adapter = MyPageVoteSectionAdapter(list)
-                    binding.recyclerVoteSection.apply {
-                        layoutManager = LinearLayoutManager(requireContext())
-                        this.adapter = adapter
+                        val adapter = MyPageVoteSectionAdapter(list)
+                        binding.recyclerVoteSection.apply {
+                            layoutManager = LinearLayoutManager(requireContext())
+                            this.adapter = adapter
+                        }
                     }
                 }
             }

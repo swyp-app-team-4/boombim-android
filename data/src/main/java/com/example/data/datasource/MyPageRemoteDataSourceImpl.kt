@@ -2,6 +2,7 @@ package com.example.data.datasource
 
 import com.example.data.network.auth.request.RefreshTokenRequest
 import com.example.data.network.mypage.MyPageApi
+import com.example.data.network.mypage.request.DeleteAccountRequest
 import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.data.network.safeFlow
 import com.example.domain.datasource.MyPageRemoteDataSource
@@ -57,6 +58,11 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
         )
 
         return safeFlow { myPageApi.patchProfileImage(multipartBody)}.first()
+    }
+
+    override suspend fun deleteUser(reason: String): ApiResult<*> {
+        val request = DeleteAccountRequest(reason)
+        return safeFlow { myPageApi.deleteAccount(request)}.first()
     }
 
 }

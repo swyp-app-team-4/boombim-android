@@ -1,12 +1,9 @@
 package com.example.swift.view.main.vote.tab
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -19,22 +16,13 @@ import com.example.swift.view.main.vote.adapter.MyVoteAdapter
 import com.example.swift.viewmodel.VoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import com.example.swift.view.main.vote.BaseViewBindingFragment
 
 @AndroidEntryPoint
-class MyDiscussionTabFragment : Fragment() {
-    private var _binding: FragmentMyDiscussionTabBinding? = null
-    private val binding get() = _binding!!
+class MyDiscussionTabFragment : BaseViewBindingFragment<FragmentMyDiscussionTabBinding>(
+    FragmentMyDiscussionTabBinding::inflate
+) {
     private val voteViewModel: VoteViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentMyDiscussionTabBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +33,6 @@ class MyDiscussionTabFragment : Fragment() {
         initTabClicks()
 
         initMyVoteList()
-
     }
 
     private fun setSelectedTab(selected: TextView) {
@@ -68,40 +55,35 @@ class MyDiscussionTabFragment : Fragment() {
         }
     }
 
-
-    private fun initMyVoteList() = with(binding){
+    private fun initMyVoteList() = with(binding) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 voteViewModel.filteredVoteList.collect { myVoteList ->
-                   val adapter = MyVoteAdapter(
-                       myVoteList,
-                       onBtnClick =  { myVoteItem ->
-                           EndVoteDialog(
-                               onConfirm = {
-                                   voteViewModel.patchVote(
-                                       voteId = myVoteItem.voteId,
-                                       onSuccess = { successMessage ->
-                                           Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()
-                                       },
-                                       onFail = { errorMessage ->
-                                           Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
-                                       }
-                                   )
-                               }
-                           ).show(parentFragmentManager, "EndVoteDialog")
-                       }
-                   )
+                    val adapter = MyVoteAdapter(
+                        myVoteList,
+                        onBtnClick = { myVoteItem ->
+                            EndVoteDialog(
+                                onConfirm = {
+                                    showLoading() // BaseViewBindingFragment에서 제공
+                                    voteViewModel.patchVote(
+                                        voteId = myVoteItem.voteId,
+                                        onSuccess = { successMessage ->
+                                            hideLoading()
+                                            Toast.makeText(requireContext(), successMessage, Toast.LENGTH_SHORT).show()
+                                        },
+                                        onFail = { errorMessage ->
+                                            hideLoading()
+                                            Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
+                                        }
+                                    )
+                                }
+                            ).show(parentFragmentManager, "EndVoteDialog")
+                        }
+                    )
                     recycleMyVote.layoutManager = LinearLayoutManager(requireContext())
                     recycleMyVote.adapter = adapter
                 }
             }
         }
-    }
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

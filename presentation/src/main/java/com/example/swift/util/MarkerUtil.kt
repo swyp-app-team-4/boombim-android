@@ -1,6 +1,11 @@
 package com.example.swift.util
 
 import android.content.Context
+import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Bitmap.Config
+import android.graphics.Paint.Align
+import android.graphics.Typeface
 import android.graphics.BitmapFactory
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.LatLng
@@ -11,14 +16,7 @@ import com.kakao.vectormap.camera.CameraUpdateFactory
 object MapUtil {
 
     /**
-     * 카카오맵에 마커를 추가하는 유틸 함수
-     *
-     * @param context Context
-     * @param kakaoMap KakaoMap 객체
-     * @param latitude 위도
-     * @param longitude 경도
-     * @param markerResId 마커로 사용할 리소스 ID (예: R.drawable.icon_red_marker)
-     * @param moveCamera 마커 위치로 카메라 이동 여부 (기본 true)
+     * 일반 마커 추가
      */
     fun addMarker(
         context: Context,
@@ -43,5 +41,41 @@ object MapUtil {
                 )
             }
         }
+    }
+
+    /**
+     * 클러스터용 원형 아이콘 생성
+     */
+    fun makeClusterIcon(size: Int): Bitmap {
+        val diameter = 200
+        val bitmap = Bitmap.createBitmap(diameter, diameter, Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+
+        val paintCircle = Paint().apply {
+            isAntiAlias = true
+            color = Color.parseColor("#80FFBABA")
+        }
+
+        val paintText = Paint().apply {
+            isAntiAlias = true
+            color = Color.BLACK
+            textSize = 40f
+            textAlign = Align.CENTER
+            typeface = Typeface.DEFAULT_BOLD
+        }
+
+        // 배경 원 그리기
+        canvas.drawCircle(
+            (diameter / 2).toFloat(),
+            (diameter / 2).toFloat(),
+            (diameter / 2).toFloat(),
+            paintCircle
+        )
+
+        // 텍스트 중앙 정렬
+        val textY = (diameter / 2 - (paintText.descent() + paintText.ascent()) / 2)
+        canvas.drawText(size.toString(), (diameter / 2).toFloat(), textY, paintText)
+
+        return bitmap
     }
 }

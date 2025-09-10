@@ -37,12 +37,17 @@ class AuthViewModel @Inject constructor(
                 expiresIn = 3600,
                 idToken = ""
             )) {
-                is ActionResult.Fail -> {
-                    onFail(result.msg)
+                is ApiResult.Success -> onSuccess(result.data.nameFlag)
+                is ApiResult.Fail.Error -> {
+                    val message = when (result.code) {
+                        409 -> "이미 사용중인 이메일입니다"
+                        422 -> "유효하지 않은 액세스 토큰입니다"
+                        else -> result.message ?: "로그인 실패"
+                    }
+                    onFail(message)
                 }
-                is ActionResult.Success -> {
-                    onSuccess(result.data.nameFlag)
-                }
+                is ApiResult.Fail.Exception -> onFail("예상치 못한 오류")
+                is ApiResult.SuccessEmpty ->  ""
             }
         }
     }

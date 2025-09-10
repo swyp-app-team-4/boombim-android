@@ -2,6 +2,7 @@ package com.example.domain.datasource
 
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CongestionResponse
+import com.example.domain.model.MemberPlaceDetailResponse
 import com.example.domain.model.MemberPlaceResponse
 import com.example.domain.model.OfficialPlaceResponse
 import kotlinx.coroutines.flow.Flow
@@ -29,4 +30,6 @@ interface MapRemoteDataSource {
     ): Flow<ApiResult<MemberPlaceResponse>>
 
     suspend fun getOfficialPlaceOverview(officialPlaceId: Int): Flow<ApiResult<OfficialPlaceResponse>>
+
+    suspend fun getMemberPlaceDetail(memberPlaceId: Int) :Flow<ApiResult<MemberPlaceDetailResponse>>
 }

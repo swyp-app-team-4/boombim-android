@@ -1,27 +1,38 @@
 package com.example.swift.view.main.home.adapter
 
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemInterestsPlaceBinding
-import com.example.domain.model.InterestsPlaceModel
+import com.bumptech.glide.Glide
+import com.example.domain.model.FavoriteData
+import com.example.swift.util.DateTimeUtils
 
-class InterestsPlaceAdapter (private val items: List<InterestsPlaceModel>) :
+class InterestsPlaceAdapter (private val items: List<FavoriteData>) :
     RecyclerView.Adapter<InterestsPlaceAdapter.PlaceViewHolder>() {
 
+    @RequiresApi(Build.VERSION_CODES.O)
     inner class PlaceViewHolder(val binding: ItemInterestsPlaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(item: InterestsPlaceModel) {
-            binding.textPlaceName.text = item.placeName
-            binding.textUpdate.text = item.updateContent
+        fun bind(item: FavoriteData) {
+            binding.textPlaceName.text = item.name
+            binding.textUpdate.text = DateTimeUtils.getTimeAgo(item.observedAt.toString())
 
-            val statusIconRes = when (item.status) {
-                "congestion" -> R.drawable.icon_status_congestion
-                "normal" -> R.drawable.icon_status_moderate
-                "relaxed" -> R.drawable.icon_status_relaxation
-                else -> R.drawable.icon_status_moderate
+            val statusIconRes = when (item.congestionLevelName) {
+                "붐빔" -> R.drawable.icon_busy_small
+                "약간 붐빔" -> R.drawable.icon_slightly_busy_small
+                "여유" -> R.drawable.icon_calm_small
+                else -> R.drawable.icon_normal_small
             }
+
+            Glide.with(binding.imagePlace.context)
+                .load(item.imageUrl)
+                .centerCrop()
+                .error(R.drawable.icon_image_load_fail)
+                .into(binding.imagePlace)
 
             binding.iconStatus.setImageResource(statusIconRes)
         }

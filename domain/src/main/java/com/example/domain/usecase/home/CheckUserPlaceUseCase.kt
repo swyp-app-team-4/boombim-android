@@ -12,9 +12,10 @@ class CheckUserPlaceUseCase @Inject constructor(
     suspend operator fun invoke(
         uuid: String,
         name: String,
+        address: String,
         latitude: Double,
         longitude: Double
     ) : Flow<ApiResult<CheckUserPlaceResponse>> {
-        return homeRepository.checkUserPlace(uuid, name, latitude, longitude)
+        return homeRepository.checkUserPlace(uuid, name, address, latitude, longitude)
     }
 }

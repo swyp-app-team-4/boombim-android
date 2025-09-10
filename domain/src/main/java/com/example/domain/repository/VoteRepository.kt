@@ -29,6 +29,7 @@ interface VoteRepository {
         posLongitude: String,
         userLatitude: String,
         userLongitude: String,
-        posName: String
+        posName: String,
+        address: String
     ): ApiResult<VoteErrorResponse>
 }

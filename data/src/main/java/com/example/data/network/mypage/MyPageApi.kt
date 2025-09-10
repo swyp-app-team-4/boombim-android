@@ -2,6 +2,7 @@ package com.example.data.network.mypage
 
 import com.example.data.network.auth.FcmTokenRequest
 import com.example.data.network.auth.request.RefreshTokenRequest
+import com.example.data.network.mypage.request.DeleteAccountRequest
 import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
@@ -9,6 +10,7 @@ import com.example.domain.model.ProfileModel
 import okhttp3.MultipartBody
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.Multipart
 import retrofit2.http.PATCH
@@ -46,6 +48,11 @@ interface MyPageApi {
     suspend fun patchProfileImage(
         @Part multipartFile: MultipartBody.Part
     ): Response<PatchProfileImageResponse>
+
+    @POST("/api/member")
+    suspend fun deleteAccount(
+        @Body request: DeleteAccountRequest
+    ): Response<Unit>
 
 
 

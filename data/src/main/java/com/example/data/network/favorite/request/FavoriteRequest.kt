@@ -4,5 +4,6 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class FavoriteRequest (
-    val memberPlaceId: Int
+    val placeType: String,
+    val placeId: Int
 )
