@@ -21,6 +21,7 @@ import com.example.domain.model.Coordinate
 import com.example.domain.model.MemberPlaceData
 import com.example.swift.util.LocationUtils
 import com.example.swift.util.MapUtil
+import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.view.main.map.adapter.NearByAdapter
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -65,6 +66,10 @@ class MapFragment : Fragment() {
 
     private val EARTH_RADIUS = 6378137.0
 
+    private val loadingAlertProvider by lazy {
+        LoadingAlertProvider(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -107,6 +112,7 @@ class MapFragment : Fragment() {
     }
 
     private fun initNearBy() {
+        loadingAlertProvider.startLoading()
         val bottomSheetBinding = binding.nearbyBottomSheet
 
         bottomSheetBinding.recycle.layoutManager = LinearLayoutManager(requireContext())
@@ -116,6 +122,7 @@ class MapFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 mapViewModel.viewPortPlaceList.collect { list ->
+                    loadingAlertProvider.endLoading()
                     nearByAdapter.updateItems(list)
                 }
             }

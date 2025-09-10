@@ -22,6 +22,7 @@ import com.example.domain.model.PlaceBoomBimModel
 import com.example.domain.model.PlaceLessBoomBimModel
 import com.example.domain.model.RegionNewsModel
 import com.example.swift.util.LocationUtils
+import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.view.main.home.adapter.PlaceBoomBimAdapter
 import com.example.swift.view.main.home.adapter.PlaceLessBoomBimAdapter
@@ -45,6 +46,10 @@ class HomeFragment : Fragment() {
     private val favoriteViewModel: FavoriteViewModel by activityViewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
 
+    private val loadingAlertProvider by lazy {
+        LoadingAlertProvider(this)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -58,6 +63,7 @@ class HomeFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         fetchLessBoomBimPlace()
 
