@@ -44,12 +44,6 @@ class AlertFragment : Fragment() {
             )
         }
 
-//       lifecycleScope.launch {
-//           binding.alertToggle.setOnClickListener {
-//               settingViewModel.updateNotificationAllowed()
-//           }
-//       }
-
         lifecycleScope.launch {
             settingViewModel.notificationAllowed.collect { allowed ->
                 binding.alertToggle.isChecked = allowed
@@ -58,6 +52,10 @@ class AlertFragment : Fragment() {
 
         binding.alertToggle.setOnCheckedChangeListener { _, isChecked ->
             settingViewModel.setNotificationAllowed(isChecked)
+            settingViewModel.patchAlarm(
+                onSuccess = {},
+                onFail = {}
+            )
         }
 
 

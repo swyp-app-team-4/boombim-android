@@ -1,6 +1,8 @@
 package com.example.data.repository
 
+import com.example.data.extension.covertApiResultToActionResultIfSuccessEmpty
 import com.example.domain.datasource.NotificationRemoteDataSource
+import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.model.NotificationModel
 import com.example.domain.repository.NotificationRepository
@@ -32,5 +34,10 @@ class NotificationRepositoryImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override suspend fun patchAlarm(): ActionResult<*> {
+        val result = notificationRemoteDataSource.patchAlarm()
+        return result.covertApiResultToActionResultIfSuccessEmpty()
     }
 }

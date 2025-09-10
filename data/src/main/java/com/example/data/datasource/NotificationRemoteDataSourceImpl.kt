@@ -6,6 +6,7 @@ import com.example.domain.datasource.NotificationRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.NotificationModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 class NotificationRemoteDataSourceImpl @Inject constructor(
@@ -14,5 +15,9 @@ class NotificationRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getNotification(deviceType: String): Flow<ApiResult<List<NotificationModel>>> {
         return safeFlow { notificationApi.getAlarmHistory(deviceType) }
+    }
+
+    override suspend fun patchAlarm(): ApiResult<*> {
+        return safeFlow { notificationApi.patchAlarm() }.first()
     }
 }

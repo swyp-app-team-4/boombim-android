@@ -7,4 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface NotificationRemoteDataSource {
     suspend fun getNotification(deviceType: String): Flow<ApiResult<List<NotificationModel>>>
+
+    suspend fun patchAlarm(): ApiResult<*>
 }
