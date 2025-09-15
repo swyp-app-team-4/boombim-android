@@ -12,27 +12,18 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
+import com.boombim.android.databinding.FragmentMyPageBinding
 import com.boombim.android.databinding.FragmentMyPageInterestsTabBinding
 import com.example.domain.model.InterestsPlaceModel
+import com.example.swift.view.common.MyPageBaseFragment
 import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.view.main.mypage.adapter.MyPageInterestsPlaceAdapter
 import com.example.swift.viewmodel.FavoriteViewModel
 import kotlinx.coroutines.launch
 
-class MyPageInterestsTabFragment : Fragment() {
-    private var _binding: FragmentMyPageInterestsTabBinding? = null
-    private val binding get() = _binding!!
-    private val favoriteViewModel: FavoriteViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentMyPageInterestsTabBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+class MyPageInterestsTabFragment : MyPageBaseFragment<FragmentMyPageInterestsTabBinding>(
+    FragmentMyPageInterestsTabBinding::inflate
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -62,12 +53,5 @@ class MyPageInterestsTabFragment : Fragment() {
                 }
             }
         }
-    }
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

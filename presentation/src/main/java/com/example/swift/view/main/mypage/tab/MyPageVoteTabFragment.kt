@@ -11,24 +11,14 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyPageVoteTabBinding
+import com.example.swift.view.common.MyPageBaseFragment
 import com.example.swift.view.main.mypage.adapter.MyPageVoteSectionAdapter
 import com.example.swift.viewmodel.MyPageViewModel
 import kotlinx.coroutines.launch
 
-class MyPageVoteTabFragment : Fragment() {
-    private var _binding: FragmentMyPageVoteTabBinding? = null
-    private val binding get() = _binding!!
-    private val myPageViewModel: MyPageViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentMyPageVoteTabBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+class MyPageVoteTabFragment : MyPageBaseFragment<FragmentMyPageVoteTabBinding>(
+    FragmentMyPageVoteTabBinding::inflate
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,11 +59,5 @@ class MyPageVoteTabFragment : Fragment() {
                 }
             }
         }
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

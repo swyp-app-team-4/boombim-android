@@ -15,6 +15,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ProfileModel
+import com.example.swift.view.common.MyPageBaseFragment
 import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.view.main.mypage.tab.MyPageInterestsTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageMyVoteTabFragment
@@ -26,23 +27,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MyPageFragment : Fragment() {
-    private var _binding: FragmentMyPageBinding? = null
-    private val binding get() = _binding!!
-    private val myPageViewModel: MyPageViewModel by activityViewModels()
-
-    private val loadingAlertProvider by lazy {
-        LoadingAlertProvider(this)
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMyPageBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
+class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
+    FragmentMyPageBinding::inflate
+) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -116,10 +103,5 @@ class MyPageFragment : Fragment() {
 
     private fun navigateTo(destinationId: Int) {
         findNavController().navigate(destinationId)
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

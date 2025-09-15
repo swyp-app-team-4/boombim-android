@@ -20,26 +20,16 @@ import com.boombim.android.databinding.FragmentMyPageInterestsTabBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ImageAddType
 import com.example.domain.model.InterestsPlaceModel
+import com.example.swift.view.common.MyPageBaseFragment
 import com.example.swift.view.dialog.ImagePickerDialogFragment
 import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
 import com.example.swift.viewmodel.MyPageViewModel
 import com.example.swift.viewmodel.VoteViewModel
 import kotlinx.coroutines.launch
 
-class EditProfileFragment : Fragment() {
-    private var _binding: FragmentEditProfileBinding? = null
-    private val binding get() = _binding!!
-    private val myPageViewModel: MyPageViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+class EditProfileFragment : MyPageBaseFragment<FragmentEditProfileBinding>(
+    FragmentEditProfileBinding::inflate
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -189,11 +179,4 @@ class EditProfileFragment : Fragment() {
         return null
     }
 
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }
