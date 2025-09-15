@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
+import com.boombim.android.databinding.FragmentEventTabBinding
 import com.boombim.android.databinding.FragmentNotificationBinding
 import com.example.swift.view.main.notification.tab.EventTabFragment
 import com.example.swift.view.main.notification.tab.NewIssueTabFragment
@@ -15,20 +16,8 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class NotificationFragment : Fragment() {
-    private var _binding: FragmentNotificationBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
-
-
-        return binding.root
-    }
+class NotificationFragment :
+    NotificationBaseFragment<FragmentNotificationBinding>(FragmentNotificationBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -69,11 +58,5 @@ class NotificationFragment : Fragment() {
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
-    }
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

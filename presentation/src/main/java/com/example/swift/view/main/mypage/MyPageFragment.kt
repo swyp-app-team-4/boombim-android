@@ -1,12 +1,8 @@
 package com.example.swift.view.main.mypage
 
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -15,13 +11,9 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ProfileModel
-import com.example.swift.view.common.MyPageBaseFragment
-import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.view.main.mypage.tab.MyPageInterestsTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageMyVoteTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageVoteTabFragment
-import com.example.swift.viewmodel.MyPageViewModel
-import com.example.swift.viewmodel.VoteViewModel
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

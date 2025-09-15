@@ -23,7 +23,6 @@ class SettingViewModel @Inject constructor(
     private val logoutUseCase: LogoutUseCase,
     private val deleteUserUseCase: DeleteUserUseCase,
     private val provider: TokenProvider,
-    private val updateFcmToken: UpdateFcmToken,
     private val appManageDataStore: AppManageDataStore,
     private val patchAlarmUseCase: PatchAlarmUseCase
 ): ViewModel() {

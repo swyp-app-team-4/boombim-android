@@ -1,4 +1,4 @@
-package com.example.swift.view.main.mypage
+package com.example.swift.view.main.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,29 +9,23 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.navigation.fragment.findNavController
-import com.example.swift.view.dialog.LoadingAlertProvider
-import com.example.swift.viewmodel.FavoriteViewModel
-import com.example.swift.viewmodel.MyPageViewModel
+import androidx.viewbinding.ViewBinding
+import com.example.swift.viewmodel.NotificationViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-abstract class MyPageBaseFragment<VB : androidx.viewbinding.ViewBinding>(
+abstract class NotificationBaseFragment<VB : ViewBinding>(
     private val bindingInflater: (LayoutInflater, ViewGroup?, Boolean) -> VB
 ) : Fragment() {
 
     private var _binding: VB? = null
     protected val binding get() = _binding!!
 
-    protected val myPageViewModel: MyPageViewModel by activityViewModels()
-    protected val favoriteViewModel: FavoriteViewModel by activityViewModels()
-
-    protected val loadingAlertProvider by lazy {
-        LoadingAlertProvider(this)
-    }
+    protected val notificationViewModel: NotificationViewModel by activityViewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         _binding = bindingInflater(inflater, container, false)
         return binding.root
@@ -46,10 +40,5 @@ abstract class MyPageBaseFragment<VB : androidx.viewbinding.ViewBinding>(
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED, block)
         }
-    }
-
-    /** NavController 간단 이동 */
-    protected fun navigateTo(destinationId: Int, args: Bundle? = null, navOptions: androidx.navigation.NavOptions? = null) {
-        findNavController().navigate(destinationId, args, navOptions)
     }
 }
