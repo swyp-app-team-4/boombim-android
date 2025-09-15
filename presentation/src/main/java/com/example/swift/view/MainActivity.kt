@@ -30,6 +30,7 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.messaging.FirebaseMessaging
+import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.security.MessageDigest
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         initNavigation()
+
 
     }
 

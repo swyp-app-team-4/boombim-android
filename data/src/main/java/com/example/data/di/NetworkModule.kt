@@ -54,7 +54,7 @@ object NetworkModule {
         val logging = HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
         return OkHttpClient.Builder()
             .addInterceptor(logging)
-            .cache(Cache(File(context.cacheDir, "http_cache"), 50L * 1024L * 1024L))
+            .cache(Cache(File(context.cacheDir, "http_cache"), 10L * 1024L * 1024L))
             .build()
     }
 
