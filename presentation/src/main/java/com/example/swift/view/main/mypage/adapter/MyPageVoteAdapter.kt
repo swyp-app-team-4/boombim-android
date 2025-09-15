@@ -12,7 +12,7 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.NotificationModel
 import com.example.domain.model.PopularityDetail
 import com.example.swift.util.DateTimeUtils
-import com.example.swift.view.main.home.notification.adapter.EventNotificationAdapter
+import com.example.swift.view.main.notification.adapter.EventNotificationAdapter
 
 class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
     RecyclerView.Adapter<MyPageVoteAdapter.NotificationViewHolder>() {

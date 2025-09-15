@@ -10,9 +10,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
@@ -30,23 +28,11 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
-class MakeCongestionFragment : Fragment() {
-
-    private var _binding: FragmentMakeCongestionBinding? = null
-    private val binding get() = _binding!!
-    private val viewModel: MakeCongestionViewModel by activityViewModels()
-    private val homeViewModel: HomeViewModel by activityViewModels()
+class MakeCongestionFragment :
+    MakeCongestionBaseFragment<FragmentMakeCongestionBinding>(FragmentMakeCongestionBinding::inflate) {
 
     private var selectedCongestionLevel: Int? = null
     private var kakaoMap: KakaoMap? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMakeCongestionBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -220,7 +206,7 @@ class MakeCongestionFragment : Fragment() {
                 ?: LocationUtils.requestSingleUpdate(fusedLocationClient)
 
             if (location != null) {
-                viewModel.makeCongestion(
+                makeCongestionViewModel.makeCongestion(
                     memberPlaceId = placeId,
                     congestionLevelId = congestionLevelId,
                     congestionMessage = message,
@@ -250,13 +236,4 @@ class MakeCongestionFragment : Fragment() {
             }
         }
     }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-
-    /** View 확장 함수 */
-    private fun View.show() { visibility = View.VISIBLE }
-    private fun View.hide() { visibility = View.GONE }
 }

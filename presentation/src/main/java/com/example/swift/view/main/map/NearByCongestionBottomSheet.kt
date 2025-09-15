@@ -21,7 +21,7 @@ import com.example.domain.model.CongestionData
 import com.example.domain.model.Coordinate
 import com.example.domain.model.MemberCongestionItem
 import com.example.swift.util.DateTimeUtils
-import com.example.swift.view.main.home.notification.adapter.EventNotificationAdapter
+import com.example.swift.view.main.notification.adapter.EventNotificationAdapter
 import com.example.swift.view.main.map.adapter.MemberPlaceDetailAdapter
 import com.example.swift.view.main.map.adapter.NearByAdapter
 import com.example.swift.viewmodel.FavoriteViewModel

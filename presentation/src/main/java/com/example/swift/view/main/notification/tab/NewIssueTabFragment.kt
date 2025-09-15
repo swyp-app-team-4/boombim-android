@@ -1,4 +1,4 @@
-package com.example.swift.view.main.home.notification.tab
+package com.example.swift.view.main.notification.tab
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentNewIssueTabBinding
-import com.example.swift.view.main.home.notification.adapter.EventNotificationAdapter
+import com.example.swift.view.main.notification.adapter.EventNotificationAdapter
 import com.example.swift.viewmodel.NotificationViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

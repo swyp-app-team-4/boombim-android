@@ -22,12 +22,8 @@ import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import kotlinx.coroutines.launch
 
-class CheckCongestionPlaceFragment : Fragment() {
-
-    private var _binding: FragmentCheckCongestionPlaceBinding? = null
-    private val binding get() = _binding!!
-
-    private val homeViewModel: HomeViewModel by activityViewModels()
+class CheckCongestionPlaceFragment :
+    MakeCongestionBaseFragment<FragmentCheckCongestionPlaceBinding>(FragmentCheckCongestionPlaceBinding::inflate) {
 
     private lateinit var mapView: MapView
     private var kakaoMap: KakaoMap? = null
@@ -38,14 +34,6 @@ class CheckCongestionPlaceFragment : Fragment() {
     private var latitude: Double = 0.0
     private var id: Int = -1
     private var serverPlaceId: Int = 0
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentCheckCongestionPlaceBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -123,10 +111,5 @@ class CheckCongestionPlaceFragment : Fragment() {
                 )
             }
         })
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

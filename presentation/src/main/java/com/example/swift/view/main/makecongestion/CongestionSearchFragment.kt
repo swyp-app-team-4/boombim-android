@@ -23,21 +23,11 @@ import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
 import kotlinx.coroutines.launch
 
-class CongestionSearchFragment : Fragment() {
-    private var _binding: FragmentCongestionSearchBinding? = null
-    private val binding get() = _binding!!
+class CongestionSearchFragment :
+    MakeCongestionBaseFragment<FragmentCongestionSearchBinding>(FragmentCongestionSearchBinding::inflate) {
+
     private val kakaoSearchViewmodel: KakaoSearchViewModel by activityViewModels()
     private lateinit var adapter: KakaoSearchListAdapter
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentCongestionSearchBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -45,7 +35,6 @@ class CongestionSearchFragment : Fragment() {
         initKakaoSearchList()
 
         initSearchViewListener()
-
 
         binding.iconBack.setOnClickListener {
             findNavController().navigate(

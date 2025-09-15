@@ -1,4 +1,4 @@
-package com.example.swift.view.main.home.notification
+package com.example.swift.view.main.notification
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,8 +9,8 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentNotificationBinding
-import com.example.swift.view.main.home.notification.tab.EventTabFragment
-import com.example.swift.view.main.home.notification.tab.NewIssueTabFragment
+import com.example.swift.view.main.notification.tab.EventTabFragment
+import com.example.swift.view.main.notification.tab.NewIssueTabFragment
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
