@@ -37,17 +37,6 @@ class PlaceBoomBimAdapter (private val items: List<PlaceBoomBimModel>) :
                 .error(R.drawable.icon_image_load_fail)
                 .into(binding.imagePlace)
 
-
-//            val ranking = when(item.){
-//                1 -> R.drawable.icon_rank1
-//                2 -> R.drawable.icon_rank2
-//                3 -> R.drawable.icon_rank3
-//                4 -> R.drawable.icon_rank4
-//                else -> R.drawable.icon_rank5
-//            }
-
-//            binding.iconRank.setImageResource(ranking)
-
             binding.iconStatus.setImageResource(statusIconRes)
         }
     }
@@ -60,7 +49,18 @@ class PlaceBoomBimAdapter (private val items: List<PlaceBoomBimModel>) :
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
         holder.bind(items[position])
+
+        val rankingRes = when (position) {
+            0 -> R.drawable.icon_rank1
+            1 -> R.drawable.icon_rank2
+            2 -> R.drawable.icon_rank3
+            3 -> R.drawable.icon_rank4
+            else -> R.drawable.icon_rank5
+        }
+
+        holder.binding.iconRank.setImageResource(rankingRes)
     }
+
 
     override fun getItemCount() = items.size
 }

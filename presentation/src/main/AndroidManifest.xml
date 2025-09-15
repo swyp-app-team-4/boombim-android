@@ -20,7 +20,7 @@
         tools:targetApi="31">
 
         <meta-data
-            android:name="com.kakao.vectormap.AppKey"
+            android:name="com.kakao.sdk.AppKey"
             android:value="15beddeb998ebfb5407b1501bf0b2259" />
 
         <activity
