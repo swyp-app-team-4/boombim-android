@@ -12,27 +12,17 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
+import com.boombim.android.databinding.FragmentSettingBinding
 import com.boombim.android.databinding.FragmentWithdrawBinding
 import com.example.swift.view.MainActivity
 import com.example.swift.view.auth.SocialLoginActivity
 import com.example.swift.viewmodel.SettingViewModel
 
-class WithDrawFragment : Fragment() {
-
-    private var _binding: FragmentWithdrawBinding? = null
-    private val binding get() = _binding!!
-    private val settingViewModel: SettingViewModel by activityViewModels()
+class WithDrawFragment :
+    SettingBaseFragment<FragmentWithdrawBinding>(FragmentWithdrawBinding::inflate) {
 
     private lateinit var checkBoxes: List<CheckBox>
     private lateinit var cbEtc: CheckBox
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentWithdrawBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -101,11 +91,7 @@ class WithDrawFragment : Fragment() {
 
     private fun getSelectedReasons(): List<String> =
         checkBoxes
-            .filter { it.isChecked && it != cbEtc } // "기타" 제외
+            .filter { it.isChecked && it != cbEtc }
             .map { it.text.toString() }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

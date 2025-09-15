@@ -1,5 +1,6 @@
 package com.example.swift.view.main.setting
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,29 +14,19 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
+import com.boombim.android.databinding.FragmentMyProfileBinding
 import com.boombim.android.databinding.FragmentPolicyBinding
 import com.boombim.android.databinding.FragmentSettingBinding
 import com.example.swift.view.dialog.LogoutDialog
 import com.example.swift.viewmodel.SettingViewModel
 
-class PolicyFragment : Fragment() {
-    private var _binding: FragmentPolicyBinding? = null
-    private val binding get() = _binding!!
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentPolicyBinding.inflate(inflater, container, false)
-
-        setupWebView()
-
-        return binding.root
-    }
+class PolicyFragment :
+    SettingBaseFragment<FragmentPolicyBinding>(FragmentPolicyBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        setupWebView()
 
         val url = arguments?.getString("url")
         val title = arguments?.getString("title")
@@ -52,6 +43,7 @@ class PolicyFragment : Fragment() {
 
     }
 
+    @SuppressLint("SetJavaScriptEnabled")
     private fun setupWebView() {
         binding.webView.apply {
             settings.javaScriptEnabled = true   // Notion 페이지 필수
@@ -68,8 +60,4 @@ class PolicyFragment : Fragment() {
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

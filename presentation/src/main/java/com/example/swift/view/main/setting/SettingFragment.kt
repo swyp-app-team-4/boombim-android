@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentChattingBinding
+import com.boombim.android.databinding.FragmentPolicyBinding
 import com.boombim.android.databinding.FragmentSettingBinding
 import com.example.swift.view.MainActivity
 import com.example.swift.view.auth.SocialLoginActivity
@@ -21,20 +22,8 @@ import com.example.swift.view.main.vote.tab.VoteTabFragment
 import com.example.swift.viewmodel.SettingViewModel
 import com.google.android.material.tabs.TabLayout
 
-class SettingFragment : Fragment() {
-    private var _binding: FragmentSettingBinding? = null
-    private val binding get() = _binding!!
-    private val settingViewModel: SettingViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentSettingBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+class SettingFragment :
+    SettingBaseFragment<FragmentSettingBinding>(FragmentSettingBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -126,10 +115,5 @@ class SettingFragment : Fragment() {
             logoutDialog.show(parentFragmentManager, "LogoutDialog")
         }
 
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
