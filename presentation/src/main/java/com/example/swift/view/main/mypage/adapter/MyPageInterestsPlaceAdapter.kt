@@ -4,16 +4,18 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemMyPaceInterestsBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.FavoriteData
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.FavoriteDiffUtil
 
 @RequiresApi(Build.VERSION_CODES.O)
 class MyPageInterestsPlaceAdapter (private val items: List<FavoriteData>) :
-    RecyclerView.Adapter<MyPageInterestsPlaceAdapter.PlaceViewHolder>() {
+    ListAdapter<FavoriteData, MyPageInterestsPlaceAdapter.PlaceViewHolder>(FavoriteDiffUtil) {
 
     inner class PlaceViewHolder(val binding: ItemMyPaceInterestsBinding) :
         RecyclerView.ViewHolder(binding.root) {

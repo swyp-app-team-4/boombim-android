@@ -4,18 +4,23 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemBoomBimBinding
 import com.boombim.android.databinding.ItemLessBoomBimBinding
 import com.bumptech.glide.Glide
+import com.example.domain.model.FavoriteData
 import com.example.domain.model.PlaceBoomBimModel
 import com.example.domain.model.PlaceLessBoomBimModel
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.FavoriteDiffUtil
+import com.example.swift.util.diffutil.PlaceBoomBimDiffUtil
 
 @RequiresApi(Build.VERSION_CODES.O)
-class PlaceBoomBimAdapter (private val items: List<PlaceBoomBimModel>) :
-    RecyclerView.Adapter<PlaceBoomBimAdapter.PlaceViewHolder>() {
+class PlaceBoomBimAdapter (
+    private val items: List<PlaceBoomBimModel>
+) : ListAdapter<PlaceBoomBimModel,PlaceBoomBimAdapter.PlaceViewHolder>(PlaceBoomBimDiffUtil) {
 
     inner class PlaceViewHolder(val binding: ItemBoomBimBinding) :
         RecyclerView.ViewHolder(binding.root) {

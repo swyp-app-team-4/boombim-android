@@ -16,10 +16,10 @@ import com.example.swift.view.main.vote.adapter.MyVoteAdapter
 import com.example.swift.viewmodel.VoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.example.swift.view.main.vote.BaseViewBindingFragment
+import com.example.swift.view.main.vote.VoteBaseFragment
 
 @AndroidEntryPoint
-class MyDiscussionTabFragment : BaseViewBindingFragment<FragmentMyDiscussionTabBinding>(
+class MyDiscussionTabFragment : VoteBaseFragment<FragmentMyDiscussionTabBinding>(
     FragmentMyDiscussionTabBinding::inflate
 ) {
     private val voteViewModel: VoteViewModel by activityViewModels()

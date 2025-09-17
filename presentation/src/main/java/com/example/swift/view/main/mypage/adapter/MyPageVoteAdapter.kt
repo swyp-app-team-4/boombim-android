@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemEventNotificationBinding
@@ -12,10 +13,11 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.NotificationModel
 import com.example.domain.model.PopularityDetail
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.MyPageVoteDiffUtil
 import com.example.swift.view.main.notification.adapter.EventNotificationAdapter
 
 class MyPageVoteAdapter (private val items: List<PopularityDetail>) :
-    RecyclerView.Adapter<MyPageVoteAdapter.NotificationViewHolder>() {
+    ListAdapter<PopularityDetail,MyPageVoteAdapter.NotificationViewHolder>(MyPageVoteDiffUtil) {
 
     inner class NotificationViewHolder(private val binding: ItemMyPageVoteBinding) :
         RecyclerView.ViewHolder(binding.root) {

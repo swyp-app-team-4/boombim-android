@@ -1,6 +1,5 @@
-package com.example.domain.usecase
+package com.example.domain.usecase.auth
 
-import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.model.SocialLoginSignUpResult
 import com.example.domain.repository.AuthRepository

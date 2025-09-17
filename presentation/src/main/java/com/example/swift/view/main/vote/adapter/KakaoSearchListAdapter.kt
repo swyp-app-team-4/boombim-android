@@ -2,15 +2,17 @@ package com.example.swift.view.main.vote.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.databinding.ItemKakaoSearchBinding
 import com.example.domain.model.PlaceDocumentDto
+import com.example.swift.util.diffutil.KakaoListDiffUtil
 
 class KakaoSearchListAdapter (
     private val items: List<PlaceDocumentDto>,
     private val onItemClick: (PlaceDocumentDto) -> Unit
 ) :
-    RecyclerView.Adapter<KakaoSearchListAdapter.PlaceViewHolder>() {
+    ListAdapter<PlaceDocumentDto,KakaoSearchListAdapter.PlaceViewHolder>(KakaoListDiffUtil) {
 
     inner class PlaceViewHolder(val binding: ItemKakaoSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {

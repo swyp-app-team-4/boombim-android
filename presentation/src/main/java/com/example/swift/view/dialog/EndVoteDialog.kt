@@ -7,7 +7,9 @@ import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.boombim.android.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class EndVoteDialog(
     private val onConfirm: () -> Unit
 ) : DialogFragment() {

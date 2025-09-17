@@ -10,8 +10,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import com.boombim.android.R
 import com.example.swift.viewmodel.MyPageViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
+@AndroidEntryPoint
 class CompleteMakeVoteDialog: DialogFragment() {
 
     private val myPageViewModel: MyPageViewModel by activityViewModels()

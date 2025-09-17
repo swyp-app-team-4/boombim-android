@@ -9,18 +9,20 @@ import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.compose.ui.text.font.Typeface
 import androidx.core.content.res.ResourcesCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemRegionNewsBinding
 import com.example.domain.model.RegionResponse
 import com.example.swift.util.CustomTypefaceSpan
+import com.example.swift.util.diffutil.RegionNewsDiffUtil
 
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
 @RequiresApi(Build.VERSION_CODES.O)
 class RegionNewsAdapter(private val items: List<RegionResponse>) :
-    RecyclerView.Adapter<RegionNewsAdapter.NewsViewHolder>() {
+    ListAdapter<RegionResponse,RegionNewsAdapter.NewsViewHolder>(RegionNewsDiffUtil) {
 
     private val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss")
     private val outputFormatter = DateTimeFormatter.ofPattern("HH:mm")

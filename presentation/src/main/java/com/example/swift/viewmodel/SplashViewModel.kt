@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.data.datastore.AppManageDataStore
 import com.example.domain.model.TokenStatus
 import com.example.domain.provider.TokenProvider
-import com.example.domain.usecase.CheckUserTokenExpiredUseCase
+import com.example.domain.usecase.auth.CheckUserTokenExpiredUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.delay

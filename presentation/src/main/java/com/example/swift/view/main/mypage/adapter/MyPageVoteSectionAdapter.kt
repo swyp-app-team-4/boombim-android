@@ -3,14 +3,16 @@ package com.example.swift.view.main.mypage.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.databinding.ItemVoteSectionBinding
 import com.example.domain.model.MyPageVoteResponse
+import com.example.swift.util.diffutil.MyPageVoteSectionDiffUtil
 import java.text.SimpleDateFormat
 import java.util.Locale
 
 class MyPageVoteSectionAdapter(private val items: List<MyPageVoteResponse>) :
-    RecyclerView.Adapter<MyPageVoteSectionAdapter.SectionViewHolder>() {
+    ListAdapter<MyPageVoteResponse, MyPageVoteSectionAdapter.SectionViewHolder>(MyPageVoteSectionDiffUtil) {
 
     inner class SectionViewHolder(private val binding: ItemVoteSectionBinding) :
         RecyclerView.ViewHolder(binding.root) {

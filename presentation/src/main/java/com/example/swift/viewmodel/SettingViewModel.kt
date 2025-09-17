@@ -1,17 +1,13 @@
 package com.example.swift.viewmodel
 
-import android.view.View
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.data.datastore.AppManageDataStore
 import com.example.domain.model.ActionResult
 import com.example.domain.provider.TokenProvider
-import com.example.domain.usecase.UpdateFcmToken
 import com.example.domain.usecase.mypage.DeleteUserUseCase
 import com.example.domain.usecase.mypage.LogoutUseCase
 import com.example.domain.usecase.notification.PatchAlarmUseCase
-import com.google.firebase.Firebase
-import com.google.firebase.messaging.messaging
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn

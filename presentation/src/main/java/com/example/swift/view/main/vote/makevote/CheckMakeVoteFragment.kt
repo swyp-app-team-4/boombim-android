@@ -11,7 +11,7 @@ import com.boombim.android.databinding.FragmentCheckMakeVoteBinding
 import com.example.swift.util.LocationUtils
 import com.example.swift.util.MapUtil
 import com.example.swift.view.dialog.CompleteMakeVoteDialog
-import com.example.swift.view.main.vote.BaseViewBindingFragment
+import com.example.swift.view.main.vote.VoteBaseFragment
 import com.example.swift.viewmodel.VoteViewModel
 import com.google.android.gms.location.LocationServices
 import com.kakao.vectormap.KakaoMap
@@ -21,7 +21,7 @@ import com.kakao.vectormap.MapView
 import kotlinx.coroutines.launch
 
 class CheckMakeVoteFragment :
-    BaseViewBindingFragment<FragmentCheckMakeVoteBinding>(FragmentCheckMakeVoteBinding::inflate) {
+    VoteBaseFragment<FragmentCheckMakeVoteBinding>(FragmentCheckMakeVoteBinding::inflate) {
 
     private val voteViewModel: VoteViewModel by activityViewModels()
 

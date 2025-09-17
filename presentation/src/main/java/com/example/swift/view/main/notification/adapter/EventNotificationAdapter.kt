@@ -4,14 +4,16 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemEventNotificationBinding
 import com.example.domain.model.NotificationModel
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.NotificationDiffUtil
 
 class EventNotificationAdapter(private val items: List<NotificationModel>) :
-    RecyclerView.Adapter<EventNotificationAdapter.NotificationViewHolder>() {
+    ListAdapter<NotificationModel, EventNotificationAdapter.NotificationViewHolder>(NotificationDiffUtil) {
 
     inner class NotificationViewHolder(private val binding: ItemEventNotificationBinding) :
         RecyclerView.ViewHolder(binding.root) {

@@ -46,6 +46,7 @@ import com.boombim.android.R
 import com.example.domain.model.ImageAddType
 import com.example.swift.ui.theme.GrayScale8
 import com.example.swift.ui.theme.pretendard
+import dagger.hilt.android.AndroidEntryPoint
 
 @Composable
 fun ImagePickerDialog(
@@ -83,6 +84,7 @@ fun ImagePickerDialog(
  * )
  * ```
  */
+@AndroidEntryPoint
 class ImagePickerDialogFragment : DialogFragment() {
 
     interface ImageTypeHandler {

@@ -1,9 +1,11 @@
 package com.example.domain.model
 
 import kotlinx.serialization.Serializable
+import java.util.UUID
 
 @Serializable
 data class MyPageVoteResponse(
+    val tempId: String = UUID.randomUUID().toString(),
     val day: String, // 날짜 (예: "2025-08-26T12:39:48.199Z")
     val res: List<PopularityDetail>
 )

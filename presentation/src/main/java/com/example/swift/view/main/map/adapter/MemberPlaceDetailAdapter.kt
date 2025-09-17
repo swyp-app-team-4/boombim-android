@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemMemberPlaceDetailBinding
@@ -13,6 +14,7 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.FavoriteData
 import com.example.domain.model.MemberCongestionItem
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.MemberPlaceDetailDiffUtil
 import com.example.swift.view.main.mypage.adapter.MyPageInterestsPlaceAdapter
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -20,7 +22,7 @@ class MemberPlaceDetailAdapter (
     private var items: List<MemberCongestionItem>,
     private val onReportClick: (MemberCongestionItem) -> Unit
 ) :
-    RecyclerView.Adapter<MemberPlaceDetailAdapter.PlaceViewHolder>() {
+    ListAdapter<MemberCongestionItem,MemberPlaceDetailAdapter.PlaceViewHolder>(MemberPlaceDetailDiffUtil) {
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateItems(newItems: List<MemberCongestionItem>) {
