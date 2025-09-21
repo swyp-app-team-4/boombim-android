@@ -2,6 +2,7 @@ package com.example.swift.view.main.vote.tab
 
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -33,6 +34,18 @@ class MyDiscussionTabFragment : VoteBaseFragment<FragmentMyDiscussionTabBinding>
         initTabClicks()
 
         initMyVoteList()
+
+        binding.sortSelector.setOnClickListener { view ->
+            val popup = PopupMenu(requireContext(), view)
+            popup.menu.add("최신순")
+            popup.menu.add("오래된순")
+
+            popup.setOnMenuItemClickListener { item ->
+                binding.sortText.text = item.title
+                true
+            }
+            popup.show()
+        }
     }
 
     private fun setSelectedTab(selected: TextView) {
