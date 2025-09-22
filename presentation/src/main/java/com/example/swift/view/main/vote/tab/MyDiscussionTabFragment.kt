@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyDiscussionTabBinding
+import com.example.domain.model.SortType
 import com.example.domain.model.TabType
 import com.example.swift.view.dialog.EndVoteDialog
 import com.example.swift.view.main.vote.adapter.MyVoteAdapter
@@ -30,7 +31,9 @@ class MyDiscussionTabFragment : VoteBaseFragment<FragmentMyDiscussionTabBinding>
 
         // 초기 선택된 탭 설정
         setSelectedTab(binding.textAll)
+
         voteViewModel.setTabFilter(TabType.ALL)
+
         initTabClicks()
 
         initMyVoteList()
@@ -42,10 +45,15 @@ class MyDiscussionTabFragment : VoteBaseFragment<FragmentMyDiscussionTabBinding>
 
             popup.setOnMenuItemClickListener { item ->
                 binding.sortText.text = item.title
+                when (item.title) {
+                    "최신순" -> voteViewModel.setSortType(SortType.LATEST)
+                    "오래된순" -> voteViewModel.setSortType(SortType.OLDEST)
+                }
                 true
             }
             popup.show()
         }
+
     }
 
     private fun setSelectedTab(selected: TextView) {

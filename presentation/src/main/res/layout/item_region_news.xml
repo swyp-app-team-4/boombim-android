@@ -14,7 +14,7 @@
         android:id="@+id/text_no_news"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="오늘 예정된 집회 소식이 없습니다."
+        android:text="오늘은 특별한 이슈가 없습니다"
         android:textColor="@color/gray_scale_8"
         android:textSize="14sp"
         android:fontFamily="@font/pretend_regular"
