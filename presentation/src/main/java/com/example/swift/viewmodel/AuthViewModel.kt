@@ -2,12 +2,10 @@ package com.example.swift.viewmodel
 
 import androidx.lifecycle.viewModelScope
 import com.example.data.datastore.AppManageDataStore
-import com.example.domain.usecase.NaverSignUpUseCase
+import com.example.domain.usecase.auth.NaverSignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import kotlinx.coroutines.launch
 

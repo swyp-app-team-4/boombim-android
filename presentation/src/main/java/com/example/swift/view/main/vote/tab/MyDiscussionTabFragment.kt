@@ -2,6 +2,7 @@ package com.example.swift.view.main.vote.tab
 
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
@@ -10,16 +11,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyDiscussionTabBinding
+import com.example.domain.model.SortType
 import com.example.domain.model.TabType
 import com.example.swift.view.dialog.EndVoteDialog
 import com.example.swift.view.main.vote.adapter.MyVoteAdapter
 import com.example.swift.viewmodel.VoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import com.example.swift.view.main.vote.BaseViewBindingFragment
+import com.example.swift.view.main.vote.VoteBaseFragment
 
 @AndroidEntryPoint
-class MyDiscussionTabFragment : BaseViewBindingFragment<FragmentMyDiscussionTabBinding>(
+class MyDiscussionTabFragment : VoteBaseFragment<FragmentMyDiscussionTabBinding>(
     FragmentMyDiscussionTabBinding::inflate
 ) {
     private val voteViewModel: VoteViewModel by activityViewModels()
@@ -29,10 +31,29 @@ class MyDiscussionTabFragment : BaseViewBindingFragment<FragmentMyDiscussionTabB
 
         // 초기 선택된 탭 설정
         setSelectedTab(binding.textAll)
+
         voteViewModel.setTabFilter(TabType.ALL)
+
         initTabClicks()
 
         initMyVoteList()
+
+        binding.sortSelector.setOnClickListener { view ->
+            val popup = PopupMenu(requireContext(), view)
+            popup.menu.add("최신순")
+            popup.menu.add("오래된순")
+
+            popup.setOnMenuItemClickListener { item ->
+                binding.sortText.text = item.title
+                when (item.title) {
+                    "최신순" -> voteViewModel.setSortType(SortType.LATEST)
+                    "오래된순" -> voteViewModel.setSortType(SortType.OLDEST)
+                }
+                true
+            }
+            popup.show()
+        }
+
     }
 
     private fun setSelectedTab(selected: TextView) {

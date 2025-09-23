@@ -6,7 +6,9 @@ import android.view.Window
 import android.widget.Button
 import androidx.fragment.app.DialogFragment
 import com.boombim.android.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogoutDialog (
     private val onConfirm: () -> Unit
 ) : DialogFragment() {

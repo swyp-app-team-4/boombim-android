@@ -50,6 +50,35 @@
         app:layout_constraintStart_toEndOf="@id/text_progress"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <LinearLayout
+        android:id="@+id/sortSelector"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="10dp"
+        android:padding="4dp">
+
+        <TextView
+            android:id="@+id/sortText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="최신순"
+            android:textSize="14sp"
+            android:fontFamily="@font/pretend_medium"
+            android:textColor="@color/gray_scale_9" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_arrow_bottom_black" />
+    </LinearLayout>
+
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycle_my_vote"
         android:layout_width="match_parent"

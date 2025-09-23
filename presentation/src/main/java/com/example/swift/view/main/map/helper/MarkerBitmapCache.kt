@@ -1,4 +1,4 @@
-package com.example.swift.view.main.map
+package com.example.swift.view.main.map.helper
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

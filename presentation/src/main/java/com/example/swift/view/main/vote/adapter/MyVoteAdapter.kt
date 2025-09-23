@@ -7,18 +7,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemMyVoteBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.MyVoteItem
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.MyVoteDiffUtil
 
 class MyVoteAdapter (
     private val items: List<MyVoteItem>,
     private val onBtnClick: (MyVoteItem) -> Unit
     ) :
-    RecyclerView.Adapter<MyVoteAdapter.PlaceViewHolder>() {
+    ListAdapter<MyVoteItem,MyVoteAdapter.PlaceViewHolder>(MyVoteDiffUtil) {
 
     inner class PlaceViewHolder(val binding: ItemMyVoteBinding) :
         RecyclerView.ViewHolder(binding.root) {

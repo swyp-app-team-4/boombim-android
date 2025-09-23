@@ -36,48 +36,6 @@ class SocialLoginActivity : AppCompatActivity() {
     private val mainViewModel: MainViewModel by viewModels()
     private val PERMISSION_REQUEST_CODE = 5000
 
-    private fun permissionCheck() {
-        val permissions = mutableListOf<String>()
-
-        // ✅ 알림 권한 (Android 13 이상)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
-            != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissions.add(android.Manifest.permission.POST_NOTIFICATIONS)
-        }
-
-        // ✅ 위치 권한
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION)
-        }
-
-        if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.ACCESS_COARSE_LOCATION
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
-            permissions.add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
-        }
-
-        // ✅ 모든 권한을 한 번에 요청
-        if (permissions.isNotEmpty()) {
-            ActivityCompat.requestPermissions(
-                this,
-                permissions.toTypedArray(),
-                PERMISSION_REQUEST_CODE
-            )
-        } else {
-            lifecycleScope.launch {
-                mainViewModel.setNotificationAllowed(true)
-            }
-        }
-    }
-
     private val launcher = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) { result ->
@@ -196,6 +154,48 @@ class SocialLoginActivity : AppCompatActivity() {
                 Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
             )
             textBoomBim.text = spannable
+        }
+    }
+
+    private fun permissionCheck() {
+        val permissions = mutableListOf<String>()
+
+        // ✅ 알림 권한 (Android 13 이상)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU &&
+            ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS)
+            != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissions.add(android.Manifest.permission.POST_NOTIFICATIONS)
+        }
+
+        // ✅ 위치 권한
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissions.add(android.Manifest.permission.ACCESS_FINE_LOCATION)
+        }
+
+        if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            permissions.add(android.Manifest.permission.ACCESS_COARSE_LOCATION)
+        }
+
+        // ✅ 모든 권한을 한 번에 요청
+        if (permissions.isNotEmpty()) {
+            ActivityCompat.requestPermissions(
+                this,
+                permissions.toTypedArray(),
+                PERMISSION_REQUEST_CODE
+            )
+        } else {
+            lifecycleScope.launch {
+                mainViewModel.setNotificationAllowed(true)
+            }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.example.domain.usecase
+package com.example.domain.usecase.notification
 
 import com.example.domain.model.ActionResult
 import com.example.domain.provider.FcmTokenProvider

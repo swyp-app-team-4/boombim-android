@@ -8,7 +8,7 @@ import android.media.RingtoneManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.boombim.android.R
-import com.example.domain.usecase.UpdateFcmToken
+import com.example.domain.usecase.notification.UpdateFcmToken
 import com.example.swift.view.MainActivity
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage

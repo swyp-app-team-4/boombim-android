@@ -3,6 +3,7 @@ package com.example.swift.view.main.map.adapter
 import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemMemberPlaceDetailBinding
@@ -11,14 +12,14 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberCongestionItem
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.NearByDiffUtil
 
 class NearByAdapter  (private var items: List<CongestionData>) :
-    RecyclerView.Adapter<NearByAdapter.PlaceViewHolder>() {
+    ListAdapter<CongestionData, NearByAdapter.PlaceViewHolder>(NearByDiffUtil) {
 
     @SuppressLint("NotifyDataSetChanged")
     fun updateItems(newItems: List<CongestionData>) {
         this.items = newItems
-        notifyDataSetChanged()
     }
 
     inner class PlaceViewHolder(val binding: ItemNearByBinding) :

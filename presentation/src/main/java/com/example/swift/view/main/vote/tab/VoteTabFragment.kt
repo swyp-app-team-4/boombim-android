@@ -1,9 +1,7 @@
 package com.example.swift.view.main.vote.tab
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentVoteTabBinding
@@ -19,10 +17,10 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.launch
-import com.example.swift.view.main.vote.BaseViewBindingFragment
+import com.example.swift.view.main.vote.VoteBaseFragment
 
 @AndroidEntryPoint
-class VoteTabFragment : BaseViewBindingFragment<FragmentVoteTabBinding>(FragmentVoteTabBinding::inflate) {
+class VoteTabFragment : VoteBaseFragment<FragmentVoteTabBinding>(FragmentVoteTabBinding::inflate) {
 
     private val voteViewModel: VoteViewModel by activityViewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient

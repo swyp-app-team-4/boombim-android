@@ -2,44 +2,23 @@ package com.example.swift.view.main.mypage
 
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
-import androidx.recyclerview.widget.GridLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentEditProfileBinding
-import com.boombim.android.databinding.FragmentMyPageInterestsTabBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ImageAddType
-import com.example.domain.model.InterestsPlaceModel
 import com.example.swift.view.dialog.ImagePickerDialogFragment
-import com.example.swift.view.main.home.adapter.InterestsPlaceAdapter
-import com.example.swift.viewmodel.MyPageViewModel
-import com.example.swift.viewmodel.VoteViewModel
 import kotlinx.coroutines.launch
 
-class EditProfileFragment : Fragment() {
-    private var _binding: FragmentEditProfileBinding? = null
-    private val binding get() = _binding!!
-    private val myPageViewModel: MyPageViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentEditProfileBinding.inflate(inflater, container, false)
-
-        return binding.root
-    }
+class EditProfileFragment : MyPageBaseFragment<FragmentEditProfileBinding>(
+    FragmentEditProfileBinding::inflate
+) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -189,11 +168,4 @@ class EditProfileFragment : Fragment() {
         return null
     }
 
-
-
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
 }

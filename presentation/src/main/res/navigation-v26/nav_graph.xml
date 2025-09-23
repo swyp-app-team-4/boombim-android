@@ -23,15 +23,15 @@
         android:label="MyPageFragment" />
     <fragment
         android:id="@+id/notificationFragment"
-        android:name="com.example.swift.view.main.home.notification.NotificationFragment"
+        android:name="com.example.swift.view.main.notification.NotificationFragment"
         android:label="NotificationFragment" />
     <fragment
         android:id="@+id/eventTabFragment"
-        android:name="com.example.swift.view.main.home.notification.tab.EventTabFragment"
+        android:name="com.example.swift.view.main.notification.tab.EventTabFragment"
         android:label="EventTabFragment" />
     <fragment
         android:id="@+id/newIssueTabFragment"
-        android:name="com.example.swift.view.main.home.notification.tab.NewIssueTabFragment"
+        android:name="com.example.swift.view.main.notification.tab.NewIssueTabFragment"
         android:label="NewIssueTabFragment" />
     
     <fragment

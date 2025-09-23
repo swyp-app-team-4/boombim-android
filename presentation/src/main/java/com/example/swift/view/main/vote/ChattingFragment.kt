@@ -1,9 +1,7 @@
 package com.example.swift.view.main.vote
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentChattingBinding
@@ -13,7 +11,7 @@ import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ChattingFragment : BaseViewBindingFragment<FragmentChattingBinding>(
+class ChattingFragment : VoteBaseFragment<FragmentChattingBinding>(
     FragmentChattingBinding::inflate
 ) {
 

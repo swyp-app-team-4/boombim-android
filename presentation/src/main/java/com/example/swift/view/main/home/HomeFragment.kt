@@ -148,17 +148,36 @@ class HomeFragment : Fragment() {
     }
 
     private fun initInterestsPlace() = with(binding) {
+        val adapter = InterestsPlaceAdapter { item ->
+            favoriteViewModel.deleteFavorite(
+                memberPlaceId = item.favoriteId,
+                placeType = item.placeType,
+                onSuccess = {},
+                onFail = {}
+            )
+        }
+        recyclerInterestPlace.layoutManager =
+            GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false)
+        recyclerInterestPlace.adapter = adapter
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                favoriteViewModel.favoriteList.collect{ list ->
-                    val adapter = InterestsPlaceAdapter(list)
-                    recyclerInterestPlace.layoutManager = GridLayoutManager(requireContext(), 1, GridLayoutManager.HORIZONTAL, false) // 세로형
-                    recyclerInterestPlace.adapter = adapter
+                favoriteViewModel.favoriteList.collect { list ->
+                    adapter.submitList(list)
+
+                    if (list.isEmpty()) {
+                        textInterestPlace.visibility = View.GONE
+                        divider3.visibility = View.GONE
+                    } else {
+                        textInterestPlace.visibility = View.VISIBLE
+                        divider3.visibility = View.VISIBLE
+                    }
                 }
             }
-
         }
     }
+
+
 
     private fun initPlaceBoomBimList() = with(binding) {
         lifecycleScope.launch {

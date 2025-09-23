@@ -4,17 +4,21 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.boombim.android.R
 import com.boombim.android.databinding.ItemInterestsPlaceBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.FavoriteData
+import com.example.domain.model.VoteItem
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.util.diffutil.FavoriteDiffUtil
 
-class InterestsPlaceAdapter (private val items: List<FavoriteData>) :
-    RecyclerView.Adapter<InterestsPlaceAdapter.PlaceViewHolder>() {
+@RequiresApi(Build.VERSION_CODES.O)
+class InterestsPlaceAdapter(
+    private val onVoteClick: (FavoriteData) -> Unit
+) : ListAdapter<FavoriteData, InterestsPlaceAdapter.PlaceViewHolder>(FavoriteDiffUtil) {
 
-    @RequiresApi(Build.VERSION_CODES.O)
     inner class PlaceViewHolder(val binding: ItemInterestsPlaceBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: FavoriteData) {
@@ -35,6 +39,10 @@ class InterestsPlaceAdapter (private val items: List<FavoriteData>) :
                 .into(binding.imagePlace)
 
             binding.iconStatus.setImageResource(statusIconRes)
+
+            binding.iconStar.setOnClickListener {
+                onVoteClick(item)
+            }
         }
     }
 
@@ -45,8 +53,6 @@ class InterestsPlaceAdapter (private val items: List<FavoriteData>) :
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount() = items.size
 }

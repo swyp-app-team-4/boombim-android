@@ -28,11 +28,13 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.lifecycleScope
 import com.example.swift.ui.theme.MainColor
 import com.example.swift.ui.theme.pretendard
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoadingAlert : DialogFragment() {
 
     companion object {

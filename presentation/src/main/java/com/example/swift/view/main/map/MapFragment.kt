@@ -1,12 +1,9 @@
 package com.example.swift.view.main.map
 
-import android.graphics.Bitmap
-import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
@@ -20,6 +17,9 @@ import com.example.domain.model.MemberPlaceData
 import com.example.swift.util.*
 import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.view.main.map.adapter.NearByAdapter
+import com.example.swift.view.main.map.helper.BottomSheetHelper
+import com.example.swift.view.main.map.helper.MapHelper
+import com.example.swift.view.main.map.helper.MarkerBitmapCache
 import com.example.swift.viewmodel.MapViewModel
 import com.kakao.vectormap.KakaoMap
 import com.kakao.vectormap.KakaoMapReadyCallback
@@ -29,18 +29,12 @@ import com.kakao.vectormap.MapView
 import com.kakao.vectormap.camera.CameraUpdateFactory
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MapFragment : Fragment() {
+class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::inflate) {
 
-    private var _binding: FragmentMapBinding? = null
-    private val binding get() = _binding!!
-
-    private val mapViewModel: MapViewModel by activityViewModels()
     private var isFirstMove = true
     private var selectedTab: MapTabType = MapTabType.OFFICIAL
 
@@ -55,15 +49,6 @@ class MapFragment : Fragment() {
     private lateinit var mapHelper: MapHelper
     private lateinit var bottomSheetHelper: BottomSheetHelper
     private lateinit var nearByAdapter: NearByAdapter
-    private val loadingAlertProvider by lazy { LoadingAlertProvider(this) }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        _binding = FragmentMapBinding.inflate(inflater, container, false)
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -195,12 +180,6 @@ class MapFragment : Fragment() {
         LocationUtils.getLastKnownLocation(requireContext(), fusedLocationClient)?.let {
             kakaoMap?.moveCamera(CameraUpdateFactory.newCenterPosition(LatLng.from(it.latitude, it.longitude)))
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        markerBitmapCache.clear()
-        _binding = null
     }
 
     private fun initNearBy() {

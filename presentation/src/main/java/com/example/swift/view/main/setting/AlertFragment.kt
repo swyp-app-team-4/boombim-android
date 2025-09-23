@@ -14,21 +14,12 @@ import com.boombim.android.databinding.FragmentAlertBinding
 import com.boombim.android.databinding.FragmentMyProfileBinding
 import com.example.swift.viewmodel.MyPageViewModel
 import com.example.swift.viewmodel.SettingViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
-class AlertFragment : Fragment() {
-    private var _binding: FragmentAlertBinding? = null
-    private val binding get() = _binding!!
-    private val settingViewModel: SettingViewModel by activityViewModels()
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentAlertBinding.inflate(inflater, container, false)
-        return binding.root
-    }
+@AndroidEntryPoint
+class AlertFragment :
+    SettingBaseFragment<FragmentAlertBinding>(FragmentAlertBinding::inflate) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -37,14 +28,12 @@ class AlertFragment : Fragment() {
             findNavController().navigate(
                 R.id.settingFragment, null,
                 navOptions {
-                    popUpTo(R.id.alertFragment) {
-                        inclusive = true
-                    }
+                    popUpTo(R.id.alertFragment) { inclusive = true }
                 }
             )
         }
 
-        lifecycleScope.launch {
+        collectOnStarted {
             settingViewModel.notificationAllowed.collect { allowed ->
                 binding.alertToggle.isChecked = allowed
             }
@@ -52,17 +41,7 @@ class AlertFragment : Fragment() {
 
         binding.alertToggle.setOnCheckedChangeListener { _, isChecked ->
             settingViewModel.setNotificationAllowed(isChecked)
-            settingViewModel.patchAlarm(
-                onSuccess = {},
-                onFail = {}
-            )
+            settingViewModel.patchAlarm(onSuccess = {}, onFail = {})
         }
-
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

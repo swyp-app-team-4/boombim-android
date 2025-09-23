@@ -1,4 +1,4 @@
-package com.example.domain.usecase
+package com.example.domain.usecase.auth
 
 import android.util.Base64
 import com.example.domain.model.TokenStatus

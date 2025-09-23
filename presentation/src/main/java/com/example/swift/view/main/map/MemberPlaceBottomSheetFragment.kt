@@ -35,7 +35,6 @@ import kotlinx.coroutines.launch
 @RequiresApi(Build.VERSION_CODES.O)
 class MemberPlaceBottomSheetFragment(
     private val place: MemberPlaceData.Place
-
 ) : BottomSheetDialogFragment() {
 
     private var _binding: FragmentMemberPlaceBottomSheetBinding? = null

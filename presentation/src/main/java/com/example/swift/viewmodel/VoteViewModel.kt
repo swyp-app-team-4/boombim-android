@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ApiResult
 import com.example.domain.model.MyVoteItem
+import com.example.domain.model.SortType
 import com.example.domain.model.TabType
 import com.example.domain.usecase.vote.FetVoteListUseCase
 import com.example.domain.usecase.vote.GetMyVoteListUseCase
@@ -33,6 +34,13 @@ class VoteViewModel @Inject constructor(
     private val _tabFilter = MutableStateFlow(TabType.ALL) // 현재 선택된 탭
     val tabFilter: StateFlow<TabType> = _tabFilter
 
+    private val _sortType = MutableStateFlow(SortType.LATEST)
+    val sortType: StateFlow<SortType> = _sortType
+
+    fun setSortType(type: SortType) {
+        _sortType.value = type
+    }
+
 
     val voteList = getVoteListUseCase()
         .stateIn(
@@ -49,13 +57,18 @@ class VoteViewModel @Inject constructor(
         )
 
     val filteredVoteList: StateFlow<List<MyVoteItem>> =
-        combine(myVoteList, _tabFilter) { list, filter ->
-            when (filter) {
+        combine(myVoteList, _tabFilter, _sortType) { list, filter, sort ->
+            val filtered = when (filter) {
                 TabType.ALL -> list
                 TabType.PROGRESS -> list.filter { it.voteStatus == "PROGRESS" }
                 TabType.END -> list.filter { it.voteStatus == "END" }
             }
+            when (sort) {
+                SortType.LATEST -> filtered.sortedByDescending { it.createdAt }
+                SortType.OLDEST -> filtered.sortedBy { it.createdAt }
+            }
         }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000L), emptyList())
+
 
     fun setTabFilter(tabType: TabType) {
         _tabFilter.value = tabType

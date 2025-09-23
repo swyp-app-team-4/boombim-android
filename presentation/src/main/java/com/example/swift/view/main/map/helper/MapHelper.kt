@@ -1,4 +1,4 @@
-package com.example.swift.view.main.map
+package com.example.swift.view.main.map.helper
 
 import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberPlaceData
