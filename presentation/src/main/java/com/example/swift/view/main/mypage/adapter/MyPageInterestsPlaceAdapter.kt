@@ -33,7 +33,7 @@ class MyPageInterestsPlaceAdapter (private val items: List<FavoriteData>) :
             Glide.with(binding.imagePlace.context)
                 .load(item.imageUrl)
                 .centerCrop()
-                .error(R.drawable.image_load_fail_large)
+                .error(R.drawable.icon_fail)
                 .into(binding.imagePlace)
 
             binding.iconStatus.setImageResource(statusIconRes)

@@ -45,6 +45,7 @@ class NearByCongestionBottomSheet: BottomSheetDialogFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = BottomSheetNearByCongestionBinding.inflate(inflater, container, false)
+
         return binding.root
     }
 
