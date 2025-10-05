@@ -4,8 +4,8 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberPlaceData
-import com.example.swift.view.main.map.MemberPlaceBottomSheetFragment
-import com.example.swift.view.main.map.OfficialPlaceBottomSheetFragment
+import com.example.swift.view.main.map.bottomsheet.MemberPlaceBottomSheetFragment
+import com.example.swift.view.main.map.bottomsheet.OfficialPlaceBottomSheetFragment
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import android.view.View
 

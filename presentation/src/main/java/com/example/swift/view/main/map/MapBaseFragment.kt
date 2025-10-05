@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.viewbinding.ViewBinding
 import com.example.swift.view.dialog.LoadingAlertProvider
+import com.example.swift.view.main.map.helper.MarkerBitmapCache
 import com.example.swift.viewmodel.FavoriteViewModel
 import com.example.swift.viewmodel.MapViewModel
 
@@ -16,6 +17,9 @@ abstract class MapBaseFragment<VB : ViewBinding>(
 ) : Fragment() {
 
     private var _binding: VB? = null
+
+    protected abstract val markerBitmapCache: MarkerBitmapCache
+
     protected val binding get() = _binding!!
 
     protected val mapViewModel: MapViewModel by activityViewModels()
@@ -36,5 +40,7 @@ abstract class MapBaseFragment<VB : ViewBinding>(
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+
+        markerBitmapCache.clear()
     }
 }

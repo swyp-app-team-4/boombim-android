@@ -65,6 +65,9 @@ class MainActivity : AppCompatActivity() {
 
         initNavigation()
 
+        var keyHash = Utility.getKeyHash(this)
+        Log.d("mainActivity", "keyHash: $keyHash")
+
 
     }
 

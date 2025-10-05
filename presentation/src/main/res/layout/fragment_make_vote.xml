@@ -68,8 +68,8 @@
 
     <ImageView
         android:id="@+id/image_3d_logo_curious"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:src="@drawable/image_3d_logo_curious"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

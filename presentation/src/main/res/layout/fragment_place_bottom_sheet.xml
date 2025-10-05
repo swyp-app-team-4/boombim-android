@@ -66,39 +66,42 @@
                 app:layout_constraintTop_toBottomOf="@id/icon_back"
                 tools:text="강남 스벅" />
 
-
-            <ImageView
-                android:id="@+id/icon_clock"
+            <LinearLayout
+                android:id="@+id/place_container"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/icon_clock"
-                android:layout_marginStart="20dp"
                 app:layout_constraintTop_toBottomOf="@id/text_place_name"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="@id/text_place_name"
+                android:orientation="horizontal"
+                android:gravity="center"
+                tools:ignore="MissingConstraints">
 
-            <TextView
-                android:id="@+id/text_update_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="14분전"
-                android:textSize="14sp"
-                android:layout_marginEnd="16dp"
-                android:textColor="@color/gray_scale_9"
-                android:fontFamily="@font/pretend_regular"
-                app:layout_constraintTop_toTopOf="@id/icon_clock"
-                app:layout_constraintStart_toEndOf="@id/icon_clock"/>
+                <ImageView
+                    android:id="@+id/icon_clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_clock"/>
 
-            <TextView
-                android:id="@+id/text_place_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/pretend_semibold"
-                android:textColor="@color/gray_scale_8"
-                android:textSize="14sp"
-                tools:text="서울특별시 강남로 331"
-                android:layout_marginStart="8dp"
-                app:layout_constraintTop_toTopOf="@id/icon_clock"
-                app:layout_constraintStart_toEndOf="@id/text_update_time"/>
+                <TextView
+                    android:id="@+id/text_update_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    tools:text="14분전"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_scale_9"
+                    android:fontFamily="@font/pretend_regular"/>
+
+                <TextView
+                    android:id="@+id/text_place_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pretend_regular"
+                    android:textColor="@color/gray_scale_8"
+                    android:textSize="12sp"
+                    tools:text="서울특별시 강남로 331"
+                    android:layout_marginStart="8dp"/>
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/icon_boombim"
@@ -118,9 +121,11 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="20dp"
+                android:background="@drawable/bg_radius_14"
+                android:clipToOutline="true"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/icon_clock" />
+                app:layout_constraintTop_toBottomOf="@id/place_container" />
 
             <View
                 android:id="@+id/divider"

@@ -9,7 +9,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMapBinding
 import com.example.domain.model.CongestionData
 import com.example.domain.model.MapTabType
@@ -45,7 +47,8 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
     private lateinit var mapView: MapView
     private var kakaoMap: KakaoMap? = null
 
-    private lateinit var markerBitmapCache: MarkerBitmapCache
+    override lateinit var markerBitmapCache: MarkerBitmapCache
+
     private lateinit var mapHelper: MapHelper
     private lateinit var bottomSheetHelper: BottomSheetHelper
     private lateinit var nearByAdapter: NearByAdapter
@@ -75,6 +78,15 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
             binding.textEvent.isSelected = true
             refreshMarkers()
         }
+
+        binding.buttonCurrentLocation.setOnClickListener {
+            lifecycleScope.launch { moveCameraToCurrentLocation() }
+        }
+
+        binding.searchView.setOnClickListener {
+           findNavController().navigate(R.id.makeVoteFragment)
+        }
+
 
         setupMapView()
 

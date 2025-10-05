@@ -57,13 +57,13 @@
 
     <TextView
         android:id="@+id/text_vote_count"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="30dp"
-        tools:text="투표 | 8"
+        tools:text="투표  |  8"
         android:textColor="@color/gray_scale_8"
         android:textSize="14sp"
         android:gravity="center"
-        android:background="@drawable/bg_rounded_gray3"
+        android:background="@drawable/bg_gray_rounded_background_white"
         android:fontFamily="@font/pretend_medium"
         android:layout_marginStart="10dp"
         app:layout_constraintBottom_toBottomOf="@id/icon_profile"
@@ -71,13 +71,13 @@
 
     <TextView
         android:id="@+id/text_my_vote_count"
-        android:layout_width="70dp"
+        android:layout_width="80dp"
         android:layout_height="30dp"
-        tools:text="질문 | 8"
+        tools:text="질문 |  8"
         android:textColor="@color/gray_scale_8"
         android:textSize="14sp"
         android:gravity="center"
-        android:background="@drawable/bg_rounded_gray3"
+        android:background="@drawable/bg_gray_rounded_background_white"
         android:fontFamily="@font/pretend_medium"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="@id/icon_profile"
@@ -155,12 +155,12 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나의 투표" />
+            android:text="투표 기록" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="나의 질문" />
+            android:text="질문 기록" />
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout

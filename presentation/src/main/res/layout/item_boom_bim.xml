@@ -34,18 +34,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginStart="5dp"
+        android:layout_marginStart="12dp"
         app:layout_constraintStart_toEndOf="@id/image_place"
         app:layout_constraintTop_toTopOf="@id/image_place">
-
-        <TextView
-            android:id="@+id/text_place_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            tools:text="서울 강남구"
-            android:textSize="12sp"
-            android:textColor="@color/gray_scale_8"
-            android:fontFamily="@font/pretend_regular" />
 
         <TextView
             android:id="@+id/text_place_address"
@@ -55,6 +46,15 @@
             android:textSize="16sp"
             android:textColor="@color/gray_scale_10"
             android:fontFamily="@font/pretend_semibold"/>
+
+        <TextView
+            android:id="@+id/text_place_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="서울 강남구"
+            android:textSize="12sp"
+            android:textColor="@color/gray_scale_8"
+            android:fontFamily="@font/pretend_regular" />
     </LinearLayout>
 
     <ImageView

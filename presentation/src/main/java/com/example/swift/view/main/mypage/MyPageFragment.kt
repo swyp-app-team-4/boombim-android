@@ -58,8 +58,8 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
 
     private fun updateProfileUI(profile: ProfileModel) {
         binding.textNickName.text = profile.name
-        binding.textVoteCount.text = "투표 | ${profile.voteCnt}"
-        binding.textMyVoteCount.text = "질문 | ${profile.questionCnt}"
+        binding.textVoteCount.text = "투표   |   ${profile.voteCnt}"
+        binding.textMyVoteCount.text = "질문   |   ${profile.questionCnt}"
 
         Glide.with(this)
             .load(profile.profile)

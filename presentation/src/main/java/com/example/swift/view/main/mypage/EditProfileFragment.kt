@@ -14,8 +14,10 @@ import com.boombim.android.databinding.FragmentEditProfileBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ImageAddType
 import com.example.swift.view.dialog.ImagePickerDialogFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class EditProfileFragment : MyPageBaseFragment<FragmentEditProfileBinding>(
     FragmentEditProfileBinding::inflate
 ) {
