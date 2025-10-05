@@ -1,4 +1,4 @@
-package com.example.swift.view.main.map
+package com.example.swift.view.main.map.bottomsheet
 
 import android.os.Build
 import android.os.Bundle
@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.compose.ui.platform.LocalGraphicsContext
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -16,8 +15,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMemberPlaceBottomSheetBinding
-import com.boombim.android.databinding.FragmentPlaceBottomSheetBinding
-import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberCongestionItem
 import com.example.domain.model.MemberPlaceData
 import com.example.swift.util.DateTimeUtils
@@ -26,8 +23,6 @@ import com.example.swift.viewmodel.FavoriteViewModel
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.kakao.vectormap.KakaoMap
-import com.kakao.vectormap.MapView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -187,6 +182,7 @@ class MemberPlaceBottomSheetFragment(
             detailAdapter.updateItems(filtered)
         }
 
+        selectButton(buttons[0])
         detailAdapter.updateItems(originalList.sortedByDescending { it.createdAt })
     }
 

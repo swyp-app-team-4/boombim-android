@@ -2,6 +2,7 @@ package com.example.swift.view.main.mypage.adapter
 
 import android.os.Build
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.ListAdapter
@@ -30,15 +31,22 @@ class MyPageInterestsPlaceAdapter (private val items: List<FavoriteData>) :
                 else -> R.drawable.icon_normal_small
             }
 
-            Glide.with(binding.imagePlace.context)
-                .load(item.imageUrl)
-                .centerCrop()
-                .error(R.drawable.icon_fail)
-                .into(binding.imagePlace)
+            if (item.imageUrl.isNullOrEmpty()) {
+                binding.imageAppLogo.visibility = View.VISIBLE
+            } else {
+                binding.imageAppLogo.visibility = View.GONE
+                binding.imagePlace.visibility = View.VISIBLE
+
+                Glide.with(binding.imagePlace.context)
+                    .load(item.imageUrl)
+                    .centerCrop()
+                    .into(binding.imagePlace)
+            }
 
             binding.iconStatus.setImageResource(statusIconRes)
         }
     }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PlaceViewHolder {
         val inflater = LayoutInflater.from(parent.context)
