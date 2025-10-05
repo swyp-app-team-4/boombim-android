@@ -82,14 +82,11 @@ class MakeVoteFragment : VoteBaseFragment<FragmentMakeVoteBinding>(
                         list,
                         onItemClick = { place ->
                             val bundle = Bundle().apply {
-                                putString("placeName", place.place_name)
-                                putString("addressName", place.address_name)
                                 putString("x", place.x)
                                 putString("y", place.y)
-                                putString("id", place.id)
                             }
                             findNavController().navigate(
-                                R.id.checkMakeVoteFragment,
+                                R.id.mapFragment,
                                 bundle
                             )
                         }
