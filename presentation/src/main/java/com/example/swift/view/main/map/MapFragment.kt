@@ -144,7 +144,9 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
 
             arguments?.clear()
         } else {
-            Log.d("MapFragment", "❌ 번들에 좌표가 없음 또는 변환 실패")
+           lifecycleScope.launch {
+               moveCameraToCurrentLocation()
+           }
         }
     }
 
