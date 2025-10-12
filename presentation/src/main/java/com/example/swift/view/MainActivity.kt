@@ -1,39 +1,17 @@
 package com.example.swift.view
 
-import android.content.Context
-import android.content.pm.PackageInfo
-import android.content.pm.PackageManager
-import android.os.Build
+
 import android.os.Bundle
-import android.util.AttributeSet
-import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.fragment.findNavController
-import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.boombim.android.R
 import com.boombim.android.databinding.ActivityMainBinding
-import com.example.swift.viewmodel.MainViewModel
-import com.example.swift.viewmodel.MapViewModel
-import com.google.android.gms.location.LocationServices
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.messaging.FirebaseMessaging
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.launch
-import java.security.MessageDigest
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -65,10 +43,6 @@ class MainActivity : AppCompatActivity() {
 
         initNavigation()
 
-        var keyHash = Utility.getKeyHash(this)
-        Log.d("mainActivity", "keyHash: $keyHash")
-
-
     }
 
     private fun initNavigation() {
@@ -82,7 +56,6 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment,
                 R.id.mapFragment,
-                R.id.chattingFragment,
                 R.id.myPageFragment -> {
                     binding.navBar.visibility = View.VISIBLE
                 }

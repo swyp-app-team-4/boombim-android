@@ -12,11 +12,6 @@
         android:icon="@drawable/icon_map"/>
 
     <item
-        android:id="@+id/chattingFragment"
-        android:title=""
-        android:icon="@drawable/icon_chat"/>
-
-    <item
         android:id="@+id/myPageFragment"
         android:title=""
         android:icon="@drawable/icon_profile"/>

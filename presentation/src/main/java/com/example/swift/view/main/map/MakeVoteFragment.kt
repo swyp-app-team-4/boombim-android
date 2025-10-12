@@ -1,4 +1,4 @@
-package com.example.swift.view.main.vote.makevote
+package com.example.swift.view.main.map
 
 import android.os.Bundle
 import android.view.View

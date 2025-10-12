@@ -78,7 +78,7 @@
     <navigation android:id="@+id/vote_graph" app:startDestination="@id/makeVoteFragment">
         <fragment
             android:id="@+id/makeVoteFragment"
-            android:name="com.example.swift.view.main.vote.makevote.MakeVoteFragment"
+            android:name="com.example.swift.view.main.map.MakeVoteFragment"
             android:label="MakeVoteFragment" />
         <fragment
             android:id="@+id/checkMakeVoteFragment"
