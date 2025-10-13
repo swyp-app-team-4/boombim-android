@@ -40,6 +40,7 @@ class OnBoardingActivity : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             val currentItem = binding.container.currentItem
+
             if (currentItem < pages.lastIndex) {
                 binding.container.currentItem = currentItem + 1
             } else {
