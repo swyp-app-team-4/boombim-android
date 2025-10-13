@@ -18,7 +18,6 @@ import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentCongestionSearchBinding
-import com.boombim.android.databinding.FragmentMakeVoteBinding
 import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
 import kotlinx.coroutines.launch

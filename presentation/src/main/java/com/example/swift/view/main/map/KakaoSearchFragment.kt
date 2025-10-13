@@ -14,7 +14,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
-import com.boombim.android.databinding.FragmentMakeVoteBinding
+import com.boombim.android.databinding.FragmentKakaoSearchBinding
 import com.example.swift.view.main.vote.VoteBaseFragment
 import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
@@ -22,8 +22,8 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MakeVoteFragment : VoteBaseFragment<FragmentMakeVoteBinding>(
-    FragmentMakeVoteBinding::inflate
+class KakaoSearchFragment : VoteBaseFragment<FragmentKakaoSearchBinding>(
+    FragmentKakaoSearchBinding::inflate
 ) {
     private val kakaoSearchViewmodel: KakaoSearchViewModel by activityViewModels()
     private lateinit var adapter: KakaoSearchListAdapter

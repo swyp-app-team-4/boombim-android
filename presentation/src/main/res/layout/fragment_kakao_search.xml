@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="질문하기"
+        android:text="검색"
         android:textSize="16sp"
         android:textColor="@color/gray_scale_10"
         android:fontFamily="@font/pretend_semibold"
@@ -25,32 +25,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
-    <TextView
-        android:id="@+id/text_curious"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="어떤 장소의 혼잡도가\n궁금하신가요?"
-        android:textSize="24sp"
-        android:fontFamily="@font/pretend_semibold"
-        android:textColor="@color/gray_scale_10"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="22dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/icon_back"/>
-
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="0dp"
         android:layout_height="44dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="22dp"
         style="@style/SearchViewStyle"
         android:background="@drawable/bg_round_radius"
         app:iconifiedByDefault="false"
         app:queryHint="약속된 장소를 검색해보세요"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_curious"
+        app:layout_constraintTop_toBottomOf="@id/icon_back"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <androidx.recyclerview.widget.RecyclerView

@@ -74,7 +74,7 @@ class MemberPlaceBottomSheetFragment(
 
         binding.buttonAnnounce.setOnClickListener {
             dismiss()
-            findNavController().navigate(R.id.chattingFragment)
+            findNavController().navigate(R.id.makeCongestionFragment)
         }
 
         binding.iconFavorite.setOnClickListener {

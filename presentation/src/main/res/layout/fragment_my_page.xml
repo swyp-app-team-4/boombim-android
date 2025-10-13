@@ -98,23 +98,9 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="포인트"
-            android:gravity="center"
-            android:fontFamily="@font/pretend_medium"
-            android:textSize="14sp"
-            android:textColor="@color/gray_scale_8"
-            android:layout_marginStart="14dp"/>
-
-        <View
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="10"
             android:gravity="center"
+            android:layout_marginStart="14dp"
             android:fontFamily="@font/pretend_semibold"
             android:textSize="16sp"
             android:textColor="@color/main_color" />
@@ -129,6 +115,39 @@
             android:layout_marginEnd="14dp"
             android:textColor="@color/gray_scale_8"
             android:layout_marginStart="3dp"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:id="@+id/container_point_history"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="포인트 내역"
+                android:gravity="center"
+                android:fontFamily="@font/pretend_medium"
+                android:textSize="14sp"
+                android:textColor="@color/gray_scale_8"
+                android:layout_marginStart="14dp"/>
+
+            <ImageView
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/icon_left_arrow"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="14dp"
+                android:backgroundTint="@color/gray_scale_8"/>
+
+        </LinearLayout>
 
 
 

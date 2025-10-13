@@ -41,7 +41,7 @@ class OnBoardingActivity : AppCompatActivity() {
         binding.btnStart.setOnClickListener {
             val currentItem = binding.container.currentItem
             if (currentItem < pages.lastIndex) {
-                binding.btnStart.isClickable = false
+                binding.container.currentItem = currentItem + 1
             } else {
                 onBoardingViewModel.updateNotFirstLaunch()
                 val intent = Intent(this, SocialLoginActivity::class.java)
