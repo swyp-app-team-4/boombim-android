@@ -102,6 +102,10 @@
         android:id="@+id/myPointDetailFragment"
         android:name="com.example.swift.view.main.mypage.MyPointDetailFragment"
         android:label="MyPointDetailFragment" />
+    <fragment
+        android:id="@+id/kakaoSearchFragment"
+        android:name="com.example.swift.view.main.map.KakaoSearchFragment"
+        android:label="KakaoSearchFragment" />
 
 
 </navigation>

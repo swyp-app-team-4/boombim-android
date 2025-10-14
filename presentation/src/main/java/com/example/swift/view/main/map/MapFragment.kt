@@ -1,6 +1,7 @@
 package com.example.swift.view.main.map
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,7 +85,7 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
         }
 
         binding.searchView.setOnClickListener {
-           findNavController().navigate(R.id.makeVoteFragment)
+           findNavController().navigate(R.id.kakaoSearchFragment)
         }
 
 
@@ -107,7 +108,6 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
                 override fun onMapReady(kakaomap: KakaoMap) {
                     kakaoMap = kakaomap
                     mapHelper = MapHelper(kakaomap, markerBitmapCache)
-                    lifecycleScope.launch { moveCameraToCurrentLocation() }
                     setupCameraMoveListener()
                     observePlaces()
 
@@ -117,9 +117,39 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
                             is MemberPlaceData.Place -> bottomSheetHelper.showMemberPlaceSheet(tag, parentFragmentManager)
                         }
                     }
+
+                    handleSearchResult()
                 }
             }
         )
+    }
+
+    private fun handleSearchResult() {
+        val x = arguments?.getString("x")
+        val y = arguments?.getString("y")
+
+        Log.d("MapFragment", "📦 handleSearchResult() 호출됨 x=$x, y=$y")
+
+        val xDouble = x?.toDoubleOrNull()
+        val yDouble = y?.toDoubleOrNull()
+
+        if (xDouble != null && yDouble != null) {
+            lifecycleScope.launch {
+                Log.d("MapFragment", "🎯 카메라 이동 시도: x=$xDouble, y=$yDouble (kakaoMap=${kakaoMap != null})")
+
+                kakaoMap?.let {
+                    val targetPosition = LatLng.from(yDouble, xDouble)
+                    it.moveCamera(CameraUpdateFactory.newCenterPosition(targetPosition))
+                    Log.d("MapFragment", "✅ 카메라 이동 완료")
+                }
+            }
+
+            arguments?.clear()
+        } else {
+            lifecycleScope.launch {
+                moveCameraToCurrentLocation()
+            }
+        }
     }
 
     private fun refreshMarkers() {
