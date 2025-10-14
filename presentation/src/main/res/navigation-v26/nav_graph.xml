@@ -14,10 +14,6 @@
         android:name="com.example.swift.view.main.map.MapFragment"
         android:label="MapFragment" />
     <fragment
-        android:id="@+id/chattingFragment"
-        android:name="com.example.swift.view.main.vote.ChattingFragment"
-        android:label="ChattingFragment" />
-    <fragment
         android:id="@+id/myPageFragment"
         android:name="com.example.swift.view.main.mypage.MyPageFragment"
         android:label="MyPageFragment" />
@@ -38,14 +34,6 @@
         android:id="@+id/homeSearchFragment"
         android:name="com.example.swift.view.main.home.search.HomeSearchFragment"
         android:label="HomeSearchFragment" />
-    <fragment
-        android:id="@+id/makeVoteFragment"
-        android:name="com.example.swift.view.main.vote.makevote.MakeVoteFragment"
-        android:label="MakeVoteFragment" />
-    <fragment
-        android:id="@+id/checkMakeVoteFragment"
-        android:name="com.example.swift.view.main.vote.makevote.CheckMakeVoteFragment"
-        android:label="CheckMakeVoteFragment" />
     <dialog
         android:id="@+id/askingVoteFragment"
         android:name="com.example.swift.view.dialog.AskingVoteFragment"

@@ -1,7 +1,6 @@
 package com.example.data.repository
 
 import com.example.domain.datasource.KakaoSearchRemoteDataSource
-import com.example.domain.datasource.VoteRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.NotificationModel
 import com.example.domain.model.PlaceDocumentDto
