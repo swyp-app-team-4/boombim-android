@@ -110,6 +110,10 @@
         android:id="@+id/withDrawFragment"
         android:name="com.example.swift.view.main.setting.WithDrawFragment"
         android:label="WithDrawFragment" />
+    <fragment
+        android:id="@+id/myPointDetailFragment"
+        android:name="com.example.swift.view.main.mypage.MyPointDetailFragment"
+        android:label="MyPointDetailFragment" />
 
 
 </navigation>
