@@ -40,9 +40,12 @@ class OnBoardingActivity : AppCompatActivity() {
 
         binding.btnStart.setOnClickListener {
             val currentItem = binding.container.currentItem
+
             if (currentItem < pages.lastIndex) {
-                binding.btnStart.isClickable = false
+                binding.btnStart.text = "다음"
+                binding.container.currentItem = currentItem + 1
             } else {
+                binding.btnStart.text = "시작하기"
                 onBoardingViewModel.updateNotFirstLaunch()
                 val intent = Intent(this, SocialLoginActivity::class.java)
                 startActivity(intent)
