@@ -11,6 +11,7 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
     }
 
 }
