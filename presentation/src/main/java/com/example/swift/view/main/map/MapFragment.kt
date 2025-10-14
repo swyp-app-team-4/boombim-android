@@ -199,7 +199,7 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
         val bottomSheetBinding = binding.nearbyBottomSheet
 
         bottomSheetBinding.recycle.layoutManager = LinearLayoutManager(requireContext())
-        nearByAdapter = NearByAdapter(emptyList())
+        nearByAdapter = NearByAdapter()
         bottomSheetBinding.recycle.adapter = nearByAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
