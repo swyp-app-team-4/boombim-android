@@ -6,6 +6,7 @@ import com.example.data.network.mypage.MyPageApi
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
+import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
 import com.example.domain.model.PopularityDetail
@@ -32,13 +33,16 @@ class MyPageRepositoryImpl @Inject constructor(
     private var _myQuestion = MutableStateFlow<List<MyPageVoteResponse>>(emptyList())
     private val myQuestion = _myQuestion.asStateFlow()
 
+    private var _myActivity = MutableStateFlow<List<MyActivityResponse>>(emptyList())
+    private val myActivity = _myActivity.asStateFlow()
+
 
     override fun getMyProfile(): Flow<ProfileModel> = myPage
 
     override fun getMyAnswerList(): Flow<List<MyPageVoteResponse>> = myAnswer
 
     override fun getMyQuestionList(): Flow<List<MyPageVoteResponse>> = myQuestion
-
+    override fun getMyActivityList(): Flow<List<MyActivityResponse>> = myActivity
 
 
     override suspend fun getProfile() {
@@ -69,6 +73,16 @@ class MyPageRepositoryImpl @Inject constructor(
                 }
             }
         }
+    }
+
+    override suspend fun getMyActivity() {
+       myPageRemoteDataSource.getMyActivity().first().let { result ->
+              if(result is ApiResult.Success){
+                _myActivity.update {
+                     result.data
+                }
+              }
+       }
     }
 
     override suspend fun patchNickName(name: String): ActionResult<*> {

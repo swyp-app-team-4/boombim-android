@@ -174,12 +174,7 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="투표 기록" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="질문 기록" />
+            android:text="활동 기록" />
     </com.google.android.material.tabs.TabLayout>
 
     <FrameLayout

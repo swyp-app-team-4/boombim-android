@@ -12,13 +12,13 @@ import retrofit2.http.Path
 
 interface AuthApi {
 
-    @POST("api/oauth2/login/{provider}")
+    @POST("api/app/oauth2/login/{provider}")
     suspend fun naverLogin(
         @Path("provider") provider: String,
         @Body data: SignUpRequest
     ): Response<SocialLoginSignUpResult>
 
-    @POST("api/reissue")
+    @POST("api/app/reissue")
     suspend fun refreshToken(
         @Body data: RefreshTokenRequest
     ): Response<TokenModel>

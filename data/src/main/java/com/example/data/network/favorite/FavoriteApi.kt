@@ -11,17 +11,17 @@ import retrofit2.http.Query
 
 interface FavoriteApi {
 
-    @POST("/favorite")
+    @POST("api/app/favorite")
     suspend fun postFavorite(
         @Body body: FavoriteRequest
     ): Response<Unit>
 
-    @DELETE("/favorite")
+    @DELETE("api/app/favorite")
     suspend fun deleteFavorite(
         @Query("placeId") memberPlaceId: Int,
         @Query("placeType") placeType: String
     ): Response<Unit>
 
-    @GET("/favorite")
+    @GET("api/app/favorite")
     suspend fun getFavorites(): Response<FavoriteResponse>
 }

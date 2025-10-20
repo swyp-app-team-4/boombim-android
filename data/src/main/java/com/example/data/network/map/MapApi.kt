@@ -14,22 +14,22 @@ import retrofit2.http.Query
 
 interface MapApi {
 
-    @POST("/official-place")
+    @POST("api/app/official-place")
     suspend fun postViewPort(
         @Body viewport: PostViewPortRequest
     ): Response<CongestionResponse>
 
-    @GET("/official-place/{officialPlaceId}/overview")
+    @GET("api/app/official-place/{officialPlaceId}/overview")
     suspend fun getOfficialPlaceOverview(
         @Path("officialPlaceId") officialPlaceId: Int
     ): Response<OfficialPlaceResponse>
 
-    @POST("/member-place")
+    @POST("api/app/member-place")
     suspend fun postMemberPlace(
         @Body viewport: PostViewPortRequest
     ): Response<MemberPlaceResponse>
 
-    @GET("/member-place/{memberPlaceId}")
+    @GET("api/app/member-place/{memberPlaceId}")
     suspend fun getMemberPlaceDetail(
         @Path("memberPlaceId") memberPlaceId: Int,
         @Query("size") size: Int? = 30,

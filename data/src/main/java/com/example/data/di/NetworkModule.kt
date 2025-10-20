@@ -42,7 +42,7 @@ annotation class KakaoRetrofit
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-    private const val BASE_URL = "https://api.boombim.p-e.kr/"
+    private const val BASE_URL = "https://boombim.co.kr/"
     private const val KAKAO_URL = "https://dapi.kakao.com/"
 
 

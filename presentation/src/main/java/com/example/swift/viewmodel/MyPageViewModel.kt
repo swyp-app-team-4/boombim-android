@@ -5,8 +5,10 @@ import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ProfileModel
 import com.example.domain.usecase.mypage.FetMyPageAnswerListUseCase
+import com.example.domain.usecase.mypage.FetchMyActivityUseCase
 import com.example.domain.usecase.mypage.FetchMyPageQuestionListUseCase
 import com.example.domain.usecase.mypage.FetchMyProfileUseCase
+import com.example.domain.usecase.mypage.GetMyActivityUseCase
 import com.example.domain.usecase.mypage.GetMyAnswerUseCase
 import com.example.domain.usecase.mypage.GetMyProfileUseCase
 import com.example.domain.usecase.mypage.GetMyQuestionUseCase
@@ -27,7 +29,9 @@ class MyPageViewModel @Inject constructor(
     getMyQuestionUseCase: GetMyQuestionUseCase,
     fetchMYPageAnswerListUseCase: FetMyPageAnswerListUseCase,
     private val patchUserNickNameUseCase: PatchUserNickNameUseCase,
-    private val patchProfileImageUseCase: PatchProfileImageUseCase
+    private val patchProfileImageUseCase: PatchProfileImageUseCase,
+    private val fetchMyActivityUseCase: FetchMyActivityUseCase,
+    getMyActivityUseCase: GetMyActivityUseCase
 
 ): ViewModel(){
 
@@ -36,6 +40,7 @@ class MyPageViewModel @Inject constructor(
             fetchMyProfileUseCase()
             fetchMYPageAnswerListUseCase()
             fetchMyPageQuestionListUseCase()
+            fetchMyActivityUseCase()
         }
     }
 
@@ -44,6 +49,13 @@ class MyPageViewModel @Inject constructor(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
             ProfileModel()
+        )
+
+    val activity = getMyActivityUseCase()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
         )
 
     val myAnswer = getMyAnswerUseCase()

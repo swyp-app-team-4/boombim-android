@@ -7,6 +7,7 @@ import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.data.network.safeFlow
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.model.ApiResult
+import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
 import com.example.domain.model.ProfileModel
@@ -63,6 +64,10 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
     override suspend fun deleteUser(reason: String): ApiResult<*> {
         val request = DeleteAccountRequest(reason)
         return safeFlow { myPageApi.deleteAccount(request)}.first()
+    }
+
+    override suspend fun getMyActivity(): Flow<ApiResult<List<MyActivityResponse>>> {
+        return safeFlow { myPageApi.getMyActivity() }
     }
 
 }

@@ -24,25 +24,25 @@ interface HomeApi {
         @Query("date") query: String
     ): Response<List<RegionResponse>>
 
-    @POST("member-place/resolve")
+    @POST("api/app/member-place/resolve")
     suspend fun checkUserPlace(
         @Body data: CheckUserPlaceRequest
     ): Response<CheckUserPlaceResponse>
 
-    @POST("member-congestion/create")
+    @POST("api/app/member-congestion")
     suspend fun postCongestion(
         @Body data: MakeCongestionRequest
     ) : Response<MakeCongestionResponse>
 
-    @GET("official-place/top-congested")
+    @GET("api/app/official-place/top-congested")
     suspend fun getTop5BoombimPlace() : Response<PlaceBoomBimResponse>
 
-    @POST("clova/congestion-message")
+    @POST("api/app/clova/congestion-message")
     suspend fun makeAutoCongestionMessage(
         @Body data: MakeAutoCongestionMessageRequest
     ) : Response<MakeAutoMessageResponse>
 
-    @GET("official-place/nearby-non-congested")
+    @GET("api/app/official-place/nearby-non-congested")
     suspend fun getLessBoomBimPlace(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double
