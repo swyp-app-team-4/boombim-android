@@ -17,8 +17,6 @@ import com.boombim.android.databinding.FragmentSettingBinding
 import com.example.swift.view.MainActivity
 import com.example.swift.view.auth.SocialLoginActivity
 import com.example.swift.view.dialog.LogoutDialog
-import com.example.swift.view.main.vote.tab.MyDiscussionTabFragment
-import com.example.swift.view.main.vote.tab.VoteTabFragment
 import com.example.swift.viewmodel.SettingViewModel
 import com.google.android.material.tabs.TabLayout
 

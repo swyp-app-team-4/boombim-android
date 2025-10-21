@@ -14,17 +14,15 @@ import com.example.domain.model.MemberCongestionItem
 import com.example.swift.util.DateTimeUtils
 import com.example.swift.util.diffutil.NearByDiffUtil
 
-class NearByAdapter  (private var items: List<CongestionData>) :
+class NearByAdapter :
     ListAdapter<CongestionData, NearByAdapter.PlaceViewHolder>(NearByDiffUtil) {
 
-    @SuppressLint("NotifyDataSetChanged")
     fun updateItems(newItems: List<CongestionData>) {
-        this.items = newItems
+        submitList(newItems)   // ✅ 이렇게만 갱신!
     }
 
     inner class PlaceViewHolder(val binding: ItemNearByBinding) :
         RecyclerView.ViewHolder(binding.root) {
-
         fun bind(item: CongestionData) {
             binding.textPlaceName.text = item.officialPlaceName
             binding.textUpdateTime.text = "방금전"
@@ -37,6 +35,12 @@ class NearByAdapter  (private var items: List<CongestionData>) :
                 else -> R.drawable.icon_normal_small
             }
 
+            binding.textDistance.text = if (item.distance >= 1000) {
+                String.format("%.1fkm", item.distance / 1000.0)
+            } else {
+                String.format("%dm", item.distance.toInt())
+            }
+
             Glide.with(binding.imagePlace.context)
                 .load(item.imageUrl)
                 .centerCrop()
@@ -44,7 +48,6 @@ class NearByAdapter  (private var items: List<CongestionData>) :
                 .into(binding.imagePlace)
 
             binding.iconBoombim.setImageResource(statusIconRes)
-
         }
     }
 
@@ -55,8 +58,6 @@ class NearByAdapter  (private var items: List<CongestionData>) :
     }
 
     override fun onBindViewHolder(holder: PlaceViewHolder, position: Int) {
-        holder.bind(items[position])
+        holder.bind(getItem(position))
     }
-
-    override fun getItemCount() = items.size
 }

@@ -7,7 +7,6 @@ import com.example.data.datasource.KakaoSearchRemoteDataSourceImpl
 import com.example.data.datasource.MapRemoteDataSourceImpl
 import com.example.data.datasource.MyPageRemoteDataSourceImpl
 import com.example.data.datasource.NotificationRemoteDataSourceImpl
-import com.example.data.datasource.VoteRemoteDataSourceImpl
 import com.example.domain.datasource.AuthRemoteDataSource
 import com.example.domain.datasource.FavoriteRemoteDatasource
 import com.example.domain.datasource.HomeRemoteDataSource
@@ -15,7 +14,6 @@ import com.example.domain.datasource.KakaoSearchRemoteDataSource
 import com.example.domain.datasource.MapRemoteDataSource
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.datasource.NotificationRemoteDataSource
-import com.example.domain.datasource.VoteRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -37,12 +35,6 @@ abstract class DataSourceModule {
     abstract fun bindNotificationRemoteSource(
         notificationRemoteDataSource: NotificationRemoteDataSourceImpl
     ): NotificationRemoteDataSource
-
-    @Binds
-    @Singleton
-    abstract fun bindVoteRemoteSource(
-        voteRemoteDataSource: VoteRemoteDataSourceImpl
-    ): VoteRemoteDataSource
 
     @Binds
     @Singleton

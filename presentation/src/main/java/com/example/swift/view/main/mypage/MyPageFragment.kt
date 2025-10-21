@@ -11,6 +11,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.ProfileModel
+import com.example.swift.view.main.mypage.tab.MyPageActivityTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageInterestsTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageMyVoteTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageVoteTabFragment
@@ -42,6 +43,9 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
         }
         binding.iconProfile.setOnClickListener {
             navigateTo(R.id.editProfileFragment)
+        }
+        binding.containerPoint.setOnClickListener {
+            navigateTo(R.id.myPointDetailFragment)
         }
     }
 
@@ -75,8 +79,7 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 val fragment = when (tab?.position) {
                     0 -> MyPageInterestsTabFragment()
-                    1 -> MyPageVoteTabFragment()
-                    2 -> MyPageMyVoteTabFragment()
+                    1 -> MyPageActivityTabFragment()
                     else -> MyPageInterestsTabFragment()
                 }
                 setFragment(fragment)

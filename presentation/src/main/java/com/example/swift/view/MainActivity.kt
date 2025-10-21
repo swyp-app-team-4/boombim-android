@@ -64,11 +64,6 @@ class MainActivity : AppCompatActivity() {
         }
 
         initNavigation()
-
-        var keyHash = Utility.getKeyHash(this)
-        Log.d("mainActivity", "keyHash: $keyHash")
-
-
     }
 
     private fun initNavigation() {
@@ -82,7 +77,6 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment,
                 R.id.mapFragment,
-                R.id.chattingFragment,
                 R.id.myPageFragment -> {
                     binding.navBar.visibility = View.VISIBLE
                 }

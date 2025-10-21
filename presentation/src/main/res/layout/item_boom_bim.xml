@@ -10,8 +10,8 @@
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginTop="18dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/bg_radius_10"
         android:clipToOutline="true"
         app:layout_constraintTop_toTopOf="parent"
@@ -36,7 +36,8 @@
         android:orientation="vertical"
         android:layout_marginStart="12dp"
         app:layout_constraintStart_toEndOf="@id/image_place"
-        app:layout_constraintTop_toTopOf="@id/image_place">
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/text_place_address"
@@ -61,20 +62,14 @@
         android:id="@+id/icon_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@id/place_container"
-        app:layout_constraintBottom_toBottomOf="@id/image_place"/>
-
-    <TextView
-        android:id="@+id/text_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:text="14 분전"
-        android:textSize="12sp"
-        android:textColor="@color/gray_scale_7"
-        android:fontFamily="@font/pretend_regular"
-        android:layout_marginBottom="19dp"
-        android:layout_marginEnd="20dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#ECECEC"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

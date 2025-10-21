@@ -1,12 +1,14 @@
-package com.example.swift.view.main.vote.makevote
+package com.example.swift.view.main.map
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.EditText
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
@@ -14,7 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.R
-import com.boombim.android.databinding.FragmentMakeVoteBinding
+import com.boombim.android.databinding.FragmentKakaoSearchBinding
 import com.example.swift.view.main.vote.VoteBaseFragment
 import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
@@ -22,10 +24,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MakeVoteFragment : VoteBaseFragment<FragmentMakeVoteBinding>(
-    FragmentMakeVoteBinding::inflate
+class KakaoSearchFragment : VoteBaseFragment<FragmentKakaoSearchBinding>(
+    FragmentKakaoSearchBinding::inflate
 ) {
-    private val kakaoSearchViewmodel: KakaoSearchViewModel by activityViewModels()
     private lateinit var adapter: KakaoSearchListAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,14 +37,7 @@ class MakeVoteFragment : VoteBaseFragment<FragmentMakeVoteBinding>(
         initTextStyle()
 
         binding.iconBack.setOnClickListener {
-            findNavController().navigate(
-                R.id.chattingFragment, null,
-                navOptions {
-                    popUpTo(R.id.makeVoteFragment) {
-                        inclusive = true
-                    }
-                }
-            )
+            findNavController().navigate(R.id.kakaoSearchFragment)
         }
     }
 
@@ -82,14 +76,11 @@ class MakeVoteFragment : VoteBaseFragment<FragmentMakeVoteBinding>(
                         list,
                         onItemClick = { place ->
                             val bundle = Bundle().apply {
-                                putString("placeName", place.place_name)
-                                putString("addressName", place.address_name)
                                 putString("x", place.x)
                                 putString("y", place.y)
-                                putString("id", place.id)
                             }
                             findNavController().navigate(
-                                R.id.checkMakeVoteFragment,
+                                R.id.mapFragment,
                                 bundle
                             )
                         }
@@ -111,3 +102,4 @@ class MakeVoteFragment : VoteBaseFragment<FragmentMakeVoteBinding>(
         }
     }
 }
+

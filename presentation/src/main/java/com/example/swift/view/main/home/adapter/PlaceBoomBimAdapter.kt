@@ -26,7 +26,6 @@ class PlaceBoomBimAdapter (
         RecyclerView.ViewHolder(binding.root) {
         fun bind(item: PlaceBoomBimModel) {
             binding.textPlaceName.text = item.officialPlaceName
-            binding.textTime.text = DateTimeUtils.getTimeAgo(item.observedAt)
             binding.textPlaceAddress.text = item.legalDong
 
             val statusIconRes = when (item.congestionLevelName) {
