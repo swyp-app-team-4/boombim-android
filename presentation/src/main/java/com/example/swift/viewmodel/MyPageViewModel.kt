@@ -4,14 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ProfileModel
-import com.example.domain.usecase.mypage.FetMyPageAnswerListUseCase
 import com.example.domain.usecase.mypage.FetchMyActivityUseCase
-import com.example.domain.usecase.mypage.FetchMyPageQuestionListUseCase
 import com.example.domain.usecase.mypage.FetchMyProfileUseCase
 import com.example.domain.usecase.mypage.GetMyActivityUseCase
-import com.example.domain.usecase.mypage.GetMyAnswerUseCase
 import com.example.domain.usecase.mypage.GetMyProfileUseCase
-import com.example.domain.usecase.mypage.GetMyQuestionUseCase
 import com.example.domain.usecase.mypage.PatchProfileImageUseCase
 import com.example.domain.usecase.mypage.PatchUserNickNameUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,10 +20,6 @@ import javax.inject.Inject
 class MyPageViewModel @Inject constructor(
     private val fetchMyProfileUseCase: FetchMyProfileUseCase,
     getMyProfileUseCase: GetMyProfileUseCase,
-    private val fetchMyPageQuestionListUseCase: FetchMyPageQuestionListUseCase,
-    getMyAnswerUseCase: GetMyAnswerUseCase,
-    getMyQuestionUseCase: GetMyQuestionUseCase,
-    fetchMYPageAnswerListUseCase: FetMyPageAnswerListUseCase,
     private val patchUserNickNameUseCase: PatchUserNickNameUseCase,
     private val patchProfileImageUseCase: PatchProfileImageUseCase,
     private val fetchMyActivityUseCase: FetchMyActivityUseCase,
@@ -38,8 +30,6 @@ class MyPageViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             fetchMyProfileUseCase()
-            fetchMYPageAnswerListUseCase()
-            fetchMyPageQuestionListUseCase()
             fetchMyActivityUseCase()
         }
     }
@@ -58,29 +48,9 @@ class MyPageViewModel @Inject constructor(
             emptyList()
         )
 
-    val myAnswer = getMyAnswerUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
-
-    val myQuestion = getMyQuestionUseCase()
-        .stateIn(
-            viewModelScope,
-            SharingStarted.WhileSubscribed(5000),
-            emptyList()
-        )
-
     fun refreshProfile() {
         viewModelScope.launch {
             fetchMyProfileUseCase()
-        }
-    }
-
-    fun refreshVoteList(){
-        viewModelScope.launch {
-            fetchMyPageQuestionListUseCase()
         }
     }
 

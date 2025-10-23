@@ -27,21 +27,12 @@ class MyPageRepositoryImpl @Inject constructor(
     private val myPage
         get() = _myPage.asStateFlow()
 
-    private var _myAnswer = MutableStateFlow<List<MyPageVoteResponse>>(emptyList())
-    private val myAnswer = _myAnswer.asStateFlow()
-
-    private var _myQuestion = MutableStateFlow<List<MyPageVoteResponse>>(emptyList())
-    private val myQuestion = _myQuestion.asStateFlow()
 
     private var _myActivity = MutableStateFlow<List<MyActivityResponse>>(emptyList())
     private val myActivity = _myActivity.asStateFlow()
 
 
     override fun getMyProfile(): Flow<ProfileModel> = myPage
-
-    override fun getMyAnswerList(): Flow<List<MyPageVoteResponse>> = myAnswer
-
-    override fun getMyQuestionList(): Flow<List<MyPageVoteResponse>> = myQuestion
     override fun getMyActivityList(): Flow<List<MyActivityResponse>> = myActivity
 
 
@@ -49,26 +40,6 @@ class MyPageRepositoryImpl @Inject constructor(
         myPageRemoteDataSource.getProfile().first().let { result ->
             if (result is ApiResult.Success){
                 _myPage.update {
-                    result.data
-                }
-            }
-        }
-    }
-
-    override suspend fun getMyAnswer() {
-        myPageRemoteDataSource.getMyAnswer().first().let{ result ->
-            if(result is ApiResult.Success){
-                _myAnswer.update {
-                    result.data
-                }
-            }
-        }
-    }
-
-    override suspend fun getMyQuestion() {
-        myPageRemoteDataSource.getMyQuestion().first().let{ result ->
-            if(result is ApiResult.Success){
-                _myQuestion.update {
                     result.data
                 }
             }

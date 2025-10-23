@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.ProfileModel
 import com.example.swift.view.main.mypage.tab.MyPageActivityTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageInterestsTabFragment
-import com.example.swift.view.main.mypage.tab.MyPageMyVoteTabFragment
-import com.example.swift.view.main.mypage.tab.MyPageVoteTabFragment
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch

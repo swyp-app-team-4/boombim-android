@@ -30,14 +30,6 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
        }
     }
 
-    override suspend fun getMyAnswer(): Flow<ApiResult<List<MyPageVoteResponse>>> {
-        return safeFlow { myPageApi.getMyAnswer() }
-    }
-
-    override suspend fun getMyQuestion(): Flow<ApiResult<List<MyPageVoteResponse>>> {
-       return safeFlow { myPageApi.getMyQuestion() }
-    }
-
     override suspend fun patchNickName(name: String): ApiResult<*> {
         val request = PatchNickNameRequest(name = name)
         return safeFlow { myPageApi.patchNickName(request)}.first()

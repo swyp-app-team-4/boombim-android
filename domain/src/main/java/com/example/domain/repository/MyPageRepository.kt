@@ -13,17 +13,9 @@ interface MyPageRepository {
 
     fun getMyProfile(): Flow<ProfileModel>
 
-    fun getMyAnswerList(): Flow<List<MyPageVoteResponse>>
-
-    fun getMyQuestionList(): Flow<List<MyPageVoteResponse>>
-
     fun getMyActivityList(): Flow<List<MyActivityResponse>>
 
     suspend fun getProfile()
-
-    suspend fun getMyAnswer()
-
-    suspend fun getMyQuestion()
 
     suspend fun getMyActivity()
 
