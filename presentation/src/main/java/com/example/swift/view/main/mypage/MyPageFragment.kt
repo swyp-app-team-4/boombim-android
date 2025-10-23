@@ -44,9 +44,9 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
         binding.iconProfile.setOnClickListener {
             navigateTo(R.id.editProfileFragment)
         }
-        binding.containerPoint.setOnClickListener {
-            navigateTo(R.id.myPointDetailFragment)
-        }
+//        binding.containerPoint.setOnClickListener {
+//            navigateTo(R.id.myPointDetailFragment)
+//        }
     }
 
     private fun observeProfile() {

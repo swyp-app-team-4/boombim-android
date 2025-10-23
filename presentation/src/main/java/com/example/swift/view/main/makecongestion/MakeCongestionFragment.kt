@@ -217,7 +217,7 @@ class MakeCongestionFragment :
                     onSuccess = { msg ->
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                         findNavController().navigate(
-                            R.id.homeFragment,
+                            R.id.mapFragment,
                             null,
                             navOptions {
                                 popUpTo(findNavController().graph.startDestinationId) {
