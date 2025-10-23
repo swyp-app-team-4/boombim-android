@@ -82,6 +82,8 @@ dependencies {
 
     implementation("io.coil-kt:coil-compose:2.4.0")
 
+    implementation("com.google.android.material:material:1.12.0")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

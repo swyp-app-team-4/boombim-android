@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="Theme.Swift" parent="Theme.AppCompat.Light.NoActionBar" >
+    <style name="Theme.Swift" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:fitsSystemWindows">true</item>
