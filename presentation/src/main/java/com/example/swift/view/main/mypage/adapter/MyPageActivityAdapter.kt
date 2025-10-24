@@ -31,7 +31,7 @@ class MyPageActivityAdapter :
         fun bind(item: MyActivityItem.ActivityItem) = with(binding) {
             val data = item.data
             textPlaceName.text = data.posName
-            textTime.text = data.createdAt
+            textTime.text = data.createdAt.slice(11..15)
             imageCongest.setImageResource(
                 when (data.congestionLevel) {
                     "여유" -> R.drawable.icon_calm_small
