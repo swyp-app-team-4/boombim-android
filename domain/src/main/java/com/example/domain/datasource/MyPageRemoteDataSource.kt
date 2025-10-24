@@ -4,12 +4,15 @@ import com.example.domain.model.ApiResult
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
+import com.example.domain.model.PointHistoryResponse
 import com.example.domain.model.ProfileModel
 import kotlinx.coroutines.flow.Flow
 
 interface MyPageRemoteDataSource {
 
     suspend fun getProfile(): Flow<ApiResult<ProfileModel>>
+
+    suspend fun getPointHistory(): Flow<ApiResult<PointHistoryResponse>>
 
     suspend fun patchNickName(name: String): ApiResult<*>
 

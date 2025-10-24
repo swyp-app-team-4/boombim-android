@@ -7,6 +7,7 @@ import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
+import com.example.domain.model.PointHistoryResponse
 import com.example.domain.model.ProfileModel
 import okhttp3.MultipartBody
 import retrofit2.Response
@@ -23,11 +24,8 @@ interface MyPageApi {
     @GET("/api/app/member")
     suspend fun getProfile(): Response<ProfileModel>
 
-    @GET("/api/app/member/my-answer")
-    suspend fun getMyAnswer() : Response<List<MyPageVoteResponse>>
-
-    @GET("/api/app/member/my-question")
-    suspend fun getMyQuestion() : Response<List<MyPageVoteResponse>>
+    @GET("/api/app/point")
+    suspend fun getMyPoint() : Response<PointHistoryResponse>
 
     @PATCH("/api/app/member/name")
     suspend fun patchNickName(

@@ -9,6 +9,7 @@ import com.example.domain.model.ApiResult
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
+import com.example.domain.model.PointHistory
 import com.example.domain.model.PopularityDetail
 import com.example.domain.model.ProfileModel
 import com.example.domain.repository.MyPageRepository
@@ -29,11 +30,25 @@ class MyPageRepositoryImpl @Inject constructor(
 
 
     private var _myActivity = MutableStateFlow<List<MyActivityResponse>>(emptyList())
-    private val myActivity = _myActivity.asStateFlow()
+    private val myActivity
+        get() = _myActivity.asStateFlow()
+
+    private var _myPointList = MutableStateFlow<List<PointHistory>>(emptyList())
+    private val myPointList
+        get() = _myPointList.asStateFlow()
+
+    private var _myPoint = MutableStateFlow(0)
+    private val myPoint
+        get() = _myPoint.asStateFlow()
 
 
     override fun getMyProfile(): Flow<ProfileModel> = myPage
+
     override fun getMyActivityList(): Flow<List<MyActivityResponse>> = myActivity
+
+    override fun getMyPointList(): Flow<List<PointHistory>> = myPointList
+
+    override fun getMyPointTotal(): Flow<Int> = myPoint
 
 
     override suspend fun getProfile() {
@@ -53,6 +68,19 @@ class MyPageRepositoryImpl @Inject constructor(
                      result.data
                 }
               }
+       }
+    }
+
+    override suspend fun getMyPoint() {
+       myPageRemoteDataSource.getPointHistory().first().let { result ->
+           if(result is ApiResult.Success){
+               _myPointList.update {
+                   result.data.getPointHistoryRes
+               }
+               _myPoint.update {
+                   result.data.point
+               }
+           }
        }
     }
 

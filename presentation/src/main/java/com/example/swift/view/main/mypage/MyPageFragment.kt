@@ -42,9 +42,9 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
         binding.iconProfile.setOnClickListener {
             navigateTo(R.id.editProfileFragment)
         }
-//        binding.containerPoint.setOnClickListener {
-//            navigateTo(R.id.myPointDetailFragment)
-//        }
+        binding.containerPoint.setOnClickListener {
+            navigateTo(R.id.myPointDetailFragment)
+        }
     }
 
     private fun observeProfile() {
@@ -60,8 +60,7 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
 
     private fun updateProfileUI(profile: ProfileModel) {
         binding.textNickName.text = profile.name
-        binding.textVoteCount.text = "투표   |   ${profile.voteCnt}"
-        binding.textMyVoteCount.text = "질문   |   ${profile.questionCnt}"
+        binding.textPoint.text = myPageViewModel.myPoint.value.toString()
 
         Glide.with(this)
             .load(profile.profile)

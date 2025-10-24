@@ -10,6 +10,7 @@ import com.example.domain.model.ApiResult
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
+import com.example.domain.model.PointHistoryResponse
 import com.example.domain.model.ProfileModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
@@ -60,6 +61,12 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getMyActivity(): Flow<ApiResult<List<MyActivityResponse>>> {
         return safeFlow { myPageApi.getMyActivity() }
+    }
+
+    override suspend fun getPointHistory(): Flow<ApiResult<PointHistoryResponse>> {
+        return safeFlow {
+            myPageApi.getMyPoint()
+        }
     }
 
 }
