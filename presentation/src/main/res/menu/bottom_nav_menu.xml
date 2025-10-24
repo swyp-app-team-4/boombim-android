@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/homeFragment"
@@ -7,14 +8,27 @@
         android:icon="@drawable/icon_home"/>
 
     <item
+        android:id="@+id/makeCongestionFragment"
+        android:title=""
+        android:icon="@drawable/icon_search"/>
+
+
+    <item
+        android:id="@+id/blank"
+        android:title=""/>
+
+
+    <item
         android:id="@+id/mapFragment"
         android:title=""
         android:icon="@drawable/icon_map"/>
+
 
     <item
         android:id="@+id/myPageFragment"
         android:title=""
         android:icon="@drawable/icon_profile"/>
+
 
 
 </menu>

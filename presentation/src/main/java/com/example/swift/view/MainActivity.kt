@@ -60,38 +60,37 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.bar.elevation = 0f
+        binding.navBar.background = null
 
-//        binding.btnMakeVote.setOnClickListener {
-//           navController.navigate((R.id.makeCongestionFragment))
-//        }
-
-//        initNavigation()
+        initNavigation()
 
     }
 
-//    private fun initNavigation() {
-//        val navHostFragment =
-//            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
-//        navController = navHostFragment.navController
-//
-//        binding.navBar.setupWithNavController(navController)
-//
-//        navController.addOnDestinationChangedListener { _, destination, _ ->
-//            when (destination.id) {
-//                R.id.homeFragment,
-//                R.id.mapFragment,
-//                R.id.myPageFragment -> {
-//                    binding.navBar.visibility = View.VISIBLE
-//                }
-//                else -> {
-//                    binding.navBar.visibility = View.GONE
-//                }
-//            }
-//
-//            binding.btnMakeVote.visibility =
-//                if (destination.id == R.id.homeFragment) View.VISIBLE else View.GONE
-//        }
-//    }
+    private fun initNavigation() {
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        navController = navHostFragment.navController
+
+        binding.navBar.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.homeFragment,
+                R.id.mapFragment,
+                R.id.makeCongestionFragment,
+                R.id.myPageFragment -> {
+                    binding.navBar.visibility = View.VISIBLE
+                    binding.bar.visibility = View.VISIBLE
+                    binding.fab.visibility = View.VISIBLE
+                }
+                else -> {
+                    binding.navBar.visibility = View.GONE
+                    binding.bar.visibility = View.GONE
+                    binding.fab.visibility = View.GONE
+                }
+            }
+
+        }
+    }
 }
 

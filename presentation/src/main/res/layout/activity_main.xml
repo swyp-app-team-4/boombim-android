@@ -13,6 +13,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="70dp"
         app:navGraph="@navigation/nav_graph"
         app:defaultNavHost="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior" />
@@ -23,17 +24,17 @@
         android:layout_width="match_parent"
         android:layout_height="70dp"
         android:layout_gravity="bottom"
-        android:backgroundTint="@color/main_color"
+        android:backgroundTint="@color/white"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="15dp"
-        app:fabCradleRoundedCornerRadius="60dp"
+        app:fabCradleMargin="5dp"
+        app:fabCradleRoundedCornerRadius="10dp"
         app:hideOnScroll="true"/>
 
     <!-- FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
         android:layout_gravity="center|bottom"
         android:layout_marginBottom="45dp"
         android:backgroundTint="@color/main_color"
@@ -43,15 +44,24 @@
         app:borderWidth="0dp"
         app:layout_anchorGravity="center" />
 
-<!--        &lt;!&ndash; BottomNavigationView (메뉴 아이콘) &ndash;&gt;-->
-<!--        <com.google.android.material.bottomnavigation.BottomNavigationView-->
-<!--            android:id="@+id/nav_bar"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:background="@android:color/transparent"-->
-<!--            app:menu="@menu/bottom_nav_menu"-->
-<!--            app:itemIconTint="@color/nav_item_color"-->
-<!--            app:itemTextColor="@android:color/transparent"-->
-<!--            app:labelVisibilityMode="unlabeled" />-->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_gravity="bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/nav_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+            app:itemTextColor="@color/black"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconTint="@color/nav_item_color"
+            app:menu="@menu/bottom_nav_menu"
+
+            tools:ignore="MissingConstraints" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
