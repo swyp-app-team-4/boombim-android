@@ -113,5 +113,9 @@
             android:name="com.example.swift.view.auth.SocialLoginProfileSettingFragment"
             android:label="SocialLoginProfileSettingFragment" />
     </navigation>
+    <fragment
+        android:id="@+id/eventFragment"
+        android:name="com.example.swift.view.main.event.EventFragment"
+        android:label="EventFragment" />
 
 </navigation>

@@ -43,7 +43,7 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
             navigateTo(R.id.editProfileFragment)
         }
         binding.containerPoint.setOnClickListener {
-            navigateTo(R.id.myPointDetailFragment)
+            navigateTo(R.id.eventFragment)
         }
     }
 
