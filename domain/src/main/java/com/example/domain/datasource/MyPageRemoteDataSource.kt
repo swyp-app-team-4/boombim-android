@@ -1,6 +1,7 @@
 package com.example.domain.datasource
 
 import com.example.domain.model.ApiResult
+import com.example.domain.model.EventCampaign
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
@@ -12,8 +13,6 @@ interface MyPageRemoteDataSource {
 
     suspend fun getProfile(): Flow<ApiResult<ProfileModel>>
 
-    suspend fun getPointHistory(): Flow<ApiResult<PointHistoryResponse>>
-
     suspend fun patchNickName(name: String): ApiResult<*>
 
     suspend fun logout(refresh: String): ApiResult<*>
@@ -23,4 +22,8 @@ interface MyPageRemoteDataSource {
     suspend fun deleteUser(reason: String): ApiResult<*>
 
     suspend fun getMyActivity(): Flow<ApiResult<List<MyActivityResponse>>>
+
+    suspend fun getEvent() : Flow<ApiResult<EventCampaign>>
+
+    suspend fun getPointHistory(): Flow<ApiResult<PointHistoryResponse>>
 }

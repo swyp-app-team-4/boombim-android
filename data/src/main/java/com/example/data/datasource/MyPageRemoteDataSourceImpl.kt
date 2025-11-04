@@ -7,6 +7,7 @@ import com.example.data.network.mypage.request.PatchNickNameRequest
 import com.example.data.network.safeFlow
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.model.ApiResult
+import com.example.domain.model.EventCampaign
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
@@ -61,6 +62,12 @@ class MyPageRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getMyActivity(): Flow<ApiResult<List<MyActivityResponse>>> {
         return safeFlow { myPageApi.getMyActivity() }
+    }
+
+    override suspend fun getEvent(): Flow<ApiResult<EventCampaign>> {
+        return safeFlow {
+            myPageApi.getEvent()
+        }
     }
 
     override suspend fun getPointHistory(): Flow<ApiResult<PointHistoryResponse>> {

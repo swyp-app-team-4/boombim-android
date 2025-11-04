@@ -60,7 +60,9 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
 
     private fun updateProfileUI(profile: ProfileModel) {
         binding.textNickName.text = profile.name
-        binding.textPoint.text = myPageViewModel.myPoint.value.toString()
+        lifecycleScope.launch {
+            binding.textPoint.text = myPageViewModel.myPoint.collect{it.toString() + "P"}
+        }
 
         Glide.with(this)
             .load(profile.profile)

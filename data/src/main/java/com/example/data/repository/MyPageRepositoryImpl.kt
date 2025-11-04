@@ -6,6 +6,7 @@ import com.example.data.network.mypage.MyPageApi
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
+import com.example.domain.model.EventCampaign
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
@@ -28,7 +29,6 @@ class MyPageRepositoryImpl @Inject constructor(
     private val myPage
         get() = _myPage.asStateFlow()
 
-
     private var _myActivity = MutableStateFlow<List<MyActivityResponse>>(emptyList())
     private val myActivity
         get() = _myActivity.asStateFlow()
@@ -41,6 +41,12 @@ class MyPageRepositoryImpl @Inject constructor(
     private val myPoint
         get() = _myPoint.asStateFlow()
 
+    private var _myEventInfo = MutableStateFlow(EventCampaign())
+    private val myEventInfo
+        get() = _myEventInfo.asStateFlow()
+
+
+
 
     override fun getMyProfile(): Flow<ProfileModel> = myPage
 
@@ -49,6 +55,8 @@ class MyPageRepositoryImpl @Inject constructor(
     override fun getMyPointList(): Flow<List<PointHistory>> = myPointList
 
     override fun getMyPointTotal(): Flow<Int> = myPoint
+
+    override fun getEventCampaignInfo(): Flow<EventCampaign> = myEventInfo
 
 
     override suspend fun getProfile() {
@@ -82,6 +90,16 @@ class MyPageRepositoryImpl @Inject constructor(
                }
            }
        }
+    }
+
+    override suspend fun getEventCampaign() {
+        myPageRemoteDataSource.getEvent().first().let { result ->
+            if(result is ApiResult.Success){
+                _myEventInfo.update {
+                    result.data
+                }
+            }
+        }
     }
 
     override suspend fun patchNickName(name: String): ActionResult<*> {

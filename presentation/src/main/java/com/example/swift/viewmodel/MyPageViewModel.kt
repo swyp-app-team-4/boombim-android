@@ -3,6 +3,7 @@ package com.example.swift.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
+import com.example.domain.model.EventCampaign
 import com.example.domain.model.ProfileModel
 import com.example.domain.usecase.mypage.FetchMyActivityUseCase
 import com.example.domain.usecase.mypage.FetchMyProfileUseCase
@@ -10,7 +11,9 @@ import com.example.domain.usecase.mypage.GetMyActivityUseCase
 import com.example.domain.usecase.mypage.GetMyProfileUseCase
 import com.example.domain.usecase.mypage.PatchProfileImageUseCase
 import com.example.domain.usecase.mypage.PatchUserNickNameUseCase
+import com.example.domain.usecase.point.FetchEventInfo
 import com.example.domain.usecase.point.FetchPointListUseCase
+import com.example.domain.usecase.point.GetEventInfo
 import com.example.domain.usecase.point.GetMyPointUseCase
 import com.example.domain.usecase.point.GetPointListUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -29,7 +32,9 @@ class MyPageViewModel @Inject constructor(
     getMyActivityUseCase: GetMyActivityUseCase,
     getMyPointUseCase: GetMyPointUseCase,
     getPointListUseCase: GetPointListUseCase,
-    private val fetchPointListUseCase: FetchPointListUseCase
+    private val fetchPointListUseCase: FetchPointListUseCase,
+    private val fetchEventInfo: FetchEventInfo,
+    getEventInfo: GetEventInfo
 
 ): ViewModel(){
 
@@ -38,6 +43,7 @@ class MyPageViewModel @Inject constructor(
             fetchMyProfileUseCase()
             fetchMyActivityUseCase()
             fetchPointListUseCase()
+            fetchEventInfo()
         }
     }
     val myPoint = getMyPointUseCase()
@@ -45,6 +51,13 @@ class MyPageViewModel @Inject constructor(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000),
             0
+        )
+
+    val eventInfo = getEventInfo()
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            EventCampaign()
         )
 
     val pointList = getPointListUseCase()

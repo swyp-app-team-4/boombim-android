@@ -4,6 +4,7 @@ import com.example.data.network.auth.FcmTokenRequest
 import com.example.data.network.auth.request.RefreshTokenRequest
 import com.example.data.network.mypage.request.DeleteAccountRequest
 import com.example.data.network.mypage.request.PatchNickNameRequest
+import com.example.domain.model.EventCampaign
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.PatchProfileImageResponse
@@ -23,9 +24,6 @@ interface MyPageApi {
 
     @GET("/api/app/member")
     suspend fun getProfile(): Response<ProfileModel>
-
-    @GET("/api/app/point")
-    suspend fun getMyPoint() : Response<PointHistoryResponse>
 
     @PATCH("/api/app/member/name")
     suspend fun patchNickName(
@@ -55,6 +53,14 @@ interface MyPageApi {
 
     @GET("/api/app/member/congestion")
     suspend fun getMyActivity(): Response<List<MyActivityResponse>>
+
+    //////////////////////////////////////// 포인트
+
+    @GET("/api/app/point")
+    suspend fun getMyPoint() : Response<PointHistoryResponse>
+
+    @GET("/api/app/event")
+    suspend fun getEvent() : Response<EventCampaign>
 
 
 }

@@ -1,6 +1,7 @@
 package com.example.domain.repository
 
 import com.example.domain.model.ActionResult
+import com.example.domain.model.EventCampaign
 import com.example.domain.model.MyActivityResponse
 import com.example.domain.model.MyPageVoteResponse
 import com.example.domain.model.NotificationModel
@@ -20,11 +21,15 @@ interface MyPageRepository {
 
     fun getMyPointTotal(): Flow<Int>
 
+    fun getEventCampaignInfo(): Flow<EventCampaign>
+
     suspend fun getProfile()
 
     suspend fun getMyActivity()
 
     suspend fun getMyPoint()
+
+    suspend fun getEventCampaign()
 
     suspend fun patchNickName(name: String) :ActionResult<*>
 

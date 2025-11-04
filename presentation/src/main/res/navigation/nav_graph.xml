@@ -3,119 +3,97 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/home_graph">
+    app:startDestination="@id/homeFragment">
 
-    <!-- ================= 홈 관련 ================= -->
-    <navigation android:id="@+id/home_graph" app:startDestination="@id/homeFragment">
-        <fragment
-            android:id="@+id/homeFragment"
-            android:name="com.example.swift.view.main.home.HomeFragment"
-            android:label="HomeFragment" />
-        <fragment
-            android:id="@+id/homeSearchFragment"
-            android:name="com.example.swift.view.main.home.search.HomeSearchFragment"
-            android:label="HomeSearchFragment" />
-        <fragment
-            android:id="@+id/mapFragment"
-            android:name="com.example.swift.view.main.map.MapFragment"
-            android:label="MapFragment">
-        </fragment>
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.swift.view.main.home.HomeFragment"
+        android:label="HomeFragment" />
+    <fragment
+        android:id="@+id/homeSearchFragment"
+        android:name="com.example.swift.view.main.home.search.HomeSearchFragment"
+        android:label="HomeSearchFragment" />
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="com.example.swift.view.main.map.MapFragment"
+        android:label="MapFragment">
+    </fragment>
 
-        <fragment
-            android:id="@+id/chattingFragment"
-            android:name="com.example.swift.view.main.vote.ChattingFragment"
-            android:label="ChattingFragment" />
-        <fragment
-            android:id="@+id/myPageFragment"
-            android:name="com.example.swift.view.main.mypage.MyPageFragment"
-            android:label="MyPageFragment" />
-        <fragment
-            android:id="@+id/notificationFragment"
-            android:name="com.example.swift.view.main.notification.NotificationFragment"
-            android:label="NotificationFragment" />
-        <fragment
-            android:id="@+id/eventTabFragment"
-            android:name="com.example.swift.view.main.notification.tab.EventTabFragment"
-            android:label="EventTabFragment" />
-        <fragment
-            android:id="@+id/newIssueTabFragment"
-            android:name="com.example.swift.view.main.notification.tab.NewIssueTabFragment"
-            android:label="NewIssueTabFragment" />
-    </navigation>
+    <fragment
+        android:id="@+id/myPageFragment"
+        android:name="com.example.swift.view.main.mypage.MyPageFragment"
+        android:label="MyPageFragment" />
+    <fragment
+        android:id="@+id/notificationFragment"
+        android:name="com.example.swift.view.main.notification.NotificationFragment"
+        android:label="NotificationFragment" />
+    <fragment
+        android:id="@+id/eventTabFragment"
+        android:name="com.example.swift.view.main.notification.tab.EventTabFragment"
+        android:label="EventTabFragment" />
+    <fragment
+        android:id="@+id/newIssueTabFragment"
+        android:name="com.example.swift.view.main.notification.tab.NewIssueTabFragment"
+        android:label="NewIssueTabFragment" />
 
-    <!-- ================= 설정 관련 ================= -->
-    <navigation android:id="@+id/setting_graph" app:startDestination="@id/settingFragment">
-        <fragment
-            android:id="@+id/settingFragment"
-            android:name="com.example.swift.view.main.setting.SettingFragment"
-            android:label="SettingFragment" />
-        <fragment
-            android:id="@+id/editProfileFragment"
-            android:name="com.example.swift.view.main.mypage.EditProfileFragment"
-            android:label="EditProfileFragment" />
-        <fragment
-            android:id="@+id/myProfileFragment"
-            android:name="com.example.swift.view.main.setting.MyProfileFragment"
-            android:label="MyProfileFragment" />
-        <fragment
-            android:id="@+id/policyFragment"
-            android:name="com.example.swift.view.main.setting.PolicyFragment"
-            android:label="PolicyFragment">
-            <argument android:name="url" app:argType="string"/>
-            <argument android:name="title" app:argType="string"/>
-        </fragment>
-        <fragment
-            android:id="@+id/alertFragment"
-            android:name="com.example.swift.view.main.setting.AlertFragment"
-            android:label="AlertFragment" />
-        <fragment
-            android:id="@+id/withDrawFragment"
-            android:name="com.example.swift.view.main.setting.WithDrawFragment"
-            android:label="WithDrawFragment" />
-    </navigation>
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.example.swift.view.main.setting.SettingFragment"
+        android:label="SettingFragment" />
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.swift.view.main.mypage.EditProfileFragment"
+        android:label="EditProfileFragment" />
+    <fragment
+        android:id="@+id/myProfileFragment"
+        android:name="com.example.swift.view.main.setting.MyProfileFragment"
+        android:label="MyProfileFragment" />
+    <fragment
+        android:id="@+id/policyFragment"
+        android:name="com.example.swift.view.main.setting.PolicyFragment"
+        android:label="PolicyFragment">
+        <argument android:name="url" app:argType="string"/>
+        <argument android:name="title" app:argType="string"/>
+    </fragment>
 
-    <!-- ================= 투표 관련 ================= -->
-    <navigation android:id="@+id/vote_graph" app:startDestination="@id/makeVoteFragment">
-        <fragment
-            android:id="@+id/makeVoteFragment"
-            android:name="com.example.swift.view.main.vote.makevote.MakeVoteFragment"
-            android:label="MakeVoteFragment" />
-        <fragment
-            android:id="@+id/checkMakeVoteFragment"
-            android:name="com.example.swift.view.main.vote.makevote.CheckMakeVoteFragment"
-            android:label="CheckMakeVoteFragment" />
-        <dialog
-            android:id="@+id/askingVoteFragment"
-            android:name="com.example.swift.view.dialog.AskingVoteFragment"
-            android:label="AskingVoteFragment" />
-    </navigation>
+    <fragment
+        android:id="@+id/alertFragment"
+        android:name="com.example.swift.view.main.setting.AlertFragment"
+        android:label="AlertFragment" />
+    <fragment
+        android:id="@+id/withDrawFragment"
+        android:name="com.example.swift.view.main.setting.WithDrawFragment"
+        android:label="WithDrawFragment" />
 
-    <!-- ================= 혼잡도 관련 ================= -->
-    <navigation android:id="@+id/congestion_graph" app:startDestination="@id/congestionSearchFragment">
-        <fragment
-            android:id="@+id/congestionSearchFragment"
-            android:name="com.example.swift.view.main.makecongestion.CongestionSearchFragment"
-            android:label="CongestionSearchFragment" />
-        <fragment
-            android:id="@+id/makeCongestionFragment"
-            android:name="com.example.swift.view.main.makecongestion.MakeCongestionFragment"
-            android:label="MakeCongestionFragment" />
-        <fragment
-            android:id="@+id/checkCongestionPlaceFragment"
-            android:name="com.example.swift.view.main.makecongestion.CheckCongestionPlaceFragment"
-            android:label="CheckCongestionPlaceFragment" />
-    </navigation>
+    <fragment
+        android:id="@+id/congestionSearchFragment"
+        android:name="com.example.swift.view.main.makecongestion.CongestionSearchFragment"
+        android:label="CongestionSearchFragment" />
+    <fragment
+        android:id="@+id/makeCongestionFragment"
+        android:name="com.example.swift.view.main.makecongestion.MakeCongestionFragment"
+        android:label="MakeCongestionFragment" />
+    <fragment
+        android:id="@+id/checkCongestionPlaceFragment"
+        android:name="com.example.swift.view.main.makecongestion.CheckCongestionPlaceFragment"
+        android:label="CheckCongestionPlaceFragment" />
 
-    <!-- ================= Auth / Login 관련 ================= -->
-    <navigation android:id="@+id/auth_graph" app:startDestination="@id/socialLoginProfileSettingFragment">
-        <fragment
-            android:id="@+id/socialLoginProfileSettingFragment"
-            android:name="com.example.swift.view.auth.SocialLoginProfileSettingFragment"
-            android:label="SocialLoginProfileSettingFragment" />
-    </navigation>
+    <fragment
+        android:id="@+id/socialLoginProfileSettingFragment"
+        android:name="com.example.swift.view.auth.SocialLoginProfileSettingFragment"
+        android:label="SocialLoginProfileSettingFragment" />
+
     <fragment
         android:id="@+id/eventFragment"
         android:name="com.example.swift.view.main.event.EventFragment"
         android:label="EventFragment" />
+    <fragment
+        android:id="@+id/kakaoSearchFragment"
+        android:name="com.example.swift.view.main.map.KakaoSearchFragment"
+        android:label="KakaoSearchFragment" />
+    <fragment
+        android:id="@+id/myPointDetailFragment"
+        android:name="com.example.swift.view.main.mypage.MyPointDetailFragment"
+        android:label="MyPointDetailFragment" />
 
 </navigation>
