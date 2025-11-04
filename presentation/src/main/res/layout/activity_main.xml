@@ -22,10 +22,9 @@
     <com.google.android.material.bottomappbar.BottomAppBar
         android:id="@+id/bar"
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="65dp"
         android:layout_gravity="bottom"
         android:backgroundTint="@color/white"
-        app:fabAlignmentMode="center"
         app:fabCradleMargin="5dp"
         app:fabCradleRoundedCornerRadius="10dp"
         app:hideOnScroll="true"/>
@@ -33,16 +32,16 @@
     <!-- FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="55dp"
-        android:layout_height="55dp"
-        android:layout_gravity="center|bottom"
-        android:layout_marginBottom="45dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_marginBottom="15dp"
         android:backgroundTint="@color/main_color"
+        android:src="@drawable/icon_plus_white"
+        android:contentDescription="FAB"
         app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
         app:tint="@android:color/white"
-        app:layout_anchor="@id/bar"
-        app:borderWidth="0dp"
-        app:layout_anchorGravity="center" />
+        app:borderWidth="0dp" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_gravity="bottom"
