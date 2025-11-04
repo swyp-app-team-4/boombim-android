@@ -37,7 +37,7 @@ class KakaoSearchFragment : VoteBaseFragment<FragmentKakaoSearchBinding>(
         initTextStyle()
 
         binding.iconBack.setOnClickListener {
-            findNavController().navigate(R.id.kakaoSearchFragment)
+            findNavController().popBackStack()
         }
     }
 
