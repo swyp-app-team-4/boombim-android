@@ -13,8 +13,6 @@ import com.bumptech.glide.Glide
 import com.example.domain.model.ProfileModel
 import com.example.swift.view.main.mypage.tab.MyPageActivityTabFragment
 import com.example.swift.view.main.mypage.tab.MyPageInterestsTabFragment
-import com.example.swift.view.main.mypage.tab.MyPageMyVoteTabFragment
-import com.example.swift.view.main.mypage.tab.MyPageVoteTabFragment
 import com.google.android.material.tabs.TabLayout
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -44,9 +42,9 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
         binding.iconProfile.setOnClickListener {
             navigateTo(R.id.editProfileFragment)
         }
-//        binding.containerPoint.setOnClickListener {
-//            navigateTo(R.id.myPointDetailFragment)
-//        }
+        binding.containerPoint.setOnClickListener {
+            navigateTo(R.id.eventFragment)
+        }
     }
 
     private fun observeProfile() {
@@ -62,8 +60,9 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
 
     private fun updateProfileUI(profile: ProfileModel) {
         binding.textNickName.text = profile.name
-        binding.textVoteCount.text = "투표   |   ${profile.voteCnt}"
-        binding.textMyVoteCount.text = "질문   |   ${profile.questionCnt}"
+        lifecycleScope.launch {
+            binding.textPoint.text = myPageViewModel.myPoint.collect{it.toString() + "P"}
+        }
 
         Glide.with(this)
             .load(profile.profile)

@@ -4,6 +4,7 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.os.Build
+import com.boombim.android.BuildConfig
 import com.kakao.sdk.common.KakaoSdk
 import com.kakao.vectormap.KakaoMapSdk
 import com.navercorp.nid.NaverIdLoginSDK
@@ -14,8 +15,8 @@ class BoomBimApp : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        KakaoSdk.init(this, "15beddeb998ebfb5407b1501bf0b2259")
-        KakaoMapSdk.init(this, "15beddeb998ebfb5407b1501bf0b2259")
+        KakaoSdk.init(this, BuildConfig.KAKAO_API_KEY)
+        KakaoMapSdk.init(this, BuildConfig.KAKAO_API_KEY)
 
         NaverIdLoginSDK.initialize(
             this,
