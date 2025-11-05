@@ -32,10 +32,10 @@
     <!-- FloatingActionButton -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="center_horizontal|bottom"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="15dp" 
         android:backgroundTint="@color/main_color"
         android:src="@drawable/icon_plus_white"
         android:contentDescription="FAB"
@@ -58,7 +58,6 @@
             app:labelVisibilityMode="unlabeled"
             app:itemIconTint="@color/nav_item_color"
             app:menu="@menu/bottom_nav_menu"
-
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

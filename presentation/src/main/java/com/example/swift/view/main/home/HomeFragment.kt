@@ -64,7 +64,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         fetchLessBoomBimPlace()
 
         fetchFcmToken()
@@ -79,6 +78,10 @@ class HomeFragment : Fragment() {
 
         binding.iconAlert.setOnClickListener {
             findNavController().navigate(R.id.notificationFragment)
+        }
+
+        binding.imageEventBanner.setOnClickListener {
+            findNavController().navigate(R.id.eventFragment)
         }
 
 
