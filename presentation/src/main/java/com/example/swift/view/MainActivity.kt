@@ -80,13 +80,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.makeCongestionFragment,
                 R.id.myPageFragment -> {
                     binding.navBar.visibility = View.VISIBLE
-                    binding.bar.visibility = View.VISIBLE
-                    binding.fab.visibility = View.VISIBLE
+                    binding.btnMakeCongestion.visibility = View.VISIBLE
                 }
                 else -> {
                     binding.navBar.visibility = View.GONE
-                    binding.bar.visibility = View.GONE
-                    binding.fab.visibility = View.GONE
+                    binding.btnMakeCongestion.visibility = View.GONE
                 }
             }
 

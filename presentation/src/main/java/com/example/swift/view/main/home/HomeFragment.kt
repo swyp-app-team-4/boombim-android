@@ -170,17 +170,13 @@ class HomeFragment : Fragment() {
 
                     if (list.isEmpty()) {
                         textInterestPlace.visibility = View.GONE
-                        divider3.visibility = View.GONE
                     } else {
                         textInterestPlace.visibility = View.VISIBLE
-                        divider3.visibility = View.VISIBLE
                     }
                 }
             }
         }
     }
-
-
 
     private fun initPlaceBoomBimList() = with(binding) {
         lifecycleScope.launch {
