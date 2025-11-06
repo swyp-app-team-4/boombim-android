@@ -3,6 +3,7 @@ package com.example.data.di
 import android.content.Context
 import com.example.data.datastore.AppManageDataStore
 import com.example.data.network.auth.AuthApi
+import com.example.data.network.event.EventApi
 import com.example.data.network.favorite.FavoriteApi
 import com.example.data.network.home.HomeApi
 import com.example.data.network.kakaosearch.KakaoLocalApi
@@ -136,6 +137,11 @@ object NetworkModule {
     @Singleton
     fun provideMyPageApi(@AuthRetrofit retrofit: Retrofit): MyPageApi =
         retrofit.create(MyPageApi::class.java)
+
+    @Provides
+    @Singleton
+    fun provideEventApi(@AuthRetrofit retrofit: Retrofit): EventApi =
+        retrofit.create(EventApi::class.java)
 
     @Provides
     @Singleton

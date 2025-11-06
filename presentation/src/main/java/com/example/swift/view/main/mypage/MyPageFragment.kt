@@ -1,6 +1,7 @@
 package com.example.swift.view.main.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
@@ -60,8 +61,11 @@ class MyPageFragment : MyPageBaseFragment<FragmentMyPageBinding>(
 
     private fun updateProfileUI(profile: ProfileModel) {
         binding.textNickName.text = profile.name
+
         lifecycleScope.launch {
-            binding.textPoint.text = myPageViewModel.myPoint.collect{it.toString() + "P"}
+            myPageViewModel.myPoint.collect { point ->
+                binding.textPoint.text = "${point}"
+            }
         }
 
         Glide.with(this)
