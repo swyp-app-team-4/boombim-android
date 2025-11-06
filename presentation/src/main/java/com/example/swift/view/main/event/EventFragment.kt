@@ -12,6 +12,7 @@ import com.boombim.android.R
 import com.boombim.android.databinding.FragmentEventBinding
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.example.swift.view.dialog.BuyTicketCompleteDialog
+import com.example.swift.view.dialog.NoMoreAttemptsDialog
 import com.example.swift.view.dialog.NotEnoughPointDialog
 import com.example.swift.view.main.mypage.MyPageBaseFragment
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,7 +88,7 @@ class EventFragment : MyPageBaseFragment<FragmentEventBinding>(
                 NotEnoughPointDialog().show(parentFragmentManager, "NotEnoughPointDialog")
             }
             msg.contains("-1002") -> {
-                Toast.makeText(requireContext(), "이벤트 응모 가능 횟수를 초과했습니다.", Toast.LENGTH_SHORT).show()
+                NoMoreAttemptsDialog().show(parentFragmentManager, "NoMoreAttemptsDialog")
             }
         }
     }
