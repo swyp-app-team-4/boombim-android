@@ -12,6 +12,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.material3.BottomAppBar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
@@ -59,11 +60,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.btnMakeVote.setOnClickListener {
-           navController.navigate((R.id.makeCongestionFragment))
-        }
+        binding.navBar.background = null
 
         initNavigation()
+
     }
 
     private fun initNavigation() {
@@ -77,16 +77,17 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment,
                 R.id.mapFragment,
+                R.id.makeCongestionFragment,
                 R.id.myPageFragment -> {
                     binding.navBar.visibility = View.VISIBLE
+                    binding.btnMakeCongestion.visibility = View.VISIBLE
                 }
                 else -> {
                     binding.navBar.visibility = View.GONE
+                    binding.btnMakeCongestion.visibility = View.GONE
                 }
             }
 
-            binding.btnMakeVote.visibility =
-                if (destination.id == R.id.homeFragment) View.VISIBLE else View.GONE
         }
     }
 }
