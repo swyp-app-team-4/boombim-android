@@ -30,8 +30,6 @@ class BuyTicketCompleteDialog() : DialogFragment() {
             dismiss()
         }
 
-        dialog.findViewById<TextView>(R.id.text_ticket_amount).text = ""
-
         lifecycleScope.launch {
             myPageViewModel.eventInfo.collect { eventInfo ->
                 dialog.findViewById<TextView>(R.id.text_ticket_amount).text = "${eventInfo.currentTicket}번째 응모권 구매 완료!"
