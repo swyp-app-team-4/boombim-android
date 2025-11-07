@@ -26,7 +26,9 @@ data class PlaceData(
     val isFavorite: Boolean,
     val legalDong: String,
     val congestionLevelName: String,
-    val congestionMessage: String
+    val congestionMessage: String,
+    val minimumPopulation: Int,
+    val maximumPopulation: Int
 )
 
 @Serializable
