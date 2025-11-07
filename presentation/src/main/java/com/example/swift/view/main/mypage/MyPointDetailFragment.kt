@@ -1,18 +1,25 @@
 package com.example.swift.view.main.mypage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.boombim.android.databinding.FragmentMyPointDetailBinding
 import com.example.swift.view.dialog.BuyTicketCompleteDialog
 import com.example.swift.view.dialog.NoMoreAttemptsDialog
 import com.example.swift.view.dialog.NotEnoughPointDialog
+import com.example.swift.view.main.mypage.adapter.PointHistoryAdapter
 import kotlinx.coroutines.launch
 
 class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
     FragmentMyPointDetailBinding::inflate
 ) {
+    private lateinit var pointHistoryAdapter: PointHistoryAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -23,6 +30,8 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
         }
 
         setupBuyTicketButton()
+        initRecyclerView()
+        observePointHistory()
 
     }
 
@@ -32,6 +41,25 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
                 onSuccess = { showBuyTicketDialog() },
                 onFail = { handleBuyTicketFailure(it) }
             )
+        }
+    }
+
+    /**  리사이클러뷰 설정 */
+    private fun initRecyclerView() {
+        pointHistoryAdapter = PointHistoryAdapter()
+        binding.recyclerPointHistory.adapter = pointHistoryAdapter
+        binding.recyclerPointHistory.layoutManager = LinearLayoutManager(requireContext())   // ✅ 이것!
+    }
+
+
+    /**  포인트 히스토리 리스트 반영 */
+    private fun observePointHistory() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                myPageViewModel.pointList.collect {
+                    pointHistoryAdapter.submitList(it)
+                }
+            }
         }
     }
 

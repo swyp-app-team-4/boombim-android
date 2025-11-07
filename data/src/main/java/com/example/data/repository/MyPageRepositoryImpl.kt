@@ -46,8 +46,6 @@ class MyPageRepositoryImpl @Inject constructor(
         get() = _myEventInfo.asStateFlow()
 
 
-
-
     override fun getMyProfile(): Flow<ProfileModel> = myPage
 
     override fun getMyActivityList(): Flow<List<MyActivityResponse>> = myActivity
