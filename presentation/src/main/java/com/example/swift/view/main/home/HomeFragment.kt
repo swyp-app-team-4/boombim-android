@@ -136,7 +136,14 @@ class HomeFragment : Fragment() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.lessBoomBimList.collect { list ->
-                    val adapter = PlaceLessBoomBimAdapter(list)
+                    val adapter = PlaceLessBoomBimAdapter(list){
+                        findNavController().navigate(
+                            R.id.homePlaceDetailFragment,
+                            Bundle().apply {
+                                putInt("placeId", it.officialPlaceId)
+                            }
+                        )
+                    }
                     val layoutManager = GridLayoutManager(
                         requireContext(),
                         2,
@@ -183,11 +190,19 @@ class HomeFragment : Fragment() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 homeViewModel.boomBimList.collect { list ->
                     recyclerBoomBim.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerBoomBim.adapter = PlaceBoomBimAdapter(list)
+                    recyclerBoomBim.adapter = PlaceBoomBimAdapter(list){ placeBoomBimModel ->
+                        findNavController().navigate(
+                            R.id.homePlaceDetailFragment,
+                            Bundle().apply {
+                                putInt("placeId", placeBoomBimModel.officialPlaceId)
+                            }
+                        )
+                    }
                 }
             }
         }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()

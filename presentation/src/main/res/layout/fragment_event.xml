@@ -49,7 +49,7 @@
             app:layout_constraintTop_toBottomOf="@id/event1" />
 
         <LinearLayout
-            android:id="@+id/button_announce"
+            android:id="@+id/button_buy_ticket"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:background="@drawable/bg_radius_30_background_blue"

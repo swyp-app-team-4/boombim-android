@@ -19,11 +19,13 @@ import com.example.swift.util.diffutil.PlaceBoomBimDiffUtil
 
 @RequiresApi(Build.VERSION_CODES.O)
 class PlaceBoomBimAdapter (
-    private val items: List<PlaceBoomBimModel>
+    private val items: List<PlaceBoomBimModel>,
+    private val onItemClick: (PlaceBoomBimModel) -> Unit
 ) : ListAdapter<PlaceBoomBimModel,PlaceBoomBimAdapter.PlaceViewHolder>(PlaceBoomBimDiffUtil) {
 
     inner class PlaceViewHolder(val binding: ItemBoomBimBinding) :
         RecyclerView.ViewHolder(binding.root) {
+
         fun bind(item: PlaceBoomBimModel) {
             binding.textPlaceName.text = item.officialPlaceName
             binding.textPlaceAddress.text = item.legalDong
@@ -42,6 +44,8 @@ class PlaceBoomBimAdapter (
                 .into(binding.imagePlace)
 
             binding.iconStatus.setImageResource(statusIconRes)
+
+            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 

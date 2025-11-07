@@ -3,6 +3,7 @@ package com.example.swift.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
+import com.example.domain.model.ApiResult
 import com.example.domain.model.EventCampaign
 import com.example.domain.model.ProfileModel
 import com.example.domain.usecase.mypage.FetchMyActivityUseCase
@@ -11,6 +12,7 @@ import com.example.domain.usecase.mypage.GetMyActivityUseCase
 import com.example.domain.usecase.mypage.GetMyProfileUseCase
 import com.example.domain.usecase.mypage.PatchProfileImageUseCase
 import com.example.domain.usecase.mypage.PatchUserNickNameUseCase
+import com.example.domain.usecase.point.BuyTicketUseCase
 import com.example.domain.usecase.point.FetchEventInfo
 import com.example.domain.usecase.point.FetchPointListUseCase
 import com.example.domain.usecase.point.GetEventInfo
@@ -34,7 +36,8 @@ class MyPageViewModel @Inject constructor(
     getPointListUseCase: GetPointListUseCase,
     private val fetchPointListUseCase: FetchPointListUseCase,
     private val fetchEventInfo: FetchEventInfo,
-    getEventInfo: GetEventInfo
+    getEventInfo: GetEventInfo,
+    private val buyTicketUseCase: BuyTicketUseCase
 
 ): ViewModel(){
 
@@ -109,6 +112,22 @@ class MyPageViewModel @Inject constructor(
     ){
         viewModelScope.launch {
            patchProfileImageUseCase(imagePath)
+        }
+    }
+
+    fun buyTicket(
+        onSuccess: () -> Unit,
+        onFail: (msg: String) -> Unit
+    ){
+        viewModelScope.launch {
+            when(val result = buyTicketUseCase()){
+                is ActionResult.Success -> {
+                    onSuccess()
+                }
+                is ActionResult.Fail -> {
+                    onFail(result.msg)
+                }
+            }
         }
     }
 

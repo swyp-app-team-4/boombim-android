@@ -14,7 +14,10 @@ import com.example.swift.util.DateTimeUtils
 import com.example.swift.util.diffutil.PlaceLessBoomBimDiffUtil
 
 @RequiresApi(Build.VERSION_CODES.O)
-class PlaceLessBoomBimAdapter(private val items: List<PlaceLessBoomBimModel>) :
+class PlaceLessBoomBimAdapter(
+    private val items: List<PlaceLessBoomBimModel>,
+    private val onItemClick: (PlaceLessBoomBimModel) -> Unit
+) :
     ListAdapter<PlaceLessBoomBimModel,PlaceLessBoomBimAdapter.PlaceViewHolder>(PlaceLessBoomBimDiffUtil) {
 
     inner class PlaceViewHolder(val binding: ItemLessBoomBimBinding) :
@@ -37,6 +40,8 @@ class PlaceLessBoomBimAdapter(private val items: List<PlaceLessBoomBimModel>) :
                 .into(binding.imagePlace)
 
             binding.iconStatus.setImageResource(statusIconRes)
+
+            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 

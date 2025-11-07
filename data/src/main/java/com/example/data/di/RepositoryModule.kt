@@ -2,6 +2,7 @@ package com.example.data.di
 
 import com.example.data.datasource.KakaoSearchRemoteDataSourceImpl
 import com.example.data.repository.AuthRepositoryImpl
+import com.example.data.repository.EventRepositoryImpl
 import com.example.data.repository.FavoriteRepositoryImpl
 import com.example.data.repository.HomeRepositoryImpl
 import com.example.data.repository.KakaoSearchRepositoryImpl
@@ -10,6 +11,7 @@ import com.example.data.repository.MyPageRepositoryImpl
 import com.example.data.repository.NotificationRepositoryImpl
 import com.example.domain.datasource.MyPageRemoteDataSource
 import com.example.domain.repository.AuthRepository
+import com.example.domain.repository.EventRepository
 import com.example.domain.repository.FavoriteRepository
 import com.example.domain.repository.HomeRepository
 import com.example.domain.repository.KakaoSearchRepository
@@ -67,4 +69,10 @@ abstract class RepositoryModule {
     abstract fun bindFavoriteRepository(
         impl: FavoriteRepositoryImpl
     ): FavoriteRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindEventRepository(
+        impl: EventRepositoryImpl
+    ): EventRepository
 }

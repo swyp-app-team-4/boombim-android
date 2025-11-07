@@ -95,5 +95,9 @@
         android:id="@+id/myPointDetailFragment"
         android:name="com.example.swift.view.main.mypage.MyPointDetailFragment"
         android:label="MyPointDetailFragment" />
+    <fragment
+        android:id="@+id/homePlaceDetailFragment"
+        android:name="com.example.swift.view.main.home.HomePlaceDetailFragment"
+        android:label="HomePlaceDetailFragment" />
 
 </navigation>
