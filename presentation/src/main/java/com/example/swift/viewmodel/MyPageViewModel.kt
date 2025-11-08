@@ -90,6 +90,12 @@ class MyPageViewModel @Inject constructor(
         }
     }
 
+    fun fetchPointList(){
+        viewModelScope.launch {
+            fetchPointListUseCase()
+        }
+    }
+
     fun patchNickName(
         name: String,
         onSuccess: () -> Unit,
