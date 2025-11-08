@@ -34,7 +34,7 @@
 
         <ImageView
             android:id="@+id/image_event_banner"
-            android:layout_width="343dp"
+            android:layout_width="335dp"
             android:layout_height="120dp"
             android:src="@drawable/image_home_event_banner"
             android:layout_marginTop="25dp"
@@ -86,16 +86,6 @@
             android:layout_marginTop="24dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider2" />
-
-        <ImageView
-            android:id="@+id/icon_refresh_boom_bim"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/icon_refresh"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/divider2"
-            app:layout_constraintEnd_toEndOf="parent"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_boom_bim"
