@@ -58,17 +58,6 @@ class MakeCongestionFragment :
                 R.id.congestionSearchFragment)
         }
 
-        binding.iconBack.setOnClickListener {
-            findNavController().navigate(
-                R.id.homeFragment, null,
-                navOptions {
-                    popUpTo(R.id.makeCongestionFragment) {
-                        inclusive = true
-                    }
-                }
-            )
-        }
-
         binding.btnMakeAi.setOnClickListener {
             homeViewModel.makeAutoMessage(
                 memberPlaceName = placeName,
