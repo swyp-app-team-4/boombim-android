@@ -32,10 +32,20 @@ android {
         buildConfigField("String", "NAVER_CLIENT_SECRET", "\"${properties["NAVER_CLIENT_SECRET"]}\"")
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("Where.jks")
+            storePassword = "phb980203"
+            keyAlias = "key0"
+            keyPassword = "phb980203"
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
             isShrinkResources = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
