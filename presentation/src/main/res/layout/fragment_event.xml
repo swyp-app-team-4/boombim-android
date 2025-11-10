@@ -88,12 +88,11 @@
             app:layout_constraintTop_toBottomOf="@id/event2" />
 
         <LinearLayout
-            android:id="@+id/btn_buy_ticket"
+            android:id="@+id/layout_ticket_point_info"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:orientation="horizontal"
-            android:background="@drawable/bg_radius_14"
-            android:backgroundTint="#FAFAFA"
+            android:background="@drawable/bg_radius_14_stroke_gray"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"

@@ -60,6 +60,16 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        binding.btnMakeCongestion.setOnClickListener {
+            Log.d("MainActivity", "Make Congestion Button Clicked")
+            try {
+                navController.navigate(R.id.makeCongestionFragment)
+            } catch (e: Exception) {
+                Log.e("NavigationError", "Navigation failed", e)
+                Toast.makeText(this, "이동 실패: ${e.message}", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.navBar.background = null
 
         initNavigation()
@@ -78,6 +88,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.homeFragment,
                 R.id.mapFragment,
                 R.id.makeCongestionFragment,
+                R.id.kakaoSearchFragment,
                 R.id.myPageFragment -> {
                     binding.navBar.visibility = View.VISIBLE
                     binding.btnMakeCongestion.visibility = View.VISIBLE

@@ -9,6 +9,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.boombim.android.databinding.FragmentMyPointDetailBinding
+import com.example.domain.model.PointFilterType
+import com.example.domain.model.PointHistory
 import com.example.swift.view.dialog.BuyTicketCompleteDialog
 import com.example.swift.view.dialog.NoMoreAttemptsDialog
 import com.example.swift.view.dialog.NotEnoughPointDialog
@@ -19,6 +21,7 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
     FragmentMyPointDetailBinding::inflate
 ) {
     private lateinit var pointHistoryAdapter: PointHistoryAdapter
+    private var currentFilter: PointFilterType = PointFilterType.ALL
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -32,6 +35,7 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
         setupBuyTicketButton()
         initRecyclerView()
         observePointHistory()
+        setupTabs()
 
     }
 
@@ -43,6 +47,46 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
             )
         }
     }
+
+    private fun applyFilter(list: List<PointHistory>) {
+        val filtered = when (currentFilter) {
+            PointFilterType.ALL -> list
+            PointFilterType.EARN -> list.filter { it.pointAction == "EARN" }
+            PointFilterType.USE -> list.filter { it.pointAction == "USE" }
+        }
+
+        pointHistoryAdapter.submitList(filtered)
+    }
+
+    private fun setupTabs() {
+
+        binding.textAll.isSelected = true
+
+        binding.textAll.setOnClickListener {
+            currentFilter = PointFilterType.ALL
+            updateTabUI()
+            myPageViewModel.pointList.value.let { applyFilter(it) }
+        }
+
+        binding.textGetHistory.setOnClickListener {
+            currentFilter = PointFilterType.EARN
+            updateTabUI()
+            myPageViewModel.pointList.value.let { applyFilter(it) }
+        }
+
+        binding.textUseHistory.setOnClickListener {
+            currentFilter = PointFilterType.USE
+            updateTabUI()
+            myPageViewModel.pointList.value.let { applyFilter(it) }
+        }
+    }
+
+    private fun updateTabUI() {
+        binding.textAll.isSelected = (currentFilter == PointFilterType.ALL)
+        binding.textGetHistory.isSelected = (currentFilter == PointFilterType.EARN)
+        binding.textUseHistory.isSelected = (currentFilter == PointFilterType.USE)
+    }
+
 
     /**  리사이클러뷰 설정 */
     private fun initRecyclerView() {

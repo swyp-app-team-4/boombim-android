@@ -124,7 +124,7 @@
 
     <TextView
         android:id="@+id/text_all"
-        android:layout_width="80dp"
+        android:layout_width="56dp"
         android:layout_height="34dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="22dp"
@@ -153,6 +153,7 @@
         app:layout_constraintTop_toBottomOf="@+id/layout_point_card"/>
 
     <TextView
+        android:id="@+id/text_use_history"
         android:layout_width="80dp"
         android:layout_height="34dp"
         android:text="사용내역"
