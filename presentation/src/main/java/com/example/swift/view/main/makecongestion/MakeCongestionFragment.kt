@@ -16,6 +16,7 @@ import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMakeCongestionBinding
 import com.example.swift.util.LocationUtils
+import com.example.swift.view.dialog.MakeCongestionSuccessDialog
 import com.example.swift.viewmodel.HomeViewModel
 import com.example.swift.viewmodel.MakeCongestionViewModel
 import com.google.android.gms.location.LocationServices
@@ -38,6 +39,16 @@ class MakeCongestionFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val placeName = arguments?.getString("placeName") ?: ""
+        val congestionLevelName = when(selectedCongestionLevel) {
+            1 -> "Calm"
+            2 -> "Normal"
+            3 -> "Slightly Busy"
+            4 -> "Busy"
+            else -> "Unknown"
+        }
+        val message = binding.textContent.text.toString()
+
         setCurrentTime(binding.textTime)
         handleArguments(arguments)
         initCongestionIcons()
@@ -59,16 +70,6 @@ class MakeCongestionFragment :
         }
 
         binding.btnMakeAi.setOnClickListener {
-            val placeName = arguments?.getString("placeName") ?: ""
-            val congestionLevelName = when(selectedCongestionLevel) {
-                1 -> "Calm"
-                2 -> "Normal"
-                3 -> "Slightly Busy"
-                4 -> "Busy"
-                else -> "Unknown"
-            }
-            val message = binding.textContent.text.toString()
-
             homeViewModel.makeAutoMessage(
                 memberPlaceName = placeName,
                 congestionLevelName = congestionLevelName,
@@ -84,7 +85,7 @@ class MakeCongestionFragment :
         }
 
 
-        binding.btnShare.setOnClickListener { shareCongestion() }
+        binding.btnShare.setOnClickListener { shareCongestion(placeName) }
     }
 
     /** 번들 값 처리 */
@@ -194,7 +195,7 @@ class MakeCongestionFragment :
     }
 
     /** 서버로 혼잡도 전송 */
-    private fun shareCongestion() {
+    private fun shareCongestion(placeName: String) {
         val placeId = arguments?.getString("serverPlaceId")?.toIntOrNull() ?: -1
         val congestionLevelId = selectedCongestionLevel ?: return
         val message = binding.textContent.text.toString()
@@ -212,13 +213,10 @@ class MakeCongestionFragment :
                     congestionMessage = message,
                     latitude = location.latitude,
                     longitude = location.longitude,
-//                    latitude = "37.50437663505579".toDouble(),
-//                    longitude = "127.04897066287083".toDouble(),
                     onSuccess = { msg ->
                         Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
-                        findNavController().navigate(
-                            R.id.mapFragment,
-                            null,
+                        MakeCongestionSuccessDialog(placeName).show(parentFragmentManager, "MakeCongestionSuccessDialog")
+                        findNavController().navigate(R.id.mapFragment, null,
                             navOptions {
                                 popUpTo(findNavController().graph.startDestinationId) {
                                     inclusive = true
