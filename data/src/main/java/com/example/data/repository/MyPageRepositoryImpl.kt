@@ -56,6 +56,18 @@ class MyPageRepositoryImpl @Inject constructor(
 
     override fun getEventCampaignInfo(): Flow<EventCampaign> = myEventInfo
 
+    override suspend fun addPoint(point: Int) {
+        _myPoint.update { currentPoint ->
+            currentPoint + point
+        }
+    }
+
+    override suspend fun deletePoint(point: Int) {
+        _myPoint.update { currentPoint ->
+            currentPoint - point
+        }
+    }
+
 
     override suspend fun getProfile() {
         myPageRemoteDataSource.getProfile().first().let { result ->

@@ -85,17 +85,8 @@ class KakaoSearchFragment : VoteBaseFragment<FragmentKakaoSearchBinding>(
                     recyclerView.layoutManager = LinearLayoutManager(requireContext())
                     recyclerView.adapter = adapter
 
-                    updateLogoVisibility(list.size)
                 }
             }
-        }
-    }
-
-    private fun updateLogoVisibility(listSize: Int) {
-        binding.image3dLogoCurious.visibility = if (listSize > 0) {
-            View.GONE
-        } else {
-            View.VISIBLE
         }
     }
 }

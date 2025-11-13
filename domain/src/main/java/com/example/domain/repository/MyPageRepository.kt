@@ -23,6 +23,10 @@ interface MyPageRepository {
 
     fun getEventCampaignInfo(): Flow<EventCampaign>
 
+    suspend fun addPoint(point: Int)
+
+    suspend fun deletePoint(point: Int)
+
     suspend fun getProfile()
 
     suspend fun getMyActivity()
