@@ -20,10 +20,9 @@ class TokenAuthenticator @Inject constructor(
 ) : Authenticator {
 
     override fun authenticate(route: Route?, response: Response): Request? {
-        // 이미 재시도한 요청인지 확인 (무한 루프 방지)
         if (responseCount(response) >= 2) return null
 
-        // 현재 refresh token 가져오기 (동기 방식으로)
+        // 현재 refresh token 가져오기
         val refreshToken = runBlocking {
             appManageDataStore.getRefreshToken().first()
         } ?: return null

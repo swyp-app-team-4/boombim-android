@@ -203,7 +203,6 @@ class MakeCongestionFragment :
                     latitude = location.latitude,
                     longitude = location.longitude,
                     onSuccess = { msg ->
-                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
                         MakeCongestionSuccessDialog(placeName).show(parentFragmentManager, "MakeCongestionSuccessDialog")
                         findNavController().navigate(R.id.mapFragment, null,
                             navOptions {
