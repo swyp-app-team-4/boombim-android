@@ -4,6 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.JsonContentPolymorphicSerializer
 import kotlinx.serialization.json.JsonElement
+import kotlinx.serialization.json.contentOrNull
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
 
@@ -20,8 +21,8 @@ sealed class MemberPlaceData {
 
     @Serializable
     data class Place(
-        val type: String,
-        val memberPlaceId: Int,
+        val markerType: String,
+        val placeId: Int,
         val name: String,
         val placeType: String,
         val coordinate: Coordinate,
@@ -46,10 +47,13 @@ sealed class MemberPlaceData {
  */
 object MemberPlaceDataSerializer :
     JsonContentPolymorphicSerializer<MemberPlaceData>(MemberPlaceData::class) {
-    override fun selectDeserializer(element: JsonElement) =
-        when (element.jsonObject["type"]?.jsonPrimitive?.content) {
-            "PLACE" -> MemberPlaceData.Place.serializer()
-            "CLUSTER" -> MemberPlaceData.Cluster.serializer()
-            else -> throw IllegalArgumentException("Unknown type: ${element.jsonObject["type"]}")
-        }
+    override fun selectDeserializer(element: JsonElement) = when (
+        element.jsonObject["type"]?.jsonPrimitive?.contentOrNull
+            ?: element.jsonObject["markerType"]?.jsonPrimitive?.contentOrNull
+    ) {
+        "PLACE" -> MemberPlaceData.Place.serializer()
+        "CLUSTER" -> MemberPlaceData.Cluster.serializer()
+        null -> throw IllegalArgumentException("Missing 'type' or 'markerType' field in MemberPlaceData: $element")
+        else -> throw IllegalArgumentException("Unknown type: ${element.jsonObject["type"] ?: element.jsonObject["markerType"]}")
+    }
 }

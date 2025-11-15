@@ -3,7 +3,7 @@
     android:shape="rectangle">
 
     <!-- 배경 색 (원하면 @android:color/transparent 등으로 변경) -->
-    <solid android:color="@color/white" />
+    <solid android:color="#FFFAF5" />
 
     <!-- 테두리: 두께와 메인 컬러 -->
     <stroke

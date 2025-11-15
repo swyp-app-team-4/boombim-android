@@ -59,12 +59,12 @@ class MemberPlaceBottomSheetFragment(
         initRecyclerView()
 
         // 데이터 불러오기
-        mapViewModel.fetchMemberPlaceList(place.memberPlaceId)
+        mapViewModel.fetchMemberPlaceList(place.placeId)
     }
 
     override fun onResume() {
         super.onResume()
-        mapViewModel.fetchMemberPlaceList(place.memberPlaceId)
+        mapViewModel.fetchMemberPlaceList(place.placeId)
     }
 
     private fun initUi() {
@@ -190,14 +190,14 @@ class MemberPlaceBottomSheetFragment(
     private fun handleFavoriteClick() {
         if (place.isFavorite) {
             favoriteViewModel.deleteFavorite(
-                place.memberPlaceId,
+                place.placeId,
                 place.placeType,
                 onSuccess = { applyFavoriteState(false) },
                 onFail = {}
             )
         } else {
             favoriteViewModel.postFavorite(
-                place.memberPlaceId,
+                place.placeId,
                 place.placeType,
                 onSuccess = { applyFavoriteState(true) },
                 onFail = {}
