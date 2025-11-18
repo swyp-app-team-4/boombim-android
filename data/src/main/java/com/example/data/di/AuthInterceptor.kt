@@ -3,6 +3,7 @@ package com.example.data.di
 import android.util.Log
 import com.example.data.datastore.AppManageDataStore
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.runBlocking
 import okhttp3.Interceptor
 import okhttp3.Response
 import javax.inject.Inject
@@ -13,10 +14,12 @@ class AuthInterceptor @Inject constructor(
     override fun intercept(chain: Interceptor.Chain): Response {
         val requestBuilder = chain.request().newBuilder()
 
-        // Flow<String?>에서 실제 값을 꺼내오기
-        val token = kotlinx.coroutines.runBlocking {
+        val token = TokenCache.accessToken ?: runBlocking {
             appManageDataStore.getAccessToken().first()
+        }.also {
+            TokenCache.accessToken = it
         }
+
 
         Log.d("AuthInterceptor", "사용하는 AccessToken = $token")
 

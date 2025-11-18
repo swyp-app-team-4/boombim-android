@@ -11,6 +11,7 @@ import com.example.domain.usecase.map.GetMemberPlaceUseCase
 import com.example.domain.usecase.map.GetOfficialPlaceUseCase
 import com.example.domain.usecase.map.GetViewPortPlaceList
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
@@ -27,6 +28,9 @@ class MapViewModel @Inject constructor(
     private val fetchMemberPlaceDetailUseCase: FetchMemberPlaceDetailUseCase,
     getMemberPlaceDetailUseCase: GetMemberPlaceDetailUseCase
 ): ViewModel() {
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading = _isLoading
 
     val viewPortPlaceList = getViewPortPlaceList()
         .stateIn(
@@ -56,9 +60,31 @@ class MapViewModel @Inject constructor(
             emptyList()
         )
 
+    // ------------------------
+    //   ★ 로딩 처리 추가
+    // ------------------------
+    private suspend fun <T> runWithLoading(block: suspend () -> T): T {
+        _isLoading.value = true
+        return try {
+            block()
+        } finally {
+            _isLoading.value = false
+        }
+    }
+
+    fun fetchOfficial(placeId: Int) {
+        viewModelScope.launch {
+            runWithLoading {
+                fetchOfficialPlaceUseCase(placeId)
+            }
+        }
+    }
+
     fun fetchMemberPlaceList(officialPlaceId: Int){
         viewModelScope.launch {
-            fetchMemberPlaceDetailUseCase(officialPlaceId)
+            runWithLoading {
+                fetchMemberPlaceDetailUseCase(officialPlaceId)
+            }
         }
     }
 
@@ -72,15 +98,17 @@ class MapViewModel @Inject constructor(
         zoomLevel: Int
     ) {
         viewModelScope.launch {
-            fetchViewPortPlaceList(
-                topLeftLongitude = topLeftLongitude,
-                topLeftLatitude = topLeftLatitude,
-                bottomRightLongitude = bottomRightLongitude,
-                bottomRightLatitude = bottomRightLatitude,
-                memberLongitude = memberLongitude,
-                memberLatitude = memberLatitude,
-                zoomLevel = zoomLevel
-            )
+            runWithLoading {
+                fetchViewPortPlaceList(
+                    topLeftLongitude,
+                    topLeftLatitude,
+                    bottomRightLongitude,
+                    bottomRightLatitude,
+                    memberLongitude,
+                    memberLatitude,
+                    zoomLevel
+                )
+            }
         }
     }
 
@@ -94,22 +122,17 @@ class MapViewModel @Inject constructor(
         zoomLevel: Int
     ) {
         viewModelScope.launch {
-            fetchMemberPlaceUseCase(
-                topLeftLongitude = topLeftLongitude,
-                topLeftLatitude = topLeftLatitude,
-                bottomRightLongitude = bottomRightLongitude,
-                bottomRightLatitude = bottomRightLatitude,
-                memberLongitude = memberLongitude,
-                memberLatitude = memberLatitude,
-                zoomLevel = zoomLevel
-            )
+            runWithLoading {
+                fetchMemberPlaceUseCase(
+                    topLeftLongitude,
+                    topLeftLatitude,
+                    bottomRightLongitude,
+                    bottomRightLatitude,
+                    memberLongitude,
+                    memberLatitude,
+                    zoomLevel
+                )
+            }
         }
     }
-
-    fun fetchOfficial(placeId: Int){
-       viewModelScope.launch {
-           fetchOfficialPlaceUseCase(placeId)
-       }
-    }
-
 }

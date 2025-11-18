@@ -11,10 +11,13 @@ import com.boombim.android.databinding.ItemNearByBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberCongestionItem
+import com.example.domain.model.PlaceBoomBimModel
 import com.example.swift.util.DateTimeUtils
 import com.example.swift.util.diffutil.NearByDiffUtil
 
-class NearByAdapter :
+class NearByAdapter(
+    private val onItemClick: (CongestionData) -> Unit
+) :
     ListAdapter<CongestionData, NearByAdapter.PlaceViewHolder>(NearByDiffUtil) {
 
     fun updateItems(newItems: List<CongestionData>) {
@@ -48,6 +51,8 @@ class NearByAdapter :
                 .into(binding.imagePlace)
 
             binding.iconBoombim.setImageResource(statusIconRes)
+
+            binding.root.setOnClickListener { onItemClick(item) }
         }
     }
 
