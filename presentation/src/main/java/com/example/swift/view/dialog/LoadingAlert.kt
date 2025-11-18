@@ -39,6 +39,7 @@ class LoadingAlert : DialogFragment() {
 
     companion object {
         private const val LOADING_MSG_KEY = "loading_msg_key"
+
         fun getInstance(): LoadingAlert {
             return LoadingAlert()
         }

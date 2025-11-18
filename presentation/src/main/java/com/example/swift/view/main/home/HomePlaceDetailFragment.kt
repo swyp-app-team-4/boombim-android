@@ -21,6 +21,7 @@ import com.boombim.android.databinding.FragmentMemberPlaceBottomSheetBinding
 import com.bumptech.glide.Glide
 import com.example.domain.model.PlaceData
 import com.example.swift.util.DateTimeUtils
+import com.example.swift.view.dialog.LoadingAlertProvider
 import com.example.swift.viewmodel.MapViewModel
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.hilt.android.AndroidEntryPoint
@@ -36,6 +37,10 @@ class HomePlaceDetailFragment : Fragment() {
     private val mapViewModel: MapViewModel by activityViewModels()
 
     private var placeId: Int = -1
+
+    private val loadingAlertProvider by lazy {
+        LoadingAlertProvider(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,6 +58,16 @@ class HomePlaceDetailFragment : Fragment() {
 
         placeId = arguments?.getInt("placeId") ?: -1
         Log.d("HomePlaceDetailFragment", "Received placeId: $placeId")
+
+        viewLifecycleOwner.lifecycleScope.launch {
+            mapViewModel.isLoading.collectLatest { isLoading ->
+                if (isLoading) {
+                    loadingAlertProvider.startLoading()   // 로딩 다이얼로그 띄우기
+                } else {
+                    loadingAlertProvider.endLoading() // 로딩 다이얼로그 닫기
+                }
+            }
+        }
 
 
         lifecycleScope.launch {
@@ -84,6 +99,11 @@ class HomePlaceDetailFragment : Fragment() {
        }
 
         observeOfficialPlace()
+
+        binding.iconBack.setOnClickListener {
+            requireActivity().supportFragmentManager.popBackStack()
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

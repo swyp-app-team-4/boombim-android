@@ -13,5 +13,6 @@ data class MakeCongestionResponse (
 @Serializable
 data class MemberCongestionData(
     val memberCongestionId: Int,
-    val memberPlaceName: String
+    val memberPlaceName: String,
+    val pointReceived : Boolean
 )

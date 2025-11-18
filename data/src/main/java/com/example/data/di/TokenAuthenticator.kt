@@ -66,6 +66,7 @@ class TokenAuthenticator @Inject constructor(
                 // 새 토큰 저장
                 appManageDataStore.saveAccessToken(tokenResponse.accessToken)
                 appManageDataStore.saveRefreshToken(tokenResponse.refreshToken)
+                TokenCache.accessToken = tokenResponse.accessToken
 
                 Log.d("TokenAuthenticator", "New access token applied.")
 

@@ -229,7 +229,16 @@ class MapFragment : MapBaseFragment<FragmentMapBinding>(FragmentMapBinding::infl
         val bottomSheetBinding = binding.nearbyBottomSheet
 
         bottomSheetBinding.recycle.layoutManager = LinearLayoutManager(requireContext())
-        nearByAdapter = NearByAdapter()
+        nearByAdapter = NearByAdapter(
+            onItemClick = {
+                findNavController().navigate(
+                    R.id.homePlaceDetailFragment,
+                    Bundle().apply {
+                        putInt("placeId", it.officialPlaceId)
+                    }
+                )
+            }
+        )
         bottomSheetBinding.recycle.adapter = nearByAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
