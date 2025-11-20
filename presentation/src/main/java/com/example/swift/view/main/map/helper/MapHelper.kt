@@ -1,5 +1,6 @@
 package com.example.swift.view.main.map.helper
 
+import com.boombim.android.R
 import com.example.domain.model.CongestionData
 import com.example.domain.model.MemberPlaceData
 import com.kakao.vectormap.KakaoMap
@@ -67,11 +68,16 @@ class MapHelper(
             if (isInCluster) return@forEach
 
             val position = LatLng.from(place.coordinate.latitude, place.coordinate.longitude)
-            val markerResId = when (place.congestionLevelName) {
-                "여유" -> com.boombim.android.R.drawable.image_green_pin
-                "보통" -> com.boombim.android.R.drawable.image_blue_pin
-                "약간 붐빔" -> com.boombim.android.R.drawable.image_yellow_pin
-                else -> com.boombim.android.R.drawable.image_pink_pin
+
+            val markerResId = if (place.isExpired) {
+                R.drawable.image_gray_pin
+            } else {
+                when (place.congestionLevelName) {
+                    "여유" -> R.drawable.image_green_pin
+                    "보통" -> R.drawable.image_blue_pin
+                    "약간 붐빔" -> R.drawable.image_yellow_pin
+                    else -> R.drawable.image_pink_pin
+                }
             }
 
             val markerBitmap = markerBitmapCache.getMarkerBitmap(markerResId)

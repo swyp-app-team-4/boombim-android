@@ -28,7 +28,7 @@ data class MemberPlaceSummary(
     val longitude: Double,
     val imageUrl: String?,
     val isFavorite: Boolean,
-    val placeType: String
+    val placeType: String,
 )
 
 @Serializable

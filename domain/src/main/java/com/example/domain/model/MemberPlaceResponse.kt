@@ -18,7 +18,6 @@ data class MemberPlaceResponse(
 
 @Serializable
 sealed class MemberPlaceData {
-
     @Serializable
     data class Place(
         val markerType: String,
@@ -26,16 +25,16 @@ sealed class MemberPlaceData {
         val name: String,
         val placeType: String,
         val coordinate: Coordinate,
-        val distance: Double,
-        val congestionLevelName: String,
-        val congestionMessage: String,
-        val createdAt: String,
-        var isFavorite: Boolean
+        val congestionLevelName: String? = null,
+        val congestionMessage: String? = null,
+        val createdAt: String? = null,
+        var isFavorite: Boolean,
+        val isExpired: Boolean = false,
     ) : MemberPlaceData()
 
     @Serializable
     data class Cluster(
-        val type: String,
+        val markerType: String,
         val coordinate: Coordinate,
         val clusterSize: Int,
         val congestionLevelCounts: Map<String, Int>
