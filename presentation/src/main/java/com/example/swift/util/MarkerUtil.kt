@@ -12,6 +12,7 @@ import com.kakao.vectormap.LatLng
 import com.kakao.vectormap.label.LabelOptions
 import com.kakao.vectormap.label.LabelStyle
 import com.kakao.vectormap.camera.CameraUpdateFactory
+import androidx.core.graphics.toColorInt
 
 object MapUtil {
 
@@ -47,13 +48,18 @@ object MapUtil {
      * 클러스터용 원형 아이콘 생성
      */
     fun makeClusterIcon(size: Int): Bitmap {
-        val diameter = 100
+        val diameter = (60 + size * 4).coerceAtMost(140)
         val bitmap = Bitmap.createBitmap(diameter, diameter, Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
         val paintCircle = Paint().apply {
             isAntiAlias = true
-            color = Color.parseColor("#80FFBABA")
+            color = when {
+                size < 5 -> "#80C6F5AA".toColorInt()
+                size in 6..10 -> "#80AFC5E7".toColorInt()
+                size in 10..25 -> "#80F1E3AD".toColorInt()
+                else -> "#80EDC4C4".toColorInt()
+            }
         }
 
         val paintText = Paint().apply {
