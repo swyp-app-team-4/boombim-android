@@ -6,6 +6,7 @@ import android.view.View
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.boombim.android.databinding.FragmentMyPageBinding
 import com.boombim.android.databinding.FragmentMyPointDetailBinding
@@ -16,6 +17,7 @@ import com.example.swift.view.dialog.NoMoreAttemptsDialog
 import com.example.swift.view.dialog.NotEnoughPointDialog
 import com.example.swift.view.main.mypage.adapter.PointHistoryAdapter
 import kotlinx.coroutines.launch
+import com.boombim.android.R
 
 class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
     FragmentMyPointDetailBinding::inflate
@@ -41,10 +43,7 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
 
     private fun setupBuyTicketButton() {
         binding.buttonEventApply.setOnClickListener {
-            myPageViewModel.buyTicket(
-                onSuccess = { showBuyTicketDialog() },
-                onFail = { handleBuyTicketFailure(it) }
-            )
+            findNavController().navigate(R.id.eventFragment)
         }
     }
 
