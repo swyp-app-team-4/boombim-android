@@ -34,16 +34,20 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
             }
         }
 
-        setupBuyTicketButton()
+        setupButton()
         initRecyclerView()
         observePointHistory()
         setupTabs()
 
     }
 
-    private fun setupBuyTicketButton() {
+    private fun setupButton() {
         binding.buttonEventApply.setOnClickListener {
             findNavController().navigate(R.id.eventFragment)
+        }
+
+        binding.buttonCollectPoint.setOnClickListener {
+            findNavController().navigate(R.id.makeCongestionFragment)
         }
     }
 
@@ -102,23 +106,6 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
                 myPageViewModel.pointList.collect {
                     pointHistoryAdapter.submitList(it)
                 }
-            }
-        }
-    }
-
-    /** 응모권 구매 성공 다이얼로그 */
-    private fun showBuyTicketDialog() {
-        BuyTicketCompleteDialog().show(parentFragmentManager, "BuyTicketCompleteDialog")
-    }
-
-    /** 응모권 구매 실패 처리 */
-    private fun handleBuyTicketFailure(msg: String) {
-        when {
-            msg.contains("-1003") -> {
-                NotEnoughPointDialog().show(parentFragmentManager, "NotEnoughPointDialog")
-            }
-            msg.contains("-1002") -> {
-                NoMoreAttemptsDialog().show(parentFragmentManager, "NoMoreAttemptsDialog")
             }
         }
     }

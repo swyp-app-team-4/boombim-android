@@ -6,6 +6,7 @@ import com.example.data.network.home.request.CheckUserPlaceRequest
 import com.example.data.network.safeFlow
 import com.example.domain.datasource.HomeRemoteDataSource
 import com.example.domain.model.ActionResult
+import com.example.domain.model.AiTokenResponse
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CheckUserPlaceResponse
 import com.example.domain.model.MakeAutoMessageResponse
@@ -113,11 +114,19 @@ class HomeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun makeAutoMessage(
+        aiAttemptToken: String,
+        memberPlaceId: Int,
         memberPlaceName: String,
         congestionLevelName: String,
         congestionMessage: String
     ): Flow<ApiResult<MakeAutoMessageResponse>> {
-        val result = homeRemoteDataSource.makeAutoMessage(memberPlaceName, congestionLevelName, congestionMessage)
+        val result = homeRemoteDataSource.makeAutoMessage(aiAttemptToken, memberPlaceId, memberPlaceName, congestionLevelName, congestionMessage)
+
+        return result
+    }
+
+    override suspend fun getClovaToken(memberPlaceId: Int): Flow<ApiResult<AiTokenResponse>> {
+        val result = homeRemoteDataSource.getClovaToken(memberPlaceId)
 
         return result
     }

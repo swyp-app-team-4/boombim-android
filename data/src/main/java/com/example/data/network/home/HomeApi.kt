@@ -1,8 +1,10 @@
 package com.example.data.network.home
 
 import com.example.data.network.home.request.CheckUserPlaceRequest
+import com.example.data.network.home.request.GetClovaTokenRequest
 import com.example.data.network.home.request.MakeAutoCongestionMessageRequest
 import com.example.data.network.home.request.MakeCongestionRequest
+import com.example.domain.model.AiTokenResponse
 import com.example.domain.model.CheckUserPlaceResponse
 import com.example.domain.model.Coordinate
 import com.example.domain.model.MakeAutoMessageResponse
@@ -41,6 +43,11 @@ interface HomeApi {
     suspend fun makeAutoCongestionMessage(
         @Body data: MakeAutoCongestionMessageRequest
     ) : Response<MakeAutoMessageResponse>
+
+    @POST("api/app/clova/issue-ai-attempt-token")
+    suspend fun getClovaToken(
+        @Body data: GetClovaTokenRequest
+    ) : Response<AiTokenResponse>
 
     @GET("api/app/official-place/nearby-non-congested")
     suspend fun getLessBoomBimPlace(

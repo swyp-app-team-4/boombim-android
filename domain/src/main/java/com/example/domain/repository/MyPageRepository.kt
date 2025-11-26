@@ -23,6 +23,8 @@ interface MyPageRepository {
 
     fun getEventCampaignInfo(): Flow<EventCampaign>
 
+    fun addMyActivity(posName: String, congestionLevel: String, createdAt: String)
+
     suspend fun addPoint(point: Int)
 
     suspend fun deletePoint(point: Int)

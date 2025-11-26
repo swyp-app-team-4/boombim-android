@@ -108,6 +108,9 @@ class OfficialPlaceBottomSheetFragment(
         viewLifecycleOwner.lifecycleScope.launch {
             mapViewModel.officialPlace.collectLatest { placeData ->
                 placeData?.let { updateDemographicsUI(it) }
+
+                binding.textMaxPopulationValue.text = "${placeData?.maximumPopulation}명"
+                binding.textMinPopulationValue.text = "${placeData?.minimumPopulation}명"
             }
         }
     }

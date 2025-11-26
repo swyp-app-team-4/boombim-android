@@ -9,7 +9,7 @@ import javax.inject.Inject
 class MakeAutoMessageUseCase @Inject constructor(
     private val homeRepository: HomeRepository
 ) {
-    suspend operator fun invoke(memberPlaceName: String, congestionLevelName: String, congestionMessage: String): Flow<ApiResult<MakeAutoMessageResponse>> {
-        return homeRepository.makeAutoMessage(memberPlaceName, congestionLevelName, congestionMessage)
+    suspend operator fun invoke(aiAttemptToken: String, memberPlaceId: Int, memberPlaceName: String, congestionLevelName: String, congestionMessage: String): Flow<ApiResult<MakeAutoMessageResponse>> {
+        return homeRepository.makeAutoMessage(aiAttemptToken, memberPlaceId, memberPlaceName, congestionLevelName, congestionMessage)
     }
 }
