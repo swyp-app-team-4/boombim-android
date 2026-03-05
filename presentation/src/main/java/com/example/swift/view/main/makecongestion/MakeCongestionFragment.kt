@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
@@ -50,6 +51,16 @@ class MakeCongestionFragment :
         binding.btnShare.setOnClickListener {
             shareCongestion(placeName)
         }
+
+        binding.iconBack.setOnClickListener {
+            findNavController().navigate(
+                R.id.homeFragment,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.homeFragment, true)
+                    .build()
+            )
+        }
     }
 
     // ------------------------------
@@ -88,6 +99,9 @@ class MakeCongestionFragment :
     private fun setupMap(data: PlaceData) {
         if (data.longitude != null && data.latitude != null) {
             showMapView(data.longitude, data.latitude)
+            binding.mapView.visibility = View.VISIBLE
+        } else {
+            binding.mapView.visibility = View.GONE
         }
     }
 

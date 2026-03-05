@@ -48,7 +48,7 @@ object MapUtil {
      * 클러스터용 원형 아이콘 생성
      */
     fun makeClusterIcon(size: Int): Bitmap {
-        val diameter = (60 + size * 4).coerceAtMost(140)
+        val diameter = (80 + size * 4).coerceAtMost(180)
         val bitmap = Bitmap.createBitmap(diameter, diameter, Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 

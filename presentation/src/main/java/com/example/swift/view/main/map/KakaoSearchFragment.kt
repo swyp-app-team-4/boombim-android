@@ -21,6 +21,7 @@ import com.example.swift.view.main.vote.VoteBaseFragment
 import com.example.swift.view.main.vote.adapter.KakaoSearchListAdapter
 import com.example.swift.viewmodel.KakaoSearchViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -54,38 +55,46 @@ class KakaoSearchFragment : VoteBaseFragment<FragmentKakaoSearchBinding>(
     private fun initSearchViewListener() = with(binding) {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                query?.let { kakaoSearchViewmodel.fetchKakaoSearch(it) }
+                query?.let { kakaoSearchViewmodel.search(it) }
                 return true
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                newText?.let { kakaoSearchViewmodel.fetchKakaoSearch(it) }
+                newText?.let { kakaoSearchViewmodel.search(it) }
                 return true
             }
         })
     }
 
     private fun initKakaoSearchList() = with(binding) {
+
+        adapter = KakaoSearchListAdapter(
+            onItemClick = { place ->
+
+                val bundle = Bundle().apply {
+                    putString("x", place.x)
+                    putString("y", place.y)
+                }
+
+                findNavController().navigate(
+                    R.id.mapFragment,
+                    bundle
+                )
+            }
+        )
+
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                kakaoSearchViewmodel.kakaoSearchList.collect { list ->
-                    adapter = KakaoSearchListAdapter(
-                        list,
-                        onItemClick = { place ->
-                            val bundle = Bundle().apply {
-                                putString("x", place.x)
-                                putString("y", place.y)
-                            }
-                            findNavController().navigate(
-                                R.id.mapFragment,
-                                bundle
-                            )
-                        }
-                    )
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView.adapter = adapter
+
+                kakaoSearchViewmodel.kakaoSearchPaging.collectLatest {
+
+                    adapter.submitData(it)
 
                 }
+
             }
         }
     }

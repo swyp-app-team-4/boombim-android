@@ -1,5 +1,10 @@
 package com.example.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.example.data.KakaoSearchPagingSource
+import com.example.data.network.kakaosearch.KakaoLocalApi
 import com.example.domain.datasource.KakaoSearchRemoteDataSource
 import com.example.domain.model.ApiResult
 import com.example.domain.model.NotificationModel
@@ -13,7 +18,8 @@ import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 class KakaoSearchRepositoryImpl @Inject constructor(
-    private val kakaoSearchRemoteDataSource: KakaoSearchRemoteDataSource
+    private val kakaoSearchRemoteDataSource: KakaoSearchRemoteDataSource,
+    private val kakaoLocalApi: KakaoLocalApi
 ) : KakaoSearchRepository{
 
     // 검색 목록을 저장하는 StateFlow
@@ -24,13 +30,19 @@ class KakaoSearchRepositoryImpl @Inject constructor(
 
     override fun getKakaoSearchList(): Flow<List<PlaceDocumentDto>> = kakaoSearchList
 
-    override suspend fun searchKakao(query: String) {
-        kakaoSearchRemoteDataSource.searchKakao(query).first().let { result ->
-            if (result is ApiResult.Success) {
-                _kakaoSearchList.update {
-                    result.data.documents
-                }
+    override fun searchKakao(query: String): Flow<PagingData<PlaceDocumentDto>> {
+
+        return Pager(
+            config = PagingConfig(
+                pageSize = 15,
+                enablePlaceholders = false
+            ),
+            pagingSourceFactory = {
+                KakaoSearchPagingSource(
+                    kakaoLocalApi = kakaoLocalApi,
+                    query = query
+                )
             }
-        }
+        ).flow
     }
 }

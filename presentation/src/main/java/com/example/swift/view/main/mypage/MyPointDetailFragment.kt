@@ -39,6 +39,10 @@ class MyPointDetailFragment : MyPageBaseFragment<FragmentMyPointDetailBinding>(
         observePointHistory()
         setupTabs()
 
+        binding.iconBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
     }
 
     private fun setupButton() {

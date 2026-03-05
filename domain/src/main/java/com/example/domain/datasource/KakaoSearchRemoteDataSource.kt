@@ -7,6 +7,8 @@ import kotlinx.coroutines.flow.Flow
 interface KakaoSearchRemoteDataSource {
 
     suspend fun searchKakao(
-        query: String
-    ): Flow<ApiResult<PlaceSearchResponseDto>>
+        query: String,
+        page: Int,
+        size: Int
+    ): PlaceSearchResponseDto
 }
