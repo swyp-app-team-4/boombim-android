@@ -34,10 +34,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("Where.jks")
-            storePassword = "phb980203"
-            keyAlias = "key0"
-            keyPassword = "phb980203"
+            storeFile = file("\"${properties["STORE_FILE"]}\"")
+            storePassword = "\"${properties["STORE_PASSWORD"]}\""
+            keyAlias = "\"${properties["KEY_ALIAS"]}\""
+            keyPassword = "\"${properties["KEY_PASSWORD"]}\""
         }
     }
 

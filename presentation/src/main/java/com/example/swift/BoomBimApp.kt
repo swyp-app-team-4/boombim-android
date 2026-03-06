@@ -20,8 +20,8 @@ class BoomBimApp : Application() {
 
         NaverIdLoginSDK.initialize(
             this,
-            "WFRKsx3t7gMMESxx7Vth",        // 네이버 개발자 센터에서 발급
-            "T3SCqoevVy",    // 네이버 개발자 센터에서 발급
+            BuildConfig.NAVER_CLIENT_ID,        // 네이버 개발자 센터에서 발급
+            BuildConfig.NAVER_CLIENT_SECRET,    // 네이버 개발자 센터에서 발급
             "붐빔"          // 사용자에게 보여질 앱 이름
         )
 
