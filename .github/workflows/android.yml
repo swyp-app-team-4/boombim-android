@@ -23,18 +23,17 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
-    # [수정] 빌드 전 빈 local.properties 파일을 생성하여 에러를 방지합니다.
+    # 1. local.properties 생성
     - name: Create local.properties
       run: touch local.properties
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
-      # [추가] Secrets에 저장된 Base64 문자열을 다시 파일로 복원합니다.
+    # 2. google-services.json 복원 (빌드 직전에 수행)
     - name: Decode google-services.json
-      run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > presentation/google-services.json
-      # 주의: 로그에 찍힌 경로(/presentation/google-services.json)에 맞춰 경로를 지정하세요.
+      run: |
+        mkdir -p presentation  # 폴더가 없을 경우에 대비해 생성
+        echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > presentation/google-services.json
 
+    # 3. 실제 빌드 수행 (한 번만 실행)
     - name: Build with Gradle
       run: ./gradlew build
 
