@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="true"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/icon_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:src="@drawable/icon_arrow_left"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
             android:id="@+id/text_profile"
@@ -115,6 +120,7 @@
             android:layout_height="wrap_content"
             tools:text="강남 스벅"
             android:textSize="20sp"
+            android:visibility="gone"
             android:fontFamily="@font/pretend_semibold"
             android:textColor="@color/gray_scale_9"
             android:layout_marginStart="20dp"
@@ -127,6 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:text="서울특별시 강남로 331"
+            android:visibility="gone"
             android:textSize="14sp"
             android:fontFamily="@font/pretend_semibold"
             android:textColor="@color/gray_scale_8"
@@ -143,6 +150,7 @@
             android:layout_marginEnd="20dp"
             android:background="@drawable/bg_radius_14"
             android:clipToOutline="true"
+            android:visibility="gone"
             app:layout_constraintTop_toBottomOf="@id/text_place_address"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -158,14 +166,14 @@
             <ImageView
                 android:layout_width="18dp"
                 android:layout_height="18dp"
-                android:src="@drawable/icon_flex_politics"
+                android:src="@drawable/icon_circle_select"
                 android:layout_gravity="center"
                 android:layout_marginStart="18dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="혼잡도를 투표해주세요"
+                android:text="혼잡도를 선택해주세요"
                 android:layout_marginStart="7dp"
                 android:layout_gravity="center"
                 android:textColor="@color/gray_scale_10"
@@ -291,7 +299,6 @@
             android:gravity="center"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_make_ai"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
@@ -312,6 +319,4 @@
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

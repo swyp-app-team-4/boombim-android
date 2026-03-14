@@ -87,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.homeFragment,
                 R.id.mapFragment,
-                R.id.makeCongestionFragment,
+//                R.id.makeCongestionFragment,
                 R.id.kakaoSearchFragment,
                 R.id.myPageFragment -> {
                     binding.navBar.visibility = View.VISIBLE

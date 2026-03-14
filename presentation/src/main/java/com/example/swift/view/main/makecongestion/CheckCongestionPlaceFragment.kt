@@ -43,6 +43,10 @@ class CheckCongestionPlaceFragment :
         setupUI()
         showMapView(longitude, latitude)
         requestCheckUserPlace()
+
+        binding.iconBack.setOnClickListener {
+            findNavController().popBackStack()
+        }
     }
 
     private fun initArguments() {

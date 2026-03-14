@@ -4,21 +4,17 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.fragment.app.activityViewModels
+import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.boombim.android.R
 import com.boombim.android.databinding.FragmentMakeCongestionBinding
 import com.example.swift.util.LocationUtils
 import com.example.swift.view.dialog.MakeCongestionSuccessDialog
-import com.example.swift.viewmodel.HomeViewModel
-import com.example.swift.viewmodel.MakeCongestionViewModel
 import com.google.android.gms.location.LocationServices
 import com.kakao.vectormap.*
 import com.kakao.vectormap.camera.CameraUpdateFactory
@@ -29,76 +25,128 @@ import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
 
+@RequiresApi(Build.VERSION_CODES.O)
 class MakeCongestionFragment :
     MakeCongestionBaseFragment<FragmentMakeCongestionBinding>(FragmentMakeCongestionBinding::inflate) {
 
-    private var selectedCongestionLevel: Int? = null
+    private var congestionLevel: Int? = null
     private var kakaoMap: KakaoMap? = null
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val placeName = arguments?.getString("placeName") ?: ""
-        val congestionLevelName = when(selectedCongestionLevel) {
-            1 -> "Calm"
-            2 -> "Normal"
-            3 -> "Slightly Busy"
-            4 -> "Busy"
-            else -> "Unknown"
-        }
-        val message = binding.textContent.text.toString()
+        val placeName = arguments?.getString("placeName").orEmpty()
 
         setCurrentTime(binding.textTime)
-        handleArguments(arguments)
         initCongestionIcons()
+        setupSearchClick()
 
-        binding.searchView.setOnClickListener {
-            findNavController().navigate(
-                R.id.congestionSearchFragment)
+        arguments?.let { bundle ->
+            val data = extractBundleData(bundle)
+            setupMap(data)
+            setupPlaceInfo(data)
+            setupAiMessageButton(data)
         }
 
+        binding.btnShare.setOnClickListener {
+            shareCongestion(placeName)
+        }
+
+        binding.iconBack.setOnClickListener {
+            findNavController().navigate(
+                R.id.homeFragment,
+                null,
+                NavOptions.Builder()
+                    .setPopUpTo(R.id.homeFragment, true)
+                    .build()
+            )
+        }
+    }
+
+    // ------------------------------
+    // Bundle Data Model
+    // ------------------------------
+
+    private data class PlaceData(
+        val placeName: String,
+        val addressName: String?,
+        val latitude: Double?,
+        val longitude: Double?,
+        val serverPlaceId: Int,
+        val id: Int
+    )
+
+    /** 번들값 추출 */
+    private fun extractBundleData(bundle: Bundle) = PlaceData(
+        placeName = bundle.getString("placeName").orEmpty(),
+        addressName = bundle.getString("addressName"),
+        latitude = bundle.getString("y")?.toDoubleOrNull(),
+        longitude = bundle.getString("x")?.toDoubleOrNull(),
+        serverPlaceId = bundle.getString("serverPlaceId")?.toIntOrNull() ?: -1,
+        id = bundle.getInt("id")
+    )
+
+    // ------------------------------
+    // Setup Functions
+    // ------------------------------
+
+    private fun setupSearchClick() {
+        binding.searchView.setOnClickListener {
+            findNavController().navigate(R.id.congestionSearchFragment)
+        }
+    }
+
+    private fun setupMap(data: PlaceData) {
+        if (data.longitude != null && data.latitude != null) {
+            showMapView(data.longitude, data.latitude)
+            binding.mapView.visibility = View.VISIBLE
+        } else {
+            binding.mapView.visibility = View.GONE
+        }
+    }
+
+    private fun setupPlaceInfo(data: PlaceData) {
+        if (data.placeName.isNotEmpty() && !data.addressName.isNullOrEmpty()) {
+            showPlaceInfo(data.placeName, data.addressName)
+        } else {
+            hidePlaceInfo()
+        }
+    }
+
+    private fun setupAiMessageButton(data: PlaceData) {
         binding.btnMakeAi.setOnClickListener {
-            homeViewModel.makeAutoMessage(
-                memberPlaceName = placeName,
-                congestionLevelName = congestionLevelName,
-                congestionMessage = message,
-                onSuccess = { generatedMessage ->
-                    binding.textContent.setText(generatedMessage)
-                    Toast.makeText(requireContext(), "AI 메시지 생성 완료", Toast.LENGTH_SHORT).show()
+            val message = binding.textContent.text.toString()
+            val levelName = getCongestionLevelName()
+
+            homeViewModel.getClovaToken(
+                data.id,
+                onSuccess = { token ->
+                    homeViewModel.makeAutoMessage(
+                        aiAttemptToken = token,
+                        memberPlaceId = data.id,
+                        memberPlaceName = data.placeName,
+                        congestionLevelName = levelName,
+                        congestionMessage = message,
+                        onSuccess = { generatedMessage ->
+                            binding.textContent.setText(generatedMessage)
+                            Toast.makeText(requireContext(), "AI 메시지 생성 완료", Toast.LENGTH_SHORT).show()
+                        },
+                        onFailure = {
+                            Toast.makeText(requireContext(), "AI 메시지 생성 실패", Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 },
                 onFailure = {
                     Toast.makeText(requireContext(), "AI 메시지 생성 실패", Toast.LENGTH_SHORT).show()
                 }
             )
         }
-
-
-        binding.btnShare.setOnClickListener { shareCongestion(placeName) }
     }
 
-    /** 번들 값 처리 */
-    private fun handleArguments(bundle: Bundle?) {
-        val placeName = bundle?.getString("placeName")
-        val addressName = bundle?.getString("addressName")
-        val longitude = bundle?.getString("x")?.toDoubleOrNull()
-        val latitude = bundle?.getString("y")?.toDoubleOrNull()
-        val serverPlaceId = bundle?.getString("serverPlaceId")?.toIntOrNull() ?: -1
+    // ------------------------------
+    // UI Helpers
+    // ------------------------------
 
-        Log.d("MakeFragment", "serverPlaceId=$serverPlaceId")
-
-        if (longitude != null && latitude != null) {
-            showMapView(longitude, latitude)
-        }
-
-        if (!placeName.isNullOrEmpty() && !addressName.isNullOrEmpty()) {
-            showPlaceInfo(placeName, addressName)
-        } else {
-            hidePlaceInfo()
-        }
-    }
-
-    /** 장소 정보 표시 */
     private fun showPlaceInfo(placeName: String, addressName: String) = with(binding) {
         textPlaceName.text = placeName
         textPlaceAddress.text = addressName
@@ -108,12 +156,30 @@ class MakeCongestionFragment :
     }
 
     private fun hidePlaceInfo() = with(binding) {
-        textPlaceName.hide()
-        textPlaceAddress.hide()
-        mapView.hide()
+        textPlaceName.visibility = View.GONE
+        textPlaceAddress.visibility = View.GONE
+        mapView.visibility = View.GONE
     }
 
-    /** 지도 표시 */
+    private fun getCongestionLevelName() = when (congestionLevel) {
+        1 -> "Calm"
+        2 -> "Normal"
+        3 -> "Slightly Busy"
+        4 -> "Busy"
+        else -> "Unknown"
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun setCurrentTime(textView: TextView) {
+        val now = LocalDateTime.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd a h시 m분", Locale.KOREA)
+        textView.text = now.format(formatter)
+    }
+
+    // ------------------------------
+    // Map
+    // ------------------------------
+
     private fun showMapView(x: Double, y: Double) {
         binding.mapView.start(
             object : MapLifeCycleCallback() {
@@ -131,28 +197,23 @@ class MakeCongestionFragment :
         )
     }
 
-    private fun addMarker(x: Double, y: Double) {
+    private fun addMarker(lat: Double, lng: Double) {
         kakaoMap?.labelManager?.layer?.let { layer ->
             val markerBitmap = BitmapFactory.decodeResource(resources, R.drawable.icon_red_marker)
-            val position = LatLng.from(x, y)
-            val iconStyle = LabelStyle.from(markerBitmap)
+            val position = LatLng.from(lat, lng)
+            val style = LabelStyle.from(markerBitmap)
 
-            val iconOptions = LabelOptions.from(position).setStyles(iconStyle)
-            layer.addLabel(iconOptions)
+            val options = LabelOptions.from(position).setStyles(style)
+            layer.addLabel(options)
 
             kakaoMap?.moveCamera(CameraUpdateFactory.newCenterPosition(position))
         }
     }
 
-    /** 현재 시간 텍스트뷰에 세팅 */
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun setCurrentTime(textView: TextView) {
-        val now = LocalDateTime.now()
-        val formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd a h시 m분", Locale.KOREA)
-        textView.text = now.format(formatter)
-    }
+    // ------------------------------
+    // Congestion Icon Handling
+    // ------------------------------
 
-    /** 혼잡도 아이콘 초기화 */
     private fun initCongestionIcons() = with(binding) {
         val icons = listOf(
             imgCalm to Pair(R.drawable.icon_calm_v2, 1),
@@ -161,35 +222,43 @@ class MakeCongestionFragment :
             iconBusy to Pair(R.drawable.icon_busy_v2, 4)
         )
 
-        // 기본 v1 세팅
-        imgCalm.setImageResource(R.drawable.icon_calm_v1)
-        imgNormal.setImageResource(R.drawable.icon_normal_v1)
-        iconSlightlyBusy.setImageResource(R.drawable.icon_slightly_busy_v1)
-        iconBusy.setImageResource(R.drawable.icon_busy_v1)
+        resetIconsToDefault()
 
         icons.forEach { (imageView, pair) ->
             val (selectedRes, levelId) = pair
             imageView.setOnClickListener {
-                // 모두 v3으로 초기화
-                imgCalm.setImageResource(R.drawable.icon_calm_v3)
-                imgNormal.setImageResource(R.drawable.icon_normal_v3)
-                iconSlightlyBusy.setImageResource(R.drawable.icon_slightly_busy_v3)
-                iconBusy.setImageResource(R.drawable.icon_busy_v3)
-
-                // 클릭된 아이콘 v2 + 선택 레벨 저장
+                resetIconsToSelected()
                 imageView.setImageResource(selectedRes)
-                selectedCongestionLevel = levelId
+                congestionLevel = levelId
             }
         }
     }
 
-    /** 서버로 혼잡도 전송 */
+    private fun resetIconsToDefault() = with(binding) {
+        imgCalm.setImageResource(R.drawable.icon_calm_v1)
+        imgNormal.setImageResource(R.drawable.icon_normal_v1)
+        iconSlightlyBusy.setImageResource(R.drawable.icon_slightly_busy_v1)
+        iconBusy.setImageResource(R.drawable.icon_busy_v1)
+    }
+
+    private fun resetIconsToSelected() = with(binding) {
+        imgCalm.setImageResource(R.drawable.icon_calm_v3)
+        imgNormal.setImageResource(R.drawable.icon_normal_v3)
+        iconSlightlyBusy.setImageResource(R.drawable.icon_slightly_busy_v3)
+        iconBusy.setImageResource(R.drawable.icon_busy_v3)
+    }
+
+    // ------------------------------
+    // 서버로 전송
+    // ------------------------------
+
     private fun shareCongestion(placeName: String) {
         val placeId = arguments?.getString("serverPlaceId")?.toIntOrNull() ?: -1
-        val congestionLevelId = selectedCongestionLevel ?: return
+        val level = congestionLevel ?: return
         val message = binding.textContent.text.toString()
 
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireContext())
+        val fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(requireContext())
 
         lifecycleScope.launch {
             val location = LocationUtils.getLastKnownLocation(requireContext(), fusedLocationClient)
@@ -198,28 +267,33 @@ class MakeCongestionFragment :
             if (location != null) {
                 makeCongestionViewModel.makeCongestion(
                     memberPlaceId = placeId,
-                    congestionLevelId = congestionLevelId,
+                    congestionLevelId = level,
                     congestionMessage = message,
                     latitude = location.latitude,
                     longitude = location.longitude,
-                    onSuccess = { msg ->
-                        MakeCongestionSuccessDialog(placeName).show(parentFragmentManager, "MakeCongestionSuccessDialog")
-                        findNavController().navigate(R.id.mapFragment, null,
-                            navOptions {
-                                popUpTo(findNavController().graph.startDestinationId) {
-                                    inclusive = true
-                                }
-                            }
-                        )
+                    onSuccess = {
+                        makeCongestionViewModel.addMyActivity(placeName, level)
+                        MakeCongestionSuccessDialog(placeName)
+                            .show(parentFragmentManager, "MakeCongestionSuccessDialog")
 
+                        navigateToHome()
                     },
-                    onFailure = { msg ->
-                        Toast.makeText(requireContext(), msg, Toast.LENGTH_SHORT).show()
+                    onFailure = {
+                        Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                     }
                 )
             } else {
                 Log.e("MakeCongestion", "위치 정보를 가져오지 못했습니다.")
             }
         }
+    }
+
+    private fun navigateToHome() {
+        findNavController().navigate(
+            R.id.mapFragment, null,
+            navOptions {
+                popUpTo(findNavController().graph.startDestinationId) { inclusive = true }
+            }
+        )
     }
 }

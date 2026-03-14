@@ -13,7 +13,9 @@ fun groupActivitiesByDate(list: List<MyActivityResponse>): List<MyActivityItem> 
     val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
     val outputFormatter = DateTimeFormatter.ofPattern("yyyy. MM. dd", Locale.KOREA)
 
-    return list
+    val sorted = list.sortedByDescending { it.createdAt }
+
+    return sorted
         .groupBy { it.createdAt.substring(0, 10) }
         .toSortedMap(compareByDescending { it })
         .flatMap { (dateStr, activities) ->

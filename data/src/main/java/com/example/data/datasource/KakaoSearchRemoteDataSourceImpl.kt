@@ -12,13 +12,17 @@ import javax.inject.Inject
 class KakaoSearchRemoteDataSourceImpl @Inject constructor(
     private val kakaoLocalApi: KakaoLocalApi
 ) : KakaoSearchRemoteDataSource {
-    override suspend fun searchKakao(query: String): Flow<ApiResult<PlaceSearchResponseDto>> {
-        return safeFlow {
-            kakaoLocalApi.searchPlaces(
-                query = query
-            )
-        }
-    }
 
+    override suspend fun searchKakao(
+        query: String,
+        page: Int,
+        size: Int
+    ): PlaceSearchResponseDto {
+        return kakaoLocalApi.searchPlaces(
+            query = query,
+            page = page,
+            size = size
+        )
+    }
 
 }

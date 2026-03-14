@@ -21,8 +21,8 @@ android {
         applicationId = "com.boombim.android"
         minSdk = 24
         targetSdk = 35
-        versionCode = 6
-        versionName = "1.2.0"
+        versionCode = 12
+        versionName = "1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -34,10 +34,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file("Where.jks")
-            storePassword = "phb980203"
-            keyAlias = "key0"
-            keyPassword = "phb980203"
+            storeFile = file("\"${properties["STORE_FILE"]}\"")
+            storePassword = "\"${properties["STORE_PASSWORD"]}\""
+            keyAlias = "\"${properties["KEY_ALIAS"]}\""
+            keyPassword = "\"${properties["KEY_PASSWORD"]}\""
         }
     }
 
@@ -106,6 +106,9 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.4.0")
 
     implementation("com.google.android.material:material:1.12.0")
+
+    //Paging3
+    implementation("androidx.paging:paging-runtime:3.3.2")
 
 
     implementation(libs.androidx.core.ktx)

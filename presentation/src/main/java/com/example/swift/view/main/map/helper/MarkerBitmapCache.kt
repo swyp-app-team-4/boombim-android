@@ -11,7 +11,8 @@ class MarkerBitmapCache(private val resources: android.content.res.Resources) {
         R.drawable.image_green_pin to BitmapFactory.decodeResource(resources, R.drawable.image_green_pin),
         R.drawable.image_blue_pin to BitmapFactory.decodeResource(resources, R.drawable.image_blue_pin),
         R.drawable.image_yellow_pin to BitmapFactory.decodeResource(resources, R.drawable.image_yellow_pin),
-        R.drawable.image_pink_pin to BitmapFactory.decodeResource(resources, R.drawable.image_pink_pin)
+        R.drawable.image_pink_pin to BitmapFactory.decodeResource(resources, R.drawable.image_pink_pin),
+        R.drawable.image_gray_pin to BitmapFactory.decodeResource(resources, R.drawable.image_gray_pin)
     )
 
     private val clusterCache: MutableMap<Int, Bitmap> = mutableMapOf()

@@ -1,16 +1,20 @@
 package com.example.swift.viewmodel
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.model.ActionResult
 import com.example.domain.usecase.home.MakeCongestionUseCase
+import com.example.domain.usecase.mypage.RegisterCongestionUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MakeCongestionViewModel @Inject constructor(
-    private val makeCongestionUseCase: MakeCongestionUseCase
+    private val makeCongestionUseCase: MakeCongestionUseCase,
+    val registerCongestionUseCase: RegisterCongestionUseCase
 ) : ViewModel(){
 
     fun makeCongestion(
@@ -34,4 +38,22 @@ class MakeCongestionViewModel @Inject constructor(
             }
       }
     }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    fun addMyActivity(posName: String, congestionLevel: Int) {
+
+        val levelText = when (congestionLevel) {
+            1 -> "여유"
+            2 -> "보통"
+            3 -> "약간 붐빔"
+            4 -> "붐빔"
+            else -> "알 수 없음"
+        }
+
+        registerCongestionUseCase(
+            posName = posName,
+            congestionLevel = levelText
+        )
+    }
+
 }

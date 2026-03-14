@@ -1,5 +1,6 @@
 package com.example.domain.datasource
 
+import com.example.domain.model.AiTokenResponse
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CheckUserPlaceResponse
 import com.example.domain.model.MakeAutoMessageResponse
@@ -31,8 +32,14 @@ interface HomeRemoteDataSource {
     ): Flow<ApiResult<PlaceLessBoomBimResponse>>
 
     suspend fun makeAutoMessage(
+        aiAttemptToken: String,
+        memberPlaceId: Int,
         memberPlaceName: String,
         congestionLevelName: String,
         congestionMessage: String
     ): Flow<ApiResult<MakeAutoMessageResponse>>
+
+    suspend fun getClovaToken(
+        memberPlaceId: Int
+    ): Flow<ApiResult<AiTokenResponse>>
 }

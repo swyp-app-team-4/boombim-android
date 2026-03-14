@@ -4,13 +4,13 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.domain.model.ActionResult
 import com.example.domain.model.ApiResult
 import com.example.domain.usecase.home.CheckUserPlaceUseCase
 import com.example.domain.usecase.home.FetchBoomBimListUseCase
 import com.example.domain.usecase.home.FetchLessBoomBimListUseCase
 import com.example.domain.usecase.home.FetchRegionUseCase
 import com.example.domain.usecase.home.GetBoomBimUseCase
+import com.example.domain.usecase.home.GetClovaTokenUseCase
 import com.example.domain.usecase.home.GetLessBoomBimUseCase
 import com.example.domain.usecase.home.GetRegionUseCase
 import com.example.domain.usecase.home.MakeAutoMessageUseCase
@@ -32,7 +32,8 @@ class HomeViewModel @Inject constructor(
     getLessBoomBimUseCase: GetLessBoomBimUseCase,
     getBoomBimUseCase: GetBoomBimUseCase,
     private val checkUserPlaceUseCase: CheckUserPlaceUseCase,
-    private val makeAutoMessageUseCase: MakeAutoMessageUseCase
+    private val makeAutoMessageUseCase: MakeAutoMessageUseCase,
+    private val getClovaTokenUseCase: GetClovaTokenUseCase
 ) : ViewModel() {
 
     init {
@@ -97,6 +98,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun makeAutoMessage(
+        aiAttemptToken: String,
+        memberPlaceId: Int,
         memberPlaceName: String,
         congestionLevelName: String,
         congestionMessage: String,
@@ -104,7 +107,7 @@ class HomeViewModel @Inject constructor(
         onFailure: () -> Unit
     ){
        viewModelScope.launch {
-           makeAutoMessageUseCase(memberPlaceName, congestionLevelName, congestionMessage).collect { result ->
+           makeAutoMessageUseCase(aiAttemptToken, memberPlaceId, memberPlaceName, congestionLevelName, congestionMessage).collect { result ->
                when(result) {
                    is ApiResult.Success -> {
                        val msg = result.data.data.generatedCongestionMessage
@@ -120,6 +123,29 @@ class HomeViewModel @Inject constructor(
            }
 
        }
+    }
+
+    fun getClovaToken(
+        memberPlaceId: Int,
+        onSuccess: (token: String) -> Unit,
+        onFailure: () -> Unit
+    ){
+        viewModelScope.launch {
+            getClovaTokenUseCase(memberPlaceId).collect { result ->
+                when(result) {
+                    is ApiResult.Success -> {
+                        val token = result.data.data.aiAttemptToken
+                        onSuccess(token)
+                    }
+                    is ApiResult.Fail.Error -> {
+                        onFailure()
+                    }
+                    else -> {
+                        onFailure()
+                    }
+                }
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

@@ -1,6 +1,7 @@
 package com.example.domain.repository
 
 import com.example.domain.model.ActionResult
+import com.example.domain.model.AiTokenResponse
 import com.example.domain.model.ApiResult
 import com.example.domain.model.CheckUserPlaceResponse
 import com.example.domain.model.MakeAutoMessageResponse
@@ -44,8 +45,16 @@ interface HomeRepository {
     ): ActionResult<MakeCongestionResponse>
 
     suspend fun makeAutoMessage(
+        aiAttemptToken: String,
+        memberPlaceId: Int,
         memberPlaceName: String,
         congestionLevelName: String,
         congestionMessage: String
     ): Flow<ApiResult<MakeAutoMessageResponse>>
+
+    suspend fun getClovaToken(
+        memberPlaceId: Int
+    ) : Flow<ApiResult<AiTokenResponse>>
+
+
 }

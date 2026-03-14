@@ -36,7 +36,6 @@ class EventFragment : MyPageBaseFragment<FragmentEventBinding>(
         setupBuyTicketButton()
     }
 
-    /** 이벤트 정보 Flow 수집 */
     private fun collectEventInfo() {
         lifecycleScope.launch {
             myPageViewModel.eventInfo.collect { eventInfo ->
@@ -46,7 +45,6 @@ class EventFragment : MyPageBaseFragment<FragmentEventBinding>(
         }
     }
 
-    /** 뒤로가기 버튼 */
     private fun setupBackButton() {
         binding.iconBack.setOnClickListener {
             findNavController().popBackStack()
@@ -66,7 +64,6 @@ class EventFragment : MyPageBaseFragment<FragmentEventBinding>(
         }
     }
 
-    /** 응모권 구매하기 버튼 */
     private fun setupBuyTicketButton() {
         binding.buttonBuyTicket.setOnClickListener {
             myPageViewModel.buyTicket(

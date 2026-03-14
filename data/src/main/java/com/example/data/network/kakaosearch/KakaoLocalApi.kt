@@ -11,6 +11,8 @@ interface KakaoLocalApi {
     @GET("v2/local/search/keyword.json")
     @Headers("Authorization: KakaoAK e22ae8cd18b014bbeb1096fb69741bbf")
     suspend fun searchPlaces(
-        @Query("query") query: String
-    ): Response<PlaceSearchResponseDto>
+        @Query("query") query: String,
+        @Query("page") page: Int,
+        @Query("size") size: Int
+    ): PlaceSearchResponseDto
 }

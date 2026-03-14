@@ -30,7 +30,7 @@ class MyPageRepositoryImpl @Inject constructor(
         get() = _myPage.asStateFlow()
 
     private var _myActivity = MutableStateFlow<List<MyActivityResponse>>(emptyList())
-    private val myActivity
+    val myActivity
         get() = _myActivity.asStateFlow()
 
     private var _myPointList = MutableStateFlow<List<PointHistory>>(emptyList())
@@ -55,6 +55,20 @@ class MyPageRepositoryImpl @Inject constructor(
     override fun getMyPointTotal(): Flow<Int> = myPoint
 
     override fun getEventCampaignInfo(): Flow<EventCampaign> = myEventInfo
+
+    override fun addMyActivity(
+        posName: String,
+        congestionLevel: String,
+        createdAt: String
+    ) {
+        val newActivity = MyActivityResponse(posName = posName, congestionLevel = congestionLevel, createdAt = createdAt)
+
+        _myActivity.update { currentList ->
+            currentList + newActivity
+        }
+    }
+
+
 
     override suspend fun addPoint(point: Int) {
         _myPoint.update { currentPoint ->
