@@ -1,0 +1,49 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: set up JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: gradle
+
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
+    # 빌드 성공 시 알림
+    - name: Slack Notification on Success
+      if: success()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_COLOR: '#36a64f' # 초록색
+        SLACK_TITLE: 'Android Build Success! ✅'
+        SLACK_MESSAGE: '박환님, Boombim 앱 빌드 및 테스트가 무사히 완료되었습니다!'
+        SLACK_USERNAME: 'GitHub Action Bot'
+
+    # 빌드 실패 시 알림
+    - name: Slack Notification on Failure
+      if: failure()
+      uses: rtCamp/action-slack-notify@v2
+      env:
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+        SLACK_COLOR: '#ff0000' # 빨간색
+        SLACK_TITLE: 'Android Build Failed! ❌'
+        SLACK_MESSAGE: '빌드 과정에서 오류가 발생했습니다. 로그를 확인해 주세요!'
+        SLACK_USERNAME: 'GitHub Action Bot'
