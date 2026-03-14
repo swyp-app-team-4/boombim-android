@@ -30,6 +30,14 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
+      # [추가] Secrets에 저장된 Base64 문자열을 다시 파일로 복원합니다.
+    - name: Decode google-services.json
+      run: echo "${{ secrets.GOOGLE_SERVICES_JSON }}" | base64 --decode > presentation/google-services.json
+      # 주의: 로그에 찍힌 경로(/presentation/google-services.json)에 맞춰 경로를 지정하세요.
+
+    - name: Build with Gradle
+      run: ./gradlew build
+
     # 빌드 성공 시 알림
     - name: Slack Notification on Success
       if: success()
