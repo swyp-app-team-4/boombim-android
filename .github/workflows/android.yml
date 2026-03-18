@@ -35,7 +35,7 @@ jobs:
 
     # 3. 실제 빌드 수행 (한 번만 실행)
     - name: Build with Gradle
-      run: ./gradlew build
+      run: ./gradlew assembleDebug
 
     # 빌드 성공 시 알림
     - name: Slack Notification on Success
