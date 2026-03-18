@@ -32,7 +32,7 @@ class CongestionSearchFragment :
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initKakaoSearchList()
+//        initKakaoSearchList()
 
         initSearchViewListener()
 
@@ -59,29 +59,29 @@ class CongestionSearchFragment :
     }
 
 
-    private fun initKakaoSearchList() = with(binding) {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED){
-                kakaoSearchViewmodel.kakaoSearchList.collect { list ->
-                    adapter = KakaoSearchListAdapter(
-                        list,
-                        onItemClick = { place ->
-                            val bundle = Bundle().apply {
-                                putString("placeName", place.place_name)
-                                putString("addressName", place.address_name)
-                                putString("x", place.x)
-                                putString("y", place.y)
-                                putString("id",place.id)
-                            }
-                            findNavController().navigate(R.id.checkCongestionPlaceFragment,bundle)
-                        }
-                    )
-                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
-                    recyclerView.adapter = adapter
-
-                }
-            }
-        }
-    }
+//    private fun initKakaoSearchList() = with(binding) {
+//        lifecycleScope.launch {
+//            repeatOnLifecycle(Lifecycle.State.STARTED){
+//                kakaoSearchViewmodel.kakaoSearchList.collect { list ->
+//                    adapter = KakaoSearchListAdapter(
+//                        list,
+//                        onItemClick = { place ->
+//                            val bundle = Bundle().apply {
+//                                putString("placeName", place.)
+//                                putString("addressName", place.address_name)
+//                                putString("x", place.x)
+//                                putString("y", place.y)
+//                                putString("id",place.id)
+//                            }
+//                            findNavController().navigate(R.id.checkCongestionPlaceFragment,bundle)
+//                        }
+//                    )
+//                    recyclerView.layoutManager = LinearLayoutManager(requireContext())
+//                    recyclerView.adapter = adapter
+//
+//                }
+//            }
+//        }
+//    }
 
 }
